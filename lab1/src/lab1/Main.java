@@ -12,13 +12,16 @@ public class Main {
 			 String linea;
 			 while (entrada.hasNext()) {
 				 linea = entrada.nextLine();
-				 String[] division = linea.split("\t");
-				 Actor aaux = new Actor(division[0]);
-				 ListaActores.getListaActores().anadirActor(aaux);
-				 String[] division2 = division[2].split("\\(");
-				 Pelicula paux = new Pelicula(division2[0]);
-				 //ListaPeliculas.getListaPeliculas.anadirPelicula(paux); <<<---Falta la clase ListaPeliculas--->>>
+				 if(linea!="\n"){
+					 
+					/* String[] division = linea.split("\t");
+					 Actor aaux = new Actor(division[0]);
+					 ListaActores.getListaActores().anadirActor(aaux);
+					 String[] division2 = division[2].split("\\(");
+					 Pelicula paux = new Pelicula(division2[0]);
+					 aaux.anadirPelicula(paux);*/
 				 }
+			 }
 			 entrada.close();
 		}
 		catch(IOException e) {

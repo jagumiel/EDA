@@ -28,21 +28,55 @@ public class ListaActoresTest {
 		actor3=null;
 		actor4=null;
 		actor5=null;
+		ListaActores.getListaActores().resetear();
 	}
 
 	@Test
 	public void testAnadirActor() {
-		//TODO
+		assertEquals(ListaActores.getListaActores().getTamano(),0);
+		ListaActores.getListaActores().anadirActor(actor1);
+		assertEquals(ListaActores.getListaActores().getTamano(),1);
+		ListaActores.getListaActores().anadirActor(actor2);
+		assertEquals(ListaActores.getListaActores().getTamano(),2);
+		ListaActores.getListaActores().anadirActor(actor3);
+		assertEquals(ListaActores.getListaActores().getTamano(),3);
+		ListaActores.getListaActores().anadirActor(actor1);
+		assertEquals(ListaActores.getListaActores().getTamano(),3);
+		ListaActores.getListaActores().anadirActor(actor4);
+		assertEquals(ListaActores.getListaActores().getTamano(),4);
+		ListaActores.getListaActores().anadirActor(actor5);
+		assertEquals(ListaActores.getListaActores().getTamano(),4);
 	}
 
 	@Test
 	public void testEliminarActor() {
-		//TODO
+		ListaActores.getListaActores().anadirActor(actor1);
+		ListaActores.getListaActores().anadirActor(actor2);
+		ListaActores.getListaActores().anadirActor(actor3);
+		ListaActores.getListaActores().anadirActor(actor4);
+		assertEquals(ListaActores.getListaActores().getTamano(),4);
+		ListaActores.getListaActores().eliminarActor(actor1);
+		assertEquals(ListaActores.getListaActores().getTamano(),3);
+		ListaActores.getListaActores().eliminarActor(actor2);
+		assertEquals(ListaActores.getListaActores().getTamano(),2);
+		ListaActores.getListaActores().eliminarActor(actor2);
+		assertEquals(ListaActores.getListaActores().getTamano(),2);
+		ListaActores.getListaActores().eliminarActor(actor3);
+		assertEquals(ListaActores.getListaActores().getTamano(),1);
+		ListaActores.getListaActores().eliminarActor(actor4);
+		assertEquals(ListaActores.getListaActores().getTamano(),0);
 	}
 
 	@Test
 	public void testBuscarActor() {
-		//TODO
+		ListaActores.getListaActores().anadirActor(actor1);
+		ListaActores.getListaActores().anadirActor(actor2);
+		ListaActores.getListaActores().anadirActor(actor3);
+		assertEquals(ListaActores.getListaActores().buscarActor(actor1),actor1);
+		assertEquals(ListaActores.getListaActores().buscarActor(actor2),actor2);
+		assertEquals(ListaActores.getListaActores().buscarActor(actor3),actor3);
+		assertNull(ListaActores.getListaActores().buscarActor(actor4));
+		
 	}
 
 }

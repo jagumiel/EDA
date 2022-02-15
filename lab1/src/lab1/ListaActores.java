@@ -5,13 +5,13 @@ import java.util.Iterator;
 
 public class ListaActores {
 	//Atributos
-	private static ListaActores milistadeactores;
+	private static ListaActores milistadeactores = new ListaActores();
 	private ArrayList<Actor> milista;
 	
 	
 	//Constructora
 	public ListaActores(){
-		milistadeactores= new ListaActores();
+		milista = new ArrayList<Actor>();
 	}
 	
 	
@@ -29,6 +29,11 @@ public class ListaActores {
 	}
 	
 	
+	public int getTamano(){
+		return getMilista().size();
+	}
+	
+	
 	//Otros Metodos
 	public boolean esta(Actor pActor){
 		return this.getMilista().contains(pActor);
@@ -36,7 +41,9 @@ public class ListaActores {
 	
 	public void anadirActor(Actor pActor){
 		if(esta(pActor)){
-			System.out.println("El actor ya se ncuentra en la lista");
+			System.out.println("El actor ya se encuentra en la lista");
+		}else if(pActor==null){
+			System.out.println("El actor introducido no es válido.");
 		}else{
 			getMilista().add(pActor);
 		}
@@ -74,5 +81,16 @@ public class ListaActores {
 	
 	public void ordenarLista(){
 		//TODO
+	}
+	
+	public void resetear(){
+		getListaActores().getMilista().clear();
+	}
+	
+	public void imprimir(){
+		Iterator<Actor> it = getListaActores().getIterador();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
 	}
 }

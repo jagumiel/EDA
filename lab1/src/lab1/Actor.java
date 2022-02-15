@@ -3,11 +3,13 @@ package lab1;
 public class Actor {
 	//Atributos
 	private String nombre;
+	private ListaPeliculas milistapeliculas;
 	
 	
 	//Constructora
 	public Actor(String pNombre){
 		this.nombre=pNombre;
+		this.milistapeliculas=new ListaPeliculas();
 	}
 	
 	
@@ -18,6 +20,10 @@ public class Actor {
 
 	public void setNombre(String pNombre) {
 		this.nombre = pNombre;
+	}
+	
+	public ListaPeliculas getMiListaPeliculas(){
+		return this.milistapeliculas;
 	}
 	
 	
@@ -33,4 +39,12 @@ public class Actor {
 			return false;
 		}
 	} 
+	
+	public void anadirPelicula(Pelicula pPelicula){
+		this.getMiListaPeliculas().anadirPelicula(pPelicula);
+	}
+	
+	public void eliminarPelicula(Pelicula pPelicula){
+		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
+	}
 }

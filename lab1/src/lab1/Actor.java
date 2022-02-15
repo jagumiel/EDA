@@ -14,7 +14,7 @@ public class Actor {
 	
 	
 	//Getters y Setters
-	private String getNombre() {
+	public String getNombre() {
 		return nombre;
 	}
 

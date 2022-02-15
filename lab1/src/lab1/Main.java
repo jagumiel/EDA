@@ -10,16 +10,28 @@ public class Main {
 		try{
 			 Scanner entrada = new Scanner(new FileReader(nomF));
 			 String linea;
+			 Actor ultimoactor = null;
+			 Pelicula aux = new Pelicula("Sin titulo");
 			 while (entrada.hasNext()) {
 				 linea = entrada.nextLine();
-				 if(linea!="\n"){
-					 
-					/* String[] division = linea.split("\t");
-					 Actor aaux = new Actor(division[0]);
-					 ListaActores.getListaActores().anadirActor(aaux);
-					 String[] division2 = division[2].split("\\(");
-					 Pelicula paux = new Pelicula(division2[0]);
-					 aaux.anadirPelicula(paux);*/
+				 if(!linea.equals("\n")){
+					 if(linea.substring(0,3).equals("\t\t\t")){
+						 if(ultimoactor!=null){
+							 String[] sintabuladores = linea.split("\t");
+							 String[] titulo = sintabuladores[3].split("\\(");
+							 aux.setTitulo(titulo[0]);
+							 ultimoactor.anadirPelicula(aux);
+						 }else{
+							 System.out.println("Ha ocurrido un error");
+						 }
+					 }else{
+						 String[] division = linea.split("\t");
+						 ultimoactor = new Actor(division[0]);
+						 ListaActores.getListaActores().anadirActor(ultimoactor);
+						 String[] titulo = division[2].split("\\(");
+						 aux.setTitulo(titulo[0]);
+						 ultimoactor.anadirPelicula(aux);
+					 }
 				 }
 			 }
 			 entrada.close();
@@ -28,5 +40,4 @@ public class Main {
 			e.printStackTrace();
 		}	
 	}
-
 }

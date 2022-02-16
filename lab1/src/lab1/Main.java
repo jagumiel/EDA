@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+	private static Main mimain = new Main();
+	
+	private Main(){	}
+	
+	public static Main getMain(){
+		return mimain;
+	}
 	
 	public void cargarFichero(String nomF){
 		try{

@@ -1,6 +1,7 @@
 package lab1;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ListaPeliculas {
 	//Atributos
@@ -16,6 +17,10 @@ public class ListaPeliculas {
 	//Getters y Setters
 	public ArrayList<Pelicula> getMiListaPeliculas(){
 		return milistapeliculas;
+	}
+	
+	private Iterator<Pelicula> getIterador(){
+		return this.milistapeliculas.iterator();
 	}
 	
 	//Otros Metodos
@@ -36,6 +41,13 @@ public class ListaPeliculas {
 			this.getMiListaPeliculas().remove(pPelicula);
 		}else{
 			System.out.println("La película no se encuentra en la lista");
+		}
+	}
+	
+	public void imprimirPeliculas(){
+		Iterator<Pelicula> it = this.getIterador();
+		while(it.hasNext()){
+			System.out.println(it.next().getTitulo());
 		}
 	}
 }

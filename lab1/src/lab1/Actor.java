@@ -47,4 +47,9 @@ public class Actor {
 	public void eliminarPelicula(Pelicula pPelicula){
 		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
 	}
+	
+	public void imprimirInformacion(){
+		System.out.println(this.getNombre());
+		this.getMiListaPeliculas().imprimirPeliculas();
+	}
 }

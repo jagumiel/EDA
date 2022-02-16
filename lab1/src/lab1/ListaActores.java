@@ -90,7 +90,8 @@ public class ListaActores {
 	public void imprimir(){
 		Iterator<Actor> it = getListaActores().getIterador();
 		while(it.hasNext()){
-			System.out.println(it.next());
+			it.next().imprimirInformacion();
+			System.out.println("\n\n");  //Imprime dos lineas vacías.
 		}
 	}
 }

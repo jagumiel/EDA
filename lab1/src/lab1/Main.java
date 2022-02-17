@@ -3,6 +3,8 @@ package lab1;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.File;
 
 public class Main {
 	private static Main mimain = new Main();
@@ -12,6 +14,8 @@ public class Main {
 	public static Main getMain(){
 		return mimain;
 	}
+	
+
 	
 	public void cargarFichero(String nomF){
 		try{

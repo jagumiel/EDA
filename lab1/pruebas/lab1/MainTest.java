@@ -18,7 +18,7 @@ public class MainTest {
 
 	@Test
 	public void testCargarFichero() {
-		Main.getMain().cargarFichero("actresses-small.txt");
+		Main.getMain().cargarFichero("C:actresses-small.txt"); //TODO Corregir, da error C:actresses-small.txt (El sistema no puede encontrar el archivo especificado)
 		ListaActores.getListaActores().imprimir();
 	}
 

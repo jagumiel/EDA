@@ -30,7 +30,7 @@ public class Actor {
 	//Otros Metodos
 	public boolean tieneElMismoNombre(Actor pActor){
 		try{
-			if(pActor.getNombre()==this.getNombre()){
+			if(pActor.getNombre().equals(this.getNombre())){
 				return true;
 			}else
 				return false;

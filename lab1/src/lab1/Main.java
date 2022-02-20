@@ -1,10 +1,10 @@
 package lab1;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+//import java.io.File;
 
 public class Main {
 	private static Main mimain = new Main();
@@ -15,23 +15,34 @@ public class Main {
 		return mimain;
 	}
 	
-
-	
-	public void cargarFichero(String nomF){
+	public void cargarFichero(File nomF){
 		try{
-			 Scanner entrada = new Scanner(new FileReader(nomF));
+			 FileReader fr = new FileReader(nomF);
+			 BufferedReader br = new BufferedReader(fr);
 			 String linea;
 			 Actor ultimoactor = null;
+			 int i=1;
 			 Pelicula aux = new Pelicula("Sin titulo");
-			 while (entrada.hasNext()) {
-				 linea = entrada.nextLine();
-				 if(!linea.equals("\n")){
+			 while ((linea=br.readLine())!=null) {
+				 System.out.println("["+i+"]"+linea);
+				 i++;
+				 //TODO que funcione el puto .substring(0,3)
+				 
+				 
+				 /*if(!(linea.length()==0)){
 					 if(linea.substring(0,3).equals("\t\t\t")){
 						 if(ultimoactor!=null){
 							 String[] sintabuladores = linea.split("\t");
-							 String[] titulo = sintabuladores[3].split("\\(");
+							 String[] titulo = sintabuladores[3].split(" *[(]+\\d+[)]");
+							 titulo[0].replaceAll("[\"]","");
 							 aux.setTitulo(titulo[0]);
-							 ultimoactor.anadirPelicula(aux);
+							 if(ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+								 ultimoactor.anadirPelicula(aux);
+							 }else{
+								 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
+								 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
+								 ultimoactor.anadirPelicula(aux);
+							 }
 						 }else{
 							 System.out.println("Ha ocurrido un error");
 						 }
@@ -43,9 +54,8 @@ public class Main {
 						 aux.setTitulo(titulo[0]);
 						 ultimoactor.anadirPelicula(aux);
 					 }
-				 }
+				 }*/
 			 }
-			 entrada.close();
 		}
 		catch(IOException e) {
 			e.printStackTrace();

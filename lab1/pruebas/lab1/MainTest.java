@@ -2,6 +2,10 @@ package lab1;
 
 //import static org.junit.Assert.*;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +22,18 @@ public class MainTest {
 
 	@Test
 	public void testCargarFichero() {
-		Main.getMain().cargarFichero("C:actresses-small.txt"); //TODO Corregir, da error C:actresses-small.txt (El sistema no puede encontrar el archivo especificado)
-		ListaActores.getListaActores().imprimir();
+		JFileChooser fc = new JFileChooser();
+		fc.setCurrentDirectory(new File("."));
+		fc.setDialogTitle("Elige un fichero");
+		fc.setAcceptAllFileFilterUsed(false);
+		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			System.out.println("Directorio: " + fc.getSelectedFile());
+			Main.getMain().cargarFichero(fc.getSelectedFile()); //TODO conseguir que el metodo cargarFichero() acepte el archivo
+			ListaActores.getListaActores().imprimir();
+		} else {
+			System.out.println("No seleccion ");
+		}
 	}
 
 }
+

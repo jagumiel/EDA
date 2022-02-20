@@ -6,7 +6,6 @@ import java.util.Iterator;
 public class ListaActores {
 	//Atributos
 	private static ListaActores milistadeactores = new ListaActores();
-	private static int[] array;
 	private ArrayList<Actor> milista;
 	
 	
@@ -80,44 +79,9 @@ public class ListaActores {
 		return retorno;
 	}
 	
-	/*public void ordenarLista(){
-		//Por hacer
-	}*/
-	
-	public static void ordenacionPorMezcla(Actor[] array) {
-	/*	if(array.length < 2) { //cambiar array por la lista de actores. Lo he hecho abajo
-			// Si el array es menor que dos, ya esta ordenado.
-			return;
-		}*/
-		if (milistadeactores.getTamano()<2){
-			return;
-		}
-		int cont = 1;
-		// inicioI - comienzo del indice del sub-array de la izquierda
-		// inicioJ - comienzo del indice del sub-array de la derecha
-		int inicioI, inicioJ;
-
-		while(cont < array.length) {
-			inicioI = 0;
-			inicioJ = cont;
-			while(inicioJ + cont <= array.length) {
-				mezclarSubArrays(milistadeactores.milista, inicioI, inicioI + cont, inicioJ, inicioJ + cont);
-				inicioI = inicioJ + cont;
-				inicioJ = inicioI + cont;
-			}
-			if(inicioJ < array.length) {
-				mezclarSubArrays(milistadeactores.milista, inicioI, inicioI + cont, inicioJ, array.length);
-			}
-			cont = cont*2;
-		}
-	}
-	
-	
-	public static void mezclarSubArrays(ArrayList<Actor> milista, int inicioI, int pararI, int inicioJ, int pararJ) {
+	public void ordenarLista(){
 		//TODO
-
 	}
-
 	
 	public void resetear(){
 		getListaActores().getMilista().clear();

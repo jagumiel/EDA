@@ -3,8 +3,13 @@ package lab1;
 public class PruebaSplit {
 	
 	public static void main(String args[]){
-		String linea = "			Mondo (1995)  [The Magician's Friend]  <5>";
-		Actor ultimoactor = new Actor("olete,Man");
+		String linea = "";
+		if(linea.length()==0){
+			System.out.println("Linea vacia");
+		}else{
+			System.out.println("Linea no vacia");
+		}
+		/*Actor ultimoactor = new Actor("olete,Man");
 		Pelicula aux = new Pelicula("Sin titulo");
 		 if(!linea.equals("\n")){
 			 if((linea.substring(0,3).equals("\t\t\t"))&&(ultimoactor!=null)){
@@ -24,7 +29,7 @@ public class PruebaSplit {
 				 ultimoactor.anadirPelicula(aux);
 				 System.out.println("Titulo: "+aux.getTitulo());
 			 }
-		 }
+		 }*/
 	}
 
 }

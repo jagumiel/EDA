@@ -22,43 +22,60 @@ public class Main {
 			 String linea;
 			 Actor ultimoactor = null;
 			 int i=1;
-			 Pelicula aux = new Pelicula("Sin titulo");
+			 Pelicula aux = null;
+			 boolean todobien = true;
+			 int ayuda = 0;
 			 while ((linea=br.readLine())!=null) {
 				 System.out.println("["+i+"]"+linea);
 				 i++;
-				 //TODO que funcione el puto .substring(0,3)
+				 ayuda=0;
 				 
-				 
-				 /*if(!(linea.length()==0)){
-					 if(linea.substring(0,3).equals("\t\t\t")){
-						 if(ultimoactor!=null){
-							 String[] sintabuladores = linea.split("\t");
-							 String[] titulo = sintabuladores[3].split(" *[(]+\\d+[)]");
-							 titulo[0].replaceAll("[\"]","");
-							 aux.setTitulo(titulo[0]);
-							 if(ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
-								 ultimoactor.anadirPelicula(aux);
+				 do{
+					 try{
+						 todobien=true;
+						 if(!(linea.length()==0)){
+							 if(linea.substring(0,3).equals("\t\t\t")){
+								 if(ultimoactor!=null){
+									 String[] sintabuladores = linea.split("\t");
+									 String[] titulo = sintabuladores[3].split(" *[(]+\\d+[)]");
+									 titulo[0].replaceAll("[\"]","");
+									 aux = new Pelicula(titulo[0]);
+									 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+										 ultimoactor.anadirPelicula(aux);
+									 }else{
+										 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
+										 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
+										 ultimoactor.anadirPelicula(aux);
+									 }
+								 }else{
+									 System.out.println("Ha ocurrido un error");
+								 }
 							 }else{
-								 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
-								 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
-								 ultimoactor.anadirPelicula(aux);
+								 String[] division = linea.split("\t");
+								 ultimoactor = new Actor(division[0]);
+								 ListaActores.getListaActores().anadirActor(ultimoactor);
+								 String[] titulo = division[2-ayuda].split("\\(");
+								 aux = new Pelicula(titulo[0]);
+								 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+									 ultimoactor.anadirPelicula(new Pelicula(titulo[0]));
+								 }else{
+									 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
+									 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
+									 ultimoactor.anadirPelicula(aux);
+								 }
 							 }
-						 }else{
-							 System.out.println("Ha ocurrido un error");
 						 }
-					 }else{
-						 String[] division = linea.split("\t");
-						 ultimoactor = new Actor(division[0]);
-						 ListaActores.getListaActores().anadirActor(ultimoactor);
-						 String[] titulo = division[2].split("\\(");
-						 aux.setTitulo(titulo[0]);
-						 ultimoactor.anadirPelicula(aux);
+					 }catch(ArrayIndexOutOfBoundsException ae){
+							//A veces en vez de salir actriz\t\tpelicula solo hay un \t. Lo solucionamos aqui:
+							todobien=false;
+							ayuda=1;
+							ListaActores.getListaActores().eliminarActor(ultimoactor); //Para evitar duplicados
 					 }
-				 }*/
+				 }while(!todobien);
 			 }
 		}
 		catch(IOException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 }

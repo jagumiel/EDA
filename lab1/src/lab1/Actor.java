@@ -49,7 +49,7 @@ public class Actor {
 	}
 	
 	public void imprimirInformacion(){
-		System.out.println(this.getNombre());
+		System.out.println("Nombre: "+this.getNombre());
 		this.getMiListaPeliculas().imprimirPeliculas();
 	}
 }

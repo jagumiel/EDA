@@ -47,7 +47,7 @@ public class ListaPeliculas {
 	public void imprimirPeliculas(){
 		Iterator<Pelicula> it = this.getIterador();
 		while(it.hasNext()){
-			System.out.println(it.next().getTitulo());
+			System.out.println("->"+it.next().getTitulo());
 		}
 	}
 }

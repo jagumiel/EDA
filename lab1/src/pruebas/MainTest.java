@@ -1,10 +1,13 @@
-package lab1;
+package pruebas;
 
 //import static org.junit.Assert.*;
 
 import java.io.File;
 
 import javax.swing.JFileChooser;
+
+import lab1.ListaActores;
+import lab1.Main;
 
 import org.junit.After;
 import org.junit.Before;

@@ -39,14 +39,7 @@ public class Main {
 									 String[] sintabuladores = linea.split("\t");
 									 String[] titulo = sintabuladores[3].split(" *[(]+\\d+[)]");
 									 titulo[0].replaceAll("[\"]","");
-									 aux = new Pelicula(titulo[0]);
-									 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
-										 ultimoactor.anadirPelicula(aux);
-									 }else{
-										 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
-										 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
-										 ultimoactor.anadirPelicula(aux);
-									 }
+									 ultimoactor.anadirPelicula(titulo[0]);
 								 }else{
 									 System.out.println("Ha ocurrido un error");
 								 }
@@ -55,14 +48,7 @@ public class Main {
 								 ultimoactor = new Actor(division[0]);
 								 ListaActores.getListaActores().anadirActor(ultimoactor);
 								 String[] titulo = division[2-ayuda].split("\\(");
-								 aux = new Pelicula(titulo[0]);
-								 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
-									 ultimoactor.anadirPelicula(new Pelicula(titulo[0]));
-								 }else{
-									 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(titulo[0]);
-									 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
-									 ultimoactor.anadirPelicula(aux);
-								 }
+								 ultimoactor.anadirPelicula(titulo[0]);
 							 }
 						 }
 					 }catch(ArrayIndexOutOfBoundsException ae){

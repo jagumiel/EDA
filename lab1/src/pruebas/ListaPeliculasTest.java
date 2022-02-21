@@ -1,6 +1,8 @@
-package lab1;
+package pruebas;
 
 import static org.junit.Assert.*;
+import lab1.ListaPeliculas;
+import lab1.Pelicula;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,22 +38,22 @@ public class ListaPeliculasTest {
 		assertFalse(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
 		assertFalse(lp.estaPelicula(p4));
-		lp.anadirPelicula(p1);
+		lp.anadirPelicula(p1.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertFalse(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
 		assertFalse(lp.estaPelicula(p4));
-		lp.anadirPelicula(p2);
+		lp.anadirPelicula(p2.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
 		assertFalse(lp.estaPelicula(p4));
-		lp.anadirPelicula(p3);
+		lp.anadirPelicula(p3.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertTrue(lp.estaPelicula(p3));
 		assertFalse(lp.estaPelicula(p4));
-		lp.anadirPelicula(p4);
+		lp.anadirPelicula(p4.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertTrue(lp.estaPelicula(p3));
@@ -60,9 +62,9 @@ public class ListaPeliculasTest {
 	
 	@Test
 	public void testEliminarPelicula()  {
-		lp.anadirPelicula(p1);
-		lp.anadirPelicula(p2);
-		lp.anadirPelicula(p3);
+		lp.anadirPelicula(p1.getTitulo());
+		lp.anadirPelicula(p2.getTitulo());
+		lp.anadirPelicula(p3.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertTrue(lp.estaPelicula(p3));

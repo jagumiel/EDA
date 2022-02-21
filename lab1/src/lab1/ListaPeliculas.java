@@ -28,12 +28,14 @@ public class ListaPeliculas {
 		return this.getMiListaPeliculas().contains(pPelicula);
 	}
 	
-	public void anadirPelicula(Pelicula pPelicula){
-		if(pPelicula!=null){
-			this.getMiListaPeliculas().add(pPelicula);
-		}else{
-			System.out.println("No se puede añadir la pelicula");
-		}
+	public void anadirPelicula(String pTitulo){
+		 Pelicula aux = new Pelicula(pTitulo);
+		 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+			 this.getMiListaPeliculas().add(aux);
+		 }else{
+			 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
+			 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux); 
+		 }	 
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){

@@ -1,6 +1,8 @@
-package lab1;
+package pruebas;
 
 import static org.junit.Assert.*;
+import lab1.Actor;
+import lab1.Pelicula;
 
 import org.junit.After;
 import org.junit.Before;
@@ -53,15 +55,15 @@ public class ActorTest {
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p1));
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p2));
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p3));
-		actor1.anadirPelicula(p1);
+		actor1.anadirPelicula(p1.getTitulo());
 		assertTrue(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p1));
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p2));
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p3));
-		actor2.anadirPelicula(p2);
+		actor2.anadirPelicula(p2.getTitulo());
 		assertFalse(actor2.getMiListaPeliculas().getMiListaPeliculas().contains(p1));
 		assertTrue(actor2.getMiListaPeliculas().getMiListaPeliculas().contains(p2));
 		assertFalse(actor2.getMiListaPeliculas().getMiListaPeliculas().contains(p3));
-		actor3.anadirPelicula(p3);
+		actor3.anadirPelicula(p3.getTitulo());
 		assertFalse(actor3.getMiListaPeliculas().getMiListaPeliculas().contains(p1));
 		assertFalse(actor3.getMiListaPeliculas().getMiListaPeliculas().contains(p2));
 		assertFalse(actor3.getMiListaPeliculas().getMiListaPeliculas().contains(p3));
@@ -69,8 +71,8 @@ public class ActorTest {
 	
 	@Test
 	public void testEliminarPelicula()  {
-		actor1.anadirPelicula(p1);
-		actor1.anadirPelicula(p2);
+		actor1.anadirPelicula(p1.getTitulo());
+		actor1.anadirPelicula(p2.getTitulo());
 		assertTrue(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p1));
 		assertTrue(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p2));
 		assertFalse(actor1.getMiListaPeliculas().getMiListaPeliculas().contains(p3));

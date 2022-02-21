@@ -1,6 +1,8 @@
-package lab1;
+package pruebas;
 
 import static org.junit.Assert.*;
+import lab1.Actor;
+import lab1.ListaActores;
 
 import org.junit.After;
 import org.junit.Before;

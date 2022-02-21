@@ -40,8 +40,8 @@ public class Actor {
 		}
 	} 
 	
-	public void anadirPelicula(Pelicula pPelicula){
-		this.getMiListaPeliculas().anadirPelicula(pPelicula);
+	public void anadirPelicula(String pTitulo){
+		this.getMiListaPeliculas().anadirPelicula(pTitulo);
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){

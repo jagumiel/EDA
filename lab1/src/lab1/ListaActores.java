@@ -25,7 +25,7 @@ public class ListaActores {
 		return this.milista;
 	}
 	
-	private Iterator<Actor> getIterador(){
+	public Iterator<Actor> getIterador(){
 		return this.getMilista().iterator();
 	}
 	

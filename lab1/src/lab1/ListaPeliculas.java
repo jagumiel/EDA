@@ -19,7 +19,7 @@ public class ListaPeliculas {
 		return milistapeliculas;
 	}
 	
-	private Iterator<Pelicula> getIterador(){
+	public Iterator<Pelicula> getIterador(){
 		return this.milistapeliculas.iterator();
 	}
 	
@@ -34,7 +34,7 @@ public class ListaPeliculas {
 			 this.getMiListaPeliculas().add(aux);
 		 }else{
 			 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
-			 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux); 
+			 this.getMiListaPeliculas().add(aux);
 		 }	 
 	}
 	

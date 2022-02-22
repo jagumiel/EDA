@@ -1,10 +1,7 @@
 package lab1;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-//import java.io.File;
+import java.io.*;  //Importo el Paquete Entero
+import java.util.Iterator;
 
 public class Main {
 	private static Main mimain = new Main();
@@ -22,7 +19,6 @@ public class Main {
 			 String linea;
 			 Actor ultimoactor = null;
 			 int i=1;
-			 Pelicula aux = null;
 			 boolean todobien = true;
 			 int ayuda = 0;
 			 while ((linea=br.readLine())!=null) {
@@ -63,5 +59,44 @@ public class Main {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	public void guardarFichero(){
+		FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("c:/actrices.txt");
+            pw = new PrintWriter(fichero);
+            Actor auxAct;
+            Pelicula auxPel;
+            
+            Iterator<Actor> itrAct = ListaActores.getListaActores().getIterador();
+            Iterator<Pelicula> itrPel; 
+            
+            while(itrAct.hasNext()){
+            	auxAct = itrAct.next();
+            	pw.println(auxAct.getNombre());
+            	itrPel = auxAct.getMiListaPeliculas().getIterador();
+            	while(itrPel.hasNext()){
+            		auxPel=itrPel.next();
+            		pw.println("--> "+auxPel.getTitulo());
+            	}
+            }
+ 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (Exception e2) {
+              e2.printStackTrace();
+           }
+        }
 	}
 }

@@ -32,7 +32,7 @@ public class MainTest {
 		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			System.out.println("Directorio: " + fc.getSelectedFile());
 			Main.getMain().cargarFichero(fc.getSelectedFile()); //TODO conseguir que el metodo cargarFichero() acepte el archivo
-			ListaActores.getListaActores().imprimir();
+			Main.getMain().guardarFichero();
 		} else {
 			System.out.println("No seleccion ");
 		}

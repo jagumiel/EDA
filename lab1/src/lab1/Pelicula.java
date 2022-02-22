@@ -19,4 +19,21 @@ public class Pelicula {
 	public void setTitulo(String pTitulo){
 		this.titulo=pTitulo;
 	}
-}
+	
+	public boolean tieneElMismoTitulo(Pelicula pPelicula){
+		try{
+			if(pPelicula.getTitulo().equals(this.getTitulo())){
+				return true;
+			}else
+				return false;
+		}
+		catch (Exception e){
+			return false;
+		}
+	}	
+	
+	public boolean equals(Pelicula pPelicula){
+		return this.tieneElMismoTitulo(pPelicula);
+	}
+} 
+

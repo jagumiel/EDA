@@ -52,4 +52,8 @@ public class Actor {
 		System.out.println("Nombre: "+this.getNombre());
 		this.getMiListaPeliculas().imprimirPeliculas();
 	}
+	
+	public boolean equals(Actor pActor){
+		return this.tieneElMismoNombre(pActor);
+	}
 }

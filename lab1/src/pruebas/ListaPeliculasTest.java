@@ -1,8 +1,6 @@
-package pruebas;
+package probandohashmaps;
 
 import static org.junit.Assert.*;
-import lab1.ListaPeliculas;
-import lab1.Pelicula;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,27 +35,22 @@ public class ListaPeliculasTest {
 		assertFalse(lp.estaPelicula(p1));
 		assertFalse(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
 		lp.anadirPelicula(p1.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertFalse(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
 		lp.anadirPelicula(p2.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
 		lp.anadirPelicula(p3.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertTrue(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
-		lp.anadirPelicula(p4.getTitulo());
 		assertTrue(lp.estaPelicula(p1));
 		assertTrue(lp.estaPelicula(p2));
 		assertTrue(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
+		//Es imposible pasarle null a este método
 	}
 	
 	@Test
@@ -80,6 +73,18 @@ public class ListaPeliculasTest {
 		assertFalse(lp.estaPelicula(p1));
 		assertFalse(lp.estaPelicula(p2));
 		assertFalse(lp.estaPelicula(p3));
+		//Como es imposible añadir una pelicula=null al método anterior, a este también
+	}
+	
+	
+	@Test
+	public void testEstaPelicula(){
+		lp.anadirPelicula(p1.getTitulo());
+		lp.anadirPelicula(p2.getTitulo());
+		assertTrue(lp.estaPelicula(p1));
+		assertTrue(lp.estaPelicula(p2));
+		assertFalse(lp.estaPelicula(p3));
+		assertFalse(lp.estaPelicula(p4));
 	}
 
 }

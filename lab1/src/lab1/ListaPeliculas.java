@@ -1,55 +1,67 @@
 package lab1;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class ListaPeliculas {
 	//Atributos
-	private ArrayList<Pelicula> milistapeliculas;
-	
+	private HashMap<String, Pelicula> miLista;
 	
 	//Constructora
 	public ListaPeliculas(){
-		milistapeliculas = new ArrayList<Pelicula>();
+		this.miLista = new HashMap<String, Pelicula>();
 	}
 	
 	
-	//Getters y Setters
-	public ArrayList<Pelicula> getMiListaPeliculas(){
-		return milistapeliculas;
+	//Getter y Setters
+	public HashMap<String, Pelicula> getMiListaPeliculas(){
+		return this.miLista;
 	}
 	
-	public Iterator<Pelicula> getIterador(){
-		return this.milistapeliculas.iterator();
+	public Iterator<String> getIterador(){
+		return this.getMiListaPeliculas().keySet().iterator();  //Esto crea un iterador de keys o llaves
+													   //en nuestro caso titulos de peliculas.
 	}
+	
 	
 	//Otros Metodos
 	public boolean estaPelicula(Pelicula pPelicula){
-		return this.getMiListaPeliculas().contains(pPelicula);
+		try{
+			return this.getMiListaPeliculas().containsKey(pPelicula.getTitulo());
+		}catch(NullPointerException e){
+			System.out.println("Estas tratando de añadir o eliminar una película no válida");
+			return false;
+		}
 	}
 	
 	public void anadirPelicula(String pTitulo){
 		 Pelicula aux = new Pelicula(pTitulo);
-		 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
-			 this.getMiListaPeliculas().add(aux);
-		 }else{
-			 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
-			 this.getMiListaPeliculas().add(aux);
-		 }	 
+		 if(pTitulo!=null){
+			 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+				 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
+				 this.getMiListaPeliculas().put(pTitulo,new Pelicula(pTitulo)); 
+			 }else{
+				 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
+				 this.getMiListaPeliculas().put(pTitulo,new Pelicula(pTitulo));
+			 } 
+		}
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){
-		if(estaPelicula(pPelicula)){
-			this.getMiListaPeliculas().remove(pPelicula);
-		}else{
-			System.out.println("La película no se encuentra en la lista");
+		if(pPelicula!=null){
+			if(estaPelicula(pPelicula)){
+				this.getMiListaPeliculas().remove(pPelicula.getTitulo());
+			}else{
+				System.out.println("La película no se encuentra en la lista");
+			}
+		}	
+	}	
+	
+	public void imprimirPeliculas(){
+		Iterator<String> it = this.getIterador();
+		while(it.hasNext()){
+			System.out.println("->"+it.next());
 		}
 	}
 	
-	public void imprimirPeliculas(){
-		Iterator<Pelicula> it = this.getIterador();
-		while(it.hasNext()){
-			System.out.println("->"+it.next().getTitulo());
-		}
-	}
 }

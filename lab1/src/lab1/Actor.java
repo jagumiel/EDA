@@ -1,15 +1,16 @@
 package lab1;
 
+
 public class Actor {
 	//Atributos
 	private String nombre;
-	private ListaPeliculas milistapeliculas;
+	private ListaPeliculas miListaPeliculas;
 	
 	
 	//Constructora
 	public Actor(String pNombre){
 		this.nombre=pNombre;
-		this.milistapeliculas=new ListaPeliculas();
+		this.miListaPeliculas = new ListaPeliculas();
 	}
 	
 	
@@ -23,7 +24,7 @@ public class Actor {
 	}
 	
 	public ListaPeliculas getMiListaPeliculas(){
-		return this.milistapeliculas;
+		return this.miListaPeliculas;
 	}
 	
 	

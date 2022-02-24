@@ -1,43 +1,60 @@
 package lab1;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class ListaPeliculasPrincipal {
 	//Atributos
-	private static ListaPeliculasPrincipal milistaprincipaldepeliculas = new ListaPeliculasPrincipal();
-	private ArrayList<Pelicula> lista;
+	private static ListaPeliculasPrincipal miListaPrincipalDePeliculas = new ListaPeliculasPrincipal();
+	private HashMap<String, Pelicula> lista;
 	
+
 	
 	//Constructora
 	private ListaPeliculasPrincipal(){
-		this.lista = new ArrayList<Pelicula>();
+		this.lista = new HashMap<String, Pelicula>();
 	}
 	
 	
 	//Getters y Setters
 	public static ListaPeliculasPrincipal getListaPeliculasPrincipal(){
-		return milistaprincipaldepeliculas;
+		return miListaPrincipalDePeliculas;
 	}
 	
 	
-	private ArrayList<Pelicula> getLista(){
+	private HashMap<String, Pelicula> getLista(){
 		return this.lista;
 	}
 	
-	private Iterator<Pelicula> getIterador(){
-		return this.getLista().iterator();
+	private Iterator<String> getIterador(){
+		return this.getLista().keySet().iterator();
 	}
+	
 	
 	
 	//Otros Metodos
 	public boolean estaPelicula(Pelicula pPelicula){
-		return this.getLista().contains(pPelicula);
-	}
+		if (this.getLista().containsKey(pPelicula))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	} //TODO Revisar
+	
+	
+	
+
 	
 	public void anadirPelicula(Pelicula pPelicula){
 		if((pPelicula!=null)&&(!estaPelicula(pPelicula))){
-			this.getLista().add(pPelicula);
+			//this.getLista().add(pPelicula);
+			String pTitulo=pPelicula.getTitulo();
+			this.getLista().put(pTitulo,new Pelicula(pPelicula.getTitulo()));
 		}else{
 			System.out.println("la pelicula introducida no es valida.");
 		}
@@ -59,6 +76,8 @@ public class ListaPeliculasPrincipal {
 	}*/
 
 	//En el caso de que funcione se aplica tambien al resto de listas.
+	
+	
 	public void anadirPeliculaOrdenada(Pelicula pPelicula) 
 	{
 		if((pPelicula!=null)&&(!estaPelicula(pPelicula)))
@@ -106,6 +125,12 @@ public class ListaPeliculasPrincipal {
 		}
 	}
 	
+	public void ordenarHashMap(ListaPeliculas listaPeliculasPrincipal)
+	{
+		Collections.sort(this.getLista(),new ListaPeliculasPrincipal());
+	}
+	
+	
 	public void desplazarDerecha(int i, int longitud)
 	{
 		Pelicula aux;
@@ -114,6 +139,7 @@ public class ListaPeliculasPrincipal {
 		{
 			aux=this.getLista().get(i);
 			aux2=this.getLista().get(i+1);
+			this.getLista().
 			this.getLista().add(i+1, aux);
 			i=i+1;
 			aux=this.getLista().get(i);

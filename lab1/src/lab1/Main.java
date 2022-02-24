@@ -4,28 +4,32 @@ import java.io.*;  //Importo el Paquete Entero
 import java.util.Iterator;
 
 public class Main {
+	//Atributos
 	private static Main mimain = new Main();
 	
+	
+	//Constructora
 	private Main(){	}
 	
+	
+	//Getters y Setters
 	public static Main getMain(){
 		return mimain;
 	}
 	
+	
+	//Otros Métodos
 	public void cargarFichero(File nomF){
 		try{
 			 FileReader fr = new FileReader(nomF);
 			 BufferedReader br = new BufferedReader(fr);
 			 String linea;
 			 Actor ultimoactor = null;
-			 int i=1;
 			 boolean todobien = true;
 			 int ayuda = 0;
 			 while ((linea=br.readLine())!=null) {
-				 System.out.println("["+i+"]"+linea);
-				 i++;
 				 ayuda=0;
-				 
+
 				 do{
 					 try{
 						 todobien=true;
@@ -55,12 +59,10 @@ public class Main {
 					 }
 				 }while(!todobien);
 			 }
-		}
-		catch(IOException e) {
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 	public void guardarFichero(){
@@ -70,19 +72,18 @@ public class Main {
         {
             fichero = new FileWriter("c:/actrices.txt");
             pw = new PrintWriter(fichero);
-            Actor auxAct;
-            Pelicula auxPel;
+            String auxAct, auxPel;
             
-            Iterator<Actor> itrAct = ListaActores.getListaActores().getIterador();
-            Iterator<Pelicula> itrPel; 
+            Iterator<String> itrAct = ListaActores.getListaActores().getIterador();
+            Iterator<String> itrPel; 
             
             while(itrAct.hasNext()){
             	auxAct = itrAct.next();
-            	pw.println(auxAct.getNombre());
-            	itrPel = auxAct.getMiListaPeliculas().getIterador();
+            	pw.println(auxAct);
+            	itrPel = ListaActores.getListaActores().getMilista().get(itrAct).getMiListaPeliculas().getIterador();
             	while(itrPel.hasNext()){
             		auxPel=itrPel.next();
-            		pw.println("--> "+auxPel.getTitulo());
+            		pw.println("--> "+auxPel);
             	}
             }
  
@@ -99,4 +100,5 @@ public class Main {
            }
         }
 	}
+	
 }

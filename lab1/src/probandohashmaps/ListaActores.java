@@ -31,16 +31,14 @@ public class ListaActores {
 	
 	
 	//Otros Metodos
-		public boolean esta(Actor pActor){
-			return this.getMilista().containsKey(pActor.getNombre());
+		public boolean esta(String pNombre){
+			return this.getMilista().containsKey(pNombre);
 		}
 		
 		public void anadirActor(Actor pActor){
 			try{
-				if(esta(pActor)){
+				if(esta(pActor.getNombre())){
 					System.out.println("El actor ya se encuentra en la lista");
-				}else if(pActor==null){
-					System.out.println("El actor introducido no es válido.");
 				}else{
 					getMilista().put(pActor.getNombre(), pActor);
 				}
@@ -51,7 +49,7 @@ public class ListaActores {
 		
 	public void eliminarActor(Actor pActor){
 		try{
-			if(esta(pActor)){
+			if(esta(pActor.getNombre())){
 				getMilista().remove(pActor);
 			}else{
 				System.out.println("El actor no se encuentra en la lista");
@@ -63,7 +61,7 @@ public class ListaActores {
 	
 	public Actor buscarActor(Actor pActor){
 		try{
-			if(esta(pActor)){
+			if(esta(pActor.getNombre())){
 				return this.getMilista().get(pActor);
 			}else{
 				return null;

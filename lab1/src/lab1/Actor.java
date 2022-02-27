@@ -4,13 +4,13 @@ package lab1;
 public class Actor {
 	//Atributos
 	private String nombre;
-	private ListaPeliculas miListaPeliculas;
+	private ListaPeliculas milistapeliculas;
 	
 	
 	//Constructora
 	public Actor(String pNombre){
 		this.nombre=pNombre;
-		this.miListaPeliculas = new ListaPeliculas();
+		this.milistapeliculas = new ListaPeliculas();
 	}
 	
 	
@@ -24,7 +24,7 @@ public class Actor {
 	}
 	
 	public ListaPeliculas getMiListaPeliculas(){
-		return this.miListaPeliculas;
+		return this.milistapeliculas;
 	}
 	
 	

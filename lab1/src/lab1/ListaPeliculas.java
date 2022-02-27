@@ -5,17 +5,17 @@ import java.util.Iterator;
 
 public class ListaPeliculas {
 	//Atributos
-	private HashMap<String, Pelicula> miLista;
+	private HashMap<String, Pelicula> milista;
 	
 	//Constructora
 	public ListaPeliculas(){
-		this.miLista = new HashMap<String, Pelicula>();
+		this.milista = new HashMap<String, Pelicula>();
 	}
 	
 	
 	//Getter y Setters
 	public HashMap<String, Pelicula> getMiListaPeliculas(){
-		return this.miLista;
+		return this.milista;
 	}
 	
 	public Iterator<String> getIterador(){
@@ -29,20 +29,21 @@ public class ListaPeliculas {
 		try{
 			return this.getMiListaPeliculas().containsKey(pPelicula.getTitulo());
 		}catch(NullPointerException e){
-			System.out.println("Estas tratando de añadir o eliminar una película no válida");
+			System.out.println("Estás tratando de añadir o eliminar una película no válida");
 			return false;
 		}
 	}
 	
 	public void anadirPelicula(String pTitulo){
-		 Pelicula aux = new Pelicula(pTitulo);
+		Pelicula aux;
 		 if(pTitulo!=null){
-			 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(aux)){
+			 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(pTitulo)){
+				 aux = new Pelicula(pTitulo);
 				 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
-				 this.getMiListaPeliculas().put(pTitulo,new Pelicula(pTitulo)); 
+				 this.getMiListaPeliculas().put(pTitulo,aux); 
 			 }else{
 				 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
-				 this.getMiListaPeliculas().put(pTitulo,new Pelicula(pTitulo));
+				 this.getMiListaPeliculas().put(pTitulo,aux);
 			 } 
 		}
 	}

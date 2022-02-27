@@ -1,4 +1,4 @@
-package probandohashmaps;
+package lab1;
 
 public class StopWatch {
 	

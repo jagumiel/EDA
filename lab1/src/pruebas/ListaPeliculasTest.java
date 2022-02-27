@@ -1,6 +1,8 @@
 package pruebas;
 
 import static org.junit.Assert.*;
+import lab1.ListaPeliculas;
+import lab1.Pelicula;
 
 import org.junit.After;
 import org.junit.Before;

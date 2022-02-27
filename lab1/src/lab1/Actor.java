@@ -1,7 +1,8 @@
 package lab1;
 
 
-public class Actor {
+
+public class Actor implements Comparable<Actor>{
 	//Atributos
 	private String nombre;
 	private ListaPeliculas milistapeliculas;
@@ -56,5 +57,12 @@ public class Actor {
 	
 	public boolean equals(Actor pActor){
 		return this.tieneElMismoNombre(pActor);
+	}
+
+
+	@Override
+	public int compareTo(Actor o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

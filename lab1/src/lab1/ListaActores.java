@@ -1,7 +1,9 @@
 package lab1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class ListaActores {
@@ -87,4 +89,63 @@ public class ListaActores {
 			System.out.println("\n\n");  //Imprime dos lineas vacías.
 		}
 	}
+	
+	public void convertirHashArray(){
+		List<Actor> miArrayDeActores = new ArrayList<Actor>(milista.values());
+	}
+	
+	//Algoritmos de Ordenaci—n
+	public void mergeSort(Actor[] laTabla){
+		mergeSort(laTabla, 0, laTabla.length-1);
+	}
+	
+	
+	private void mergeSort (Actor[] miArrayDeActores, int inicio, int fin){
+		if( inicio < fin ) {
+	// hay m‡s de un elemento en la tabla
+			mergeSort(miArrayDeActores, inicio, (inicio+fin)/2);
+			mergeSort(miArrayDeActores, ((inicio+fin)/2)+1, fin);
+			mezcla(miArrayDeActores, inicio, (inicio+fin)/2, fin);
+		}
+	}
+	
+	
+	private void mezcla (Actor[] miArrayDeActores, int	i, int centro, int f){
+		Actor[] laMezcla = (Actor[])(new Comparable [f-i+1]);
+		int izq = i;
+		int der = centro+1;
+		int k = 0;
+		//indice para rellenar laMezcla
+		while (izq<=centro && der<=f ){
+			if (miArrayDeActores[izq].compareTo(miArrayDeActores[der])<= 0){
+				laMezcla[k] = miArrayDeActores[izq];
+				k++;
+				izq++;
+				}
+			else
+				{
+				laMezcla[k] = miArrayDeActores[der];
+				k++;
+				der++;
+				}
+		}
+		if (izq > centro){
+			while(der<=f ){
+				laMezcla[k] = miArrayDeActores[der];
+				k++;
+				der++;
+				}
+		}
+		else{
+			while(izq<=centro ){
+				laMezcla[k] = miArrayDeActores[izq];
+				k++;
+				izq++;
+			}
+		}
+		for(int j=i; j<=f; j++)
+			miArrayDeActores[j] = laMezcla[j-i];
+	}
+	
 }
+

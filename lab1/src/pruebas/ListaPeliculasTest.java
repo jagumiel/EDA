@@ -34,24 +34,24 @@ public class ListaPeliculasTest {
 
 	@Test
 	public void testAnadirPelicula() {
-		assertFalse(lp.estaPelicula(p1));
-		assertFalse(lp.estaPelicula(p2));
-		assertFalse(lp.estaPelicula(p3));
+		assertFalse(lp.estaPelicula(p1.getTitulo()));
+		assertFalse(lp.estaPelicula(p2.getTitulo()));
+		assertFalse(lp.estaPelicula(p3.getTitulo()));
 		lp.anadirPelicula(p1.getTitulo());
-		assertTrue(lp.estaPelicula(p1));
-		assertFalse(lp.estaPelicula(p2));
-		assertFalse(lp.estaPelicula(p3));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertFalse(lp.estaPelicula(p2.getTitulo()));
+		assertFalse(lp.estaPelicula(p3.getTitulo()));
 		lp.anadirPelicula(p2.getTitulo());
-		assertTrue(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertFalse(lp.estaPelicula(p3));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertFalse(lp.estaPelicula(p3.getTitulo()));
 		lp.anadirPelicula(p3.getTitulo());
-		assertTrue(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertTrue(lp.estaPelicula(p3));
-		assertTrue(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertTrue(lp.estaPelicula(p3));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertTrue(lp.estaPelicula(p3.getTitulo()));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertTrue(lp.estaPelicula(p3.getTitulo()));
 		//Es imposible pasarle null a este método
 	}
 	
@@ -60,21 +60,21 @@ public class ListaPeliculasTest {
 		lp.anadirPelicula(p1.getTitulo());
 		lp.anadirPelicula(p2.getTitulo());
 		lp.anadirPelicula(p3.getTitulo());
-		assertTrue(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertTrue(lp.estaPelicula(p3));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertTrue(lp.estaPelicula(p3.getTitulo()));
 		lp.eliminarPelicula(p1);
-		assertFalse(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertTrue(lp.estaPelicula(p3));
+		assertFalse(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertTrue(lp.estaPelicula(p3.getTitulo()));
 		lp.eliminarPelicula(p2);
-		assertFalse(lp.estaPelicula(p1));
-		assertFalse(lp.estaPelicula(p2));
-		assertTrue(lp.estaPelicula(p3));
+		assertFalse(lp.estaPelicula(p1.getTitulo()));
+		assertFalse(lp.estaPelicula(p2.getTitulo()));
+		assertTrue(lp.estaPelicula(p3.getTitulo()));
 		lp.eliminarPelicula(p3);
-		assertFalse(lp.estaPelicula(p1));
-		assertFalse(lp.estaPelicula(p2));
-		assertFalse(lp.estaPelicula(p3));
+		assertFalse(lp.estaPelicula(p1.getTitulo()));
+		assertFalse(lp.estaPelicula(p2.getTitulo()));
+		assertFalse(lp.estaPelicula(p3.getTitulo()));
 		//Como es imposible añadir una pelicula=null al método anterior, a este también
 	}
 	
@@ -83,10 +83,10 @@ public class ListaPeliculasTest {
 	public void testEstaPelicula(){
 		lp.anadirPelicula(p1.getTitulo());
 		lp.anadirPelicula(p2.getTitulo());
-		assertTrue(lp.estaPelicula(p1));
-		assertTrue(lp.estaPelicula(p2));
-		assertFalse(lp.estaPelicula(p3));
-		assertFalse(lp.estaPelicula(p4));
+		assertTrue(lp.estaPelicula(p1.getTitulo()));
+		assertTrue(lp.estaPelicula(p2.getTitulo()));
+		assertFalse(lp.estaPelicula(p3.getTitulo()));
+		assertFalse(lp.estaPelicula(p4.getTitulo()));
 	}
 
 }

@@ -52,38 +52,38 @@ public class ActorTest {
 	
 	@Test
 	public void testAnadirPelicula()  {
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.anadirPelicula(p1.getTitulo());
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.anadirPelicula(p2.getTitulo());
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 	}
 	
 	@Test
 	public void testEliminarPelicula()  {
 		actor1.anadirPelicula(p1.getTitulo());
 		actor1.anadirPelicula(p2.getTitulo());
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.eliminarPelicula(p3);
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.eliminarPelicula(p2);
-		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.eliminarPelicula(p1);
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
+		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 	}
 
 }

@@ -87,7 +87,7 @@ public class Main {
 			 FileReader fr = new FileReader(nomF);
 			 @SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(fr);
-			 String linea;
+			 String linea, tituloaux;
 			 Actor ultimoactor = null;
 			 boolean todobien = true;
 			 int ayuda = 0;
@@ -102,12 +102,12 @@ public class Main {
 								 if(ultimoactor!=null){
 									 String[] sintabuladores = linea.split("\t");
 									 String[] titulo = sintabuladores[3-ayuda].split(" *[(]+\\d+[)]");
-									 titulo[0].replaceAll("[\"]","");
-									 if(titulo[0].equals("")){
+									 tituloaux = titulo[0].replaceAll("[\"]","");
+									 if(tituloaux.equals("")){
 										 todobien=false;
 										 ayuda++;
 									 }else{
-										 ultimoactor.anadirPelicula(titulo[0]);
+										 ultimoactor.anadirPelicula(tituloaux);
 									 }
 								 }else{
 									 System.out.println("Ha ocurrido un error");
@@ -116,15 +116,20 @@ public class Main {
 								 String[] division = linea.split("\t");
 								 if(ayuda==0){
 									 ultimoactor = new Actor(division[0]);
-									 ListaActores.getListaActores().anadirActor(ultimoactor);
+									 if (ListaActores.getListaActores().esta(division[0])){
+										 Actor aux = ultimoactor;
+										 ultimoactor = ListaActores.getListaActores().buscarActor(aux);
+									 }else{
+										 ListaActores.getListaActores().anadirActor(ultimoactor);
+									 }
 								 }
 								 String[] titulo = division[2-ayuda].split(" *[(]+\\d+[)]");
-								 titulo[0].replaceAll("[\"]","");
-								 if(titulo[0].equals("\t")){
+								 tituloaux = titulo[0].replaceAll("\"","");
+								 if(tituloaux.equals("\t")){
 									 todobien=false;
 									 ayuda++;
 								 }else{
-									 ultimoactor.anadirPelicula(titulo[0]);
+									 ultimoactor.anadirPelicula(tituloaux);
 								 }
 							 }
 						 }
@@ -147,7 +152,7 @@ public class Main {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("C:\\Users\\Mikel\\Desktop\\actrices.txt");
+            fichero = new FileWriter("C:\\actrices.txt");
             pw = new PrintWriter(fichero);
             String auxAct, auxPel;
             

@@ -68,7 +68,7 @@ public class ListaActores {
 	public Actor buscarActor(Actor pActor){
 		try{
 			if(esta(pActor.getNombre())){
-				return this.getMilista().get(pActor);
+				return this.getMilista().get(pActor.getNombre());
 			}else{
 				return null;
 			}

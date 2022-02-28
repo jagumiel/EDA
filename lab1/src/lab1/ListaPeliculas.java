@@ -25,9 +25,9 @@ public class ListaPeliculas {
 	
 	
 	//Otros Metodos
-	public boolean estaPelicula(Pelicula pPelicula){
+	public boolean estaPelicula(String pTitulo){
 		try{
-			return this.getMiListaPeliculas().containsKey(pPelicula.getTitulo());
+			return this.getMiListaPeliculas().containsKey(pTitulo);
 		}catch(NullPointerException e){
 			System.out.println("Estás tratando de añadir o eliminar una película no válida");
 			return false;
@@ -37,20 +37,22 @@ public class ListaPeliculas {
 	public void anadirPelicula(String pTitulo){
 		Pelicula aux;
 		 if(pTitulo!=null){
-			 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(pTitulo)){
-				 aux = new Pelicula(pTitulo);
-				 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
-				 this.getMiListaPeliculas().put(pTitulo,aux); 
-			 }else{
-				 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
-				 this.getMiListaPeliculas().put(pTitulo,aux);
-			 } 
+			if(!this.estaPelicula(pTitulo)){
+				 if(!ListaPeliculasPrincipal.getListaPeliculasPrincipal().estaPelicula(pTitulo)){
+					 aux = new Pelicula(pTitulo);
+					 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(aux);
+					 this.getMiListaPeliculas().put(pTitulo,aux); 
+				 }else{
+					 aux = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliculaPorTitulo(pTitulo);
+					 this.getMiListaPeliculas().put(pTitulo,aux);
+				 } 
+			}
 		}
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){
 		if(pPelicula!=null){
-			if(estaPelicula(pPelicula)){
+			if(estaPelicula(pPelicula.getTitulo())){
 				this.getMiListaPeliculas().remove(pPelicula.getTitulo());
 			}else{
 				System.out.println("La película no se encuentra en la lista");

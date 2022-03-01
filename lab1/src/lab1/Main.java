@@ -25,15 +25,16 @@ public class Main {
 	
 	public static void main(String[] args){
 		boolean repetir;
-		repetir = false;
-		System.out.println("Bienvenido a la base virtual de cine, ¿Qué quieres hacer?\n"
-				+ "1- Cargar fichero\n"
-				+ "2- Añadir un actor\n"
-				+ "3- Añadir una pelicula\n"
-				+ "4- Ordenar la lista de actores\n"
-				+ "5- Guardar fichero");
-		do{	
-			String entrada = JOptionPane.showInputDialog("Elige una opción"); //Para que se vea que vamos sobrados y no usamos Scanner <-- Borrar después
+		repetir = true;
+		JOptionPane.showMessageDialog(null, "Bienvenido a la base virtual de cine");
+		do{
+			String entrada = JOptionPane.showInputDialog("¿Qué quieres hacer?\n"
+					+ "1- Cargar fichero\n"
+					+ "2- Añadir un actor\n"
+					+ "3- Añadir una pelicula\n"
+					+ "4- Ordenar la lista de actores\n"
+					+ "5- Guardar fichero\n"
+					+ "6- Salir");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -57,8 +58,10 @@ public class Main {
 						respuesta = JOptionPane.showInputDialog("¿Quieres añadirle una película? (Si/No)");
 						if (respuesta.equalsIgnoreCase("si")){
 							anadir.anadirPelicula(JOptionPane.showInputDialog("Introduce el titulo de la película"));
-						}else{
+						}else if (respuesta.equalsIgnoreCase("no")){
 							quedanpeliculas=false;
+						}else{
+							JOptionPane.showMessageDialog(null, "La respuesta introducida es incorrecta. Por favor introduzca si o no");
 						}
 					}while (quedanpeliculas);
 					ListaActores.getListaActores().anadirActor(anadir);
@@ -73,9 +76,11 @@ public class Main {
 			case "5":
 				Main.getMain().guardarFichero();
 				break;
+			case "6":
+				repetir=false;
+				break;
 			default:
-				System.out.println("La opción itroducida es incorrecta. Introduce un número del 1 al 5.");
-				repetir=true;
+				JOptionPane.showMessageDialog(null, "La opción itroducida es incorrecta. Introduce un número del 1 al 5.");
 			}
 		}while(repetir==true);	
 	}
@@ -110,7 +115,7 @@ public class Main {
 										 ultimoactor.anadirPelicula(tituloaux);
 									 }
 								 }else{
-									 System.out.println("Ha ocurrido un error");
+									 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 								 }
 							 }else{
 								 String[] division = linea.split("\t");

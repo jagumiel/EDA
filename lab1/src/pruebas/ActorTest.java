@@ -16,7 +16,6 @@ public class ActorTest {
 	Actor actor5;
 	Pelicula p1;
 	Pelicula p2;
-	Pelicula p3;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +36,6 @@ public class ActorTest {
 		actor5=null;
 		p1=null;
 		p2=null;
-		p3=null;
 	}
 
 	@Test
@@ -54,15 +52,12 @@ public class ActorTest {
 	public void testAnadirPelicula()  {
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.anadirPelicula(p1.getTitulo());
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.anadirPelicula(p2.getTitulo());
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 	}
 	
 	@Test
@@ -71,19 +66,14 @@ public class ActorTest {
 		actor1.anadirPelicula(p2.getTitulo());
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
-		actor1.eliminarPelicula(p3);
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.eliminarPelicula(p2);
 		assertTrue(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 		actor1.eliminarPelicula(p1);
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p1.getTitulo()));
 		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p2.getTitulo()));
-		assertFalse(actor1.getMiListaPeliculas().estaPelicula(p3.getTitulo()));
 	}
 
 }

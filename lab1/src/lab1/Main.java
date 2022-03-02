@@ -71,7 +71,7 @@ public class Main {
 				ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(new Pelicula(JOptionPane.showInputDialog("Introduce el titulo de la película")));
 				break;
 			case "4":
-				//TODO
+				ListaActores.getListaActores().ordenarLista();
 				break;
 			case "5":
 				Main.getMain().guardarFichero();

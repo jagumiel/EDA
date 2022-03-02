@@ -1,8 +1,6 @@
 package lab1;
 
-
-
-public class Actor implements Comparable<Actor>{
+public class Actor{
 	//Atributos
 	private String nombre;
 	private ListaPeliculas milistapeliculas;
@@ -43,7 +41,11 @@ public class Actor implements Comparable<Actor>{
 	} 
 	
 	public void anadirPelicula(String pTitulo){
-		this.getMiListaPeliculas().anadirPelicula(pTitulo);
+		try{
+		 this.getMiListaPeliculas().anadirPelicula(pTitulo);
+		}catch(Exception e){
+			System.out.println("La pelicula introducida no es válida");
+		}
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){
@@ -60,9 +62,7 @@ public class Actor implements Comparable<Actor>{
 	}
 
 
-	@Override
 	public int compareTo(Actor o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getNombre().compareTo(o.getNombre());
 	}
 }

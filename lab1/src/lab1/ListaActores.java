@@ -1,9 +1,9 @@
 package lab1;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+
+import javax.swing.JOptionPane;
 
 
 public class ListaActores {
@@ -90,62 +90,36 @@ public class ListaActores {
 		}
 	}
 	
-	public void convertirHashArray(){
-		List<Actor> miArrayDeActores = new ArrayList<Actor>(milista.values());
+	public void ordenarLista(){
+		Actor[] milistaordenada = this.convertirHashArray();
+		ordenacionPorBurbuja(milistaordenada);
+		JOptionPane.showMessageDialog(null, "El resultado se muestra por consola");
+		for(int i = 0; i<milistaordenada.length; i++)
+			System.out.println(i+": "+milistaordenada[i].getNombre());
 	}
 	
-	//Algoritmos de Ordenaci—n
-	public void mergeSort(Actor[] laTabla){
-		mergeSort(laTabla, 0, laTabla.length-1);
+	public Actor[] convertirHashArray(){
+		Actor[] miArrayDeActores = new Actor[this.getMilista().size()];
+		int i = 0;
+		Iterator<String> itr = this.getIterador();
+		while (itr.hasNext()){
+			miArrayDeActores[i] = this.getMilista().get(itr.next());
+			i++;
+		}
+		return miArrayDeActores;
 	}
 	
-	
-	private void mergeSort (Actor[] miArrayDeActores, int inicio, int fin){
-		if( inicio < fin ) {
-	// hay m‡s de un elemento en la tabla
-			mergeSort(miArrayDeActores, inicio, (inicio+fin)/2);
-			mergeSort(miArrayDeActores, ((inicio+fin)/2)+1, fin);
-			mezcla(miArrayDeActores, inicio, (inicio+fin)/2, fin);
-		}
-	}
-	
-	
-	private void mezcla (Actor[] miArrayDeActores, int	i, int centro, int f){
-		Actor[] laMezcla = (Actor[])(new Comparable [f-i+1]);
-		int izq = i;
-		int der = centro+1;
-		int k = 0;
-		//indice para rellenar laMezcla
-		while (izq<=centro && der<=f ){
-			if (miArrayDeActores[izq].compareTo(miArrayDeActores[der])<= 0){
-				laMezcla[k] = miArrayDeActores[izq];
-				k++;
-				izq++;
-				}
-			else
-				{
-				laMezcla[k] = miArrayDeActores[der];
-				k++;
-				der++;
-				}
-		}
-		if (izq > centro){
-			while(der<=f ){
-				laMezcla[k] = miArrayDeActores[der];
-				k++;
-				der++;
-				}
-		}
-		else{
-			while(izq<=centro ){
-				laMezcla[k] = miArrayDeActores[izq];
-				k++;
-				izq++;
-			}
-		}
-		for(int j=i; j<=f; j++)
-			miArrayDeActores[j] = laMezcla[j-i];
-	}
-	
-}
+	public void ordenacionPorBurbuja(Actor[] tabla) {
+		int out, in;
+		for (out = tabla.length - 1; out > 0; out--) 
+			for (in = 0; in < out; in++) 
+				if ( tabla[in].compareTo(tabla[in + 1]) > 0 ) 
+					swap(tabla, in, in + 1); 
+	} 
 
+	private void swap(Actor[] tabla, int a, int b) {
+		Actor aux = tabla[a];
+		tabla[a] = tabla[b];
+		tabla[b] = aux;
+	}
+}

@@ -46,7 +46,7 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 		}
 	}
 
-	public int tomarPos(T elem){
+	private int tomarPos(T elem){
 		Node<T> actual=first;
 		int cont=1;
 		boolean enc=false;

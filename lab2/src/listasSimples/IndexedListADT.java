@@ -6,9 +6,8 @@
 package listasSimples;public interface IndexedListADT<T> extends ListADT<T>{   /**  
     * Inserts the specified element at the specified index. 
     * 
-    * @param index   the index into the array to which the element is to be
-    *                inserted.
-    * @param element the element to be inserted into the array   
+    private int indice;   //el indice del array donde introduciremos el elemento
+    private T elemento;    //the element to be inserted into the array   
     */   public void add (int index, T element);   /**  
     * Sets the element at the specified index. 
     *

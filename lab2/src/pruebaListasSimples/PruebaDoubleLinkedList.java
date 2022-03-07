@@ -1,4 +1,4 @@
-package pruebas;
+package pruebaListasSimples;
 
 import java.util.Iterator;
 

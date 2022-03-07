@@ -1,4 +1,4 @@
-package pruebas;
+package pruebaListasSimples;
 
 import listasSimples.OrderedDoubleLinkedList;
 import listasSimples.Persona;

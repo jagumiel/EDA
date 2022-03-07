@@ -28,48 +28,55 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	public T removeFirst() {
 	//Elimina el primer elemento de la lista
     
-	T resultado = null;
-		
-	if (!isEmpty()){
-		//TODO
-	     Node<T> result = first; 
-	     if (first == first.next)
-		     //Solo hay un elemento, luego después de borrar la lista está vacia
-		     first = null;
-		 else { 
-			 //Hay mas de un elemento
-			 Node<T> anterior = result.prev;
-			 Node<T> siguiente = result.next;
-		
-			 first = siguiente;
-		     first.prev = anterior;
-			 result.prev.next = first;
-				}
-	     count--;
-	     resultado = result.data;
+		T resultado = null;
+			
+		if (!isEmpty()){
+		     Node<T> result = first; 
+		     if (first == first.next)
+			     //Solo hay un elemento, luego después de borrar la lista está vacia
+			     first = null;
+			 else { 
+				 //Hay mas de un elemento
+				 Node<T> anterior = result.prev;
+				 Node<T> siguiente = result.next;
+			
+				 first = siguiente;
+			     first.prev = anterior;
+				 result.prev.next = first;
+			}
+		     count--;
+		     resultado = result.data;
+		}
+	
+		return resultado;
 	}
 	
-	return resultado;
-
+	
 	public T removeLast() {
 	//Elimina el último elemento de la lista
 	
 		Node<T> rdo = null;
 		
-		if(!isEmpty()){
-			return null;
-		}else{	
+		if(!isEmpty()){	
 			rdo = first.prev;
 			if(first==rdo){
 				//Solo hay un elemento en la lista que es el que quiero borrar
 				first = null;
 			}else{
-				rdo.prev.next = first;
-				first.prev = rdo.prev;
+				//Hay mas de un elemento
+				Node<T> anterior = rdo.prev;
+				Node<T> siguiente = first;
+				
+				anterior.next = siguiente;
+				siguiente.prev = anterior;
 			}
 		count--;
-		return rdo.data;
 		}
+		
+		if (rdo==null)
+			return null;
+		else
+			return rdo.data;
 		
 	//COSTE O(1)
     }
@@ -78,20 +85,25 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	public T remove(T elem) {
 	//Elimina un elemento concreto de la lista
 
+	Node<T> rdo	= null;
+		
 	if(!contains(elem)){
-		return null;
+		
 	}else{
-		Node<T> rdo = findDevuelveNodo(elem);
+		rdo = findDevuelveNodo(elem);
 		Node<T> anterior = rdo.prev;
 		Node<T> siguiente = rdo.next;
 		
 		anterior.next = siguiente;
 		siguiente.prev = anterior;
 		
-		count--;
-		
-		return rdo.data;	
+		count--;	
 	}
+	
+	if (rdo==null)
+		return null;
+	else
+		return rdo.data;
 		
 	//COSTE	O(1)
 	};
@@ -130,7 +142,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		if(contains(elem)){
 				aux = first;
 			boolean encontrado = false;
-			while((aux!=last())&&(!encontrado)){
+			while((aux.data.equals(last()))&&(!encontrado)){
 				if(aux.data==elem){
 					encontrado=true;
 				}else{
@@ -163,16 +175,21 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	{ return count;};
 	
 	/** Return an iterator to the stack that iterates through the items . */ 
-	public Iterator<T> iterator() { return new ListIterator(); } 
+	public Iterator<T> iterator() { return new ListIterator(this); } 
 
 	   // an iterator, doesn't implement remove() since it's optional 
 	   private class ListIterator implements Iterator<T> {
 		   
 		   private Node<T> actual;
 		   
+		   public ListIterator(DoubleLinkedList l){
+			   actual = l.first;
+		   }
+		   
 			@Override
+			//TODO que no se quede en bucle
 			public boolean hasNext() {
-				if(actual.next==null){
+				if(actual.next.equals(first)){
 					return false;
 				}else{
 					return true;
@@ -181,7 +198,9 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	
 			@Override
 			public T next() {
-				return actual.next.data;
+				T rdo = actual.next.data;
+				actual = actual.next;
+				return rdo;
 			}
 
 			@Override

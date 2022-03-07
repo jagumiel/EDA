@@ -1,7 +1,6 @@
 package listasSimples;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class DoubleLinkedList<T> implements ListADT<T> {
 
@@ -13,7 +12,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	// Constructor
 	public DoubleLinkedList() {
 		first = null;
-		descr = "";
+		descr = "Esta es una lista circular";
 		count = 0;
 	}
 	
@@ -28,19 +27,29 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	public T removeFirst() {
 	//Elimina el primer elemento de la lista
-    if (isEmpty())
-        return null;
-     
-     Node<T> result = first; 
-     if (first == first.next)
-        first = null;
-	 else { first = first.next;
-	        first.prev = result.prev;
-			result.prev.next = first;
-			}
-     count--;
-     return result.data;
+    
+	T resultado = null;
+		
+	if (!isEmpty()){
+		//TODO
+	     Node<T> result = first; 
+	     if (first == first.next)
+		     //Solo hay un elemento, luego después de borrar la lista está vacia
+		     first = null;
+		 else { 
+			 //Hay mas de un elemento
+			 Node<T> anterior = result.prev;
+			 Node<T> siguiente = result.next;
+		
+			 first = siguiente;
+		     first.prev = anterior;
+			 result.prev.next = first;
+				}
+	     count--;
+	     resultado = result.data;
 	}
+	
+	return resultado;
 
 	public T removeLast() {
 	//Elimina el último elemento de la lista
@@ -72,11 +81,16 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	if(!contains(elem)){
 		return null;
 	}else{
-		Node<T> rdo = new Node<T>(find(elem));
-		rdo.prev.next = rdo.next;
-		rdo.next.prev = rdo.prev;
+		Node<T> rdo = findDevuelveNodo(elem);
+		Node<T> anterior = rdo.prev;
+		Node<T> siguiente = rdo.next;
+		
+		anterior.next = siguiente;
+		siguiente.prev = anterior;
+		
 		count--;
-		return rdo.data;
+		
+		return rdo.data;	
 	}
 		
 	//COSTE	O(1)
@@ -108,22 +122,34 @@ public class DoubleLinkedList<T> implements ListADT<T> {
       return elem.equals(current.data);
    }
 
+	private Node<T> findDevuelveNodo (T elem) {
+	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no esté
+		
+		Node<T> aux = null;
+		
+		if(contains(elem)){
+				aux = first;
+			boolean encontrado = false;
+			while((aux!=last())&&(!encontrado)){
+				if(aux.data==elem){
+					encontrado=true;
+				}else{
+					aux=aux.next;
+				}
+			}
+		}
+		
+		//Si aux es el último justo habrá salido del while y lo devolverá bien
+		return aux;
+		
+		//COSTE O(n)
+	}
 	public T find(T elem) {
 	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no esté
 
-		if(contains(elem)){
-			return null;
-		}else{
-			Iterator<T> it = iterator();
-			T aux = null;
-			while(it.hasNext()){
-				aux = it.next();
-				if(aux==elem){
-					break;
-				}
-			}
-			return aux;
-		}
+       Node<T> nodo = findDevuelveNodo(elem);
+       if (nodo == null) return null;
+       else return nodo.data;
 		
 	//COSTE O(n)
 	}
@@ -181,5 +207,4 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			}	
 			return "SimpleLinkedList " + result + "]";
 		}
-
 }

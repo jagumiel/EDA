@@ -1,4 +1,7 @@
-package listasSimples;
+package pruebas;
+
+import listasSimples.OrderedDoubleLinkedList;
+import listasSimples.Persona;
 
 public class PruebaOrderedDoubleLinkedList {	
 		

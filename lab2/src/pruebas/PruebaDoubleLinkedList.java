@@ -1,6 +1,8 @@
-package listasSimples;
+package pruebas;
 
 import java.util.Iterator;
+
+import listasSimples.UnorderedDoubleLinkedList;
 
 
 public class PruebaDoubleLinkedList {

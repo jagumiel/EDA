@@ -198,9 +198,24 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	
 			@Override
 			public T next() {
-				T rdo = actual.next.data;
-				actual = actual.next;
-				return rdo;
+				try{
+					if(hasNext())
+					{
+						T rdo = actual.next.data;
+						actual = actual.next;
+						return rdo;
+					}
+					else
+					{
+		                throw new NoHayNextException();
+					}
+				}
+					catch(NoHayNextException ex)
+					{
+						//System.out.println("No hay siguiente.");
+						T rdo = actual.data;
+						return rdo;
+					}
 			}
 
 			@Override

@@ -142,8 +142,8 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		if(contains(elem)){
 				aux = first;
 			boolean encontrado = false;
-			while((aux.data.equals(last()))&&(!encontrado)){
-				if(aux.data==elem){
+			while((!aux.data.equals(last()))&&(!encontrado)){
+				if(aux.data.equals(elem)){
 					encontrado=true;
 				}else{
 					aux=aux.next;
@@ -181,15 +181,17 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	   private class ListIterator implements Iterator<T> {
 		   
 		   private Node<T> actual;
+		   private int indice;
 		   
 		   public ListIterator(DoubleLinkedList l){
-			   actual = l.first;
+			   actual = l.first.prev;
+			   indice = 0;
 		   }
 		   
 			@Override
 			//TODO que no se quede en bucle
 			public boolean hasNext() {
-				if(actual.next.equals(first)){
+				if(indice==count){
 					return false;
 				}else{
 					return true;
@@ -203,6 +205,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 					{
 						T rdo = actual.next.data;
 						actual = actual.next;
+						indice++;
 						return rdo;
 					}
 					else

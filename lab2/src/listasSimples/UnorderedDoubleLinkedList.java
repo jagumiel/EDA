@@ -17,9 +17,9 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 			nuevo.next = siguiente;
 			siguiente.prev = nuevo;		
 			nuevo.prev = anterior;
-			nuevo.next = siguiente;
+			anterior.next=nuevo;
 		}
-
+		count++;
 	}
 
 	public void addToRear(T elem) {
@@ -37,6 +37,7 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 			nuevo.next = first;
 			first.prev = nuevo;
 		}
+		count++;
 	}
 
 	public void addAfter(T elem, T target) {
@@ -56,6 +57,7 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 			nuevo.next=actual.next;
 			actual.next=nuevo;
 		}
+		count++;
 	}
 
 	private int tomarPos(T elem){

@@ -3,6 +3,7 @@ package pruebaListasSimples;
 import java.util.Iterator;
 
 import listasSimples.UnorderedDoubleLinkedList;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 
 public class PruebaDoubleLinkedList {
@@ -40,6 +41,22 @@ public class PruebaDoubleLinkedList {
 		System.out.println("9? " + l.find(9));
 		System.out.println("0? " + l.find(0));
 		System.out.println("7? " + l.find(7));
-		
-}
+                
+                int aux=l.tomarPos(1);
+                System.out.println("Este valor tiene que dar 1 y da " + aux);
+		aux=l.tomarPos(2);
+                System.out.println("El valor no se encuentra y tiene que dar -1, y da " + aux);
+                aux=l.tomarPos(3);
+                System.out.println("Este valor tiene que dar 2 y da " + aux);
+	}
+        
+        public void testTomarPos(){
+        		UnorderedDoubleLinkedList<Integer> l =new UnorderedDoubleLinkedList<Integer>();
+		l.addToRear(1);
+		l.addToRear(3);
+		l.addToRear(6);
+		l.addToRear(7);
+                int aux=l.tomarPos(1);
+                System.out.println("este es el valor de " + aux);
+        }
 }

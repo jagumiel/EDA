@@ -60,17 +60,21 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 		count++;
 	}
 
-	private int tomarPos(T elem){
+	public int tomarPos(T elem){
 		Node<T> actual=first;
-		int cont=1;
-		boolean enc=false;
-		while(!(enc||actual==null)){
+		int cont=0;
+		boolean salir=false, enc=false;
+		while(!(enc||salir||actual==null)){
 			if(actual.data.equals(elem)){
 				enc=true;
 		}
 			else{
 				actual=actual.next;
 				cont++;
+                                if(actual.equals(first)){
+                                    actual=null;
+                                    salir=true;
+                                }
 			}
 		}
 		if (actual==null){

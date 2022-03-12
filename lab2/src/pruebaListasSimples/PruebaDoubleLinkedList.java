@@ -48,6 +48,10 @@ public class PruebaDoubleLinkedList {
                 System.out.println("El valor no se encuentra y tiene que dar -1, y da " + aux);
                 aux=l.tomarPos(3);
                 System.out.println("Este valor tiene que dar 2 y da " + aux);
+                
+                l.addAfter(2, 1);
+                System.out.print(" Lista ...............");
+		visualizarNodos(l);
 	}
         
         public void testTomarPos(){

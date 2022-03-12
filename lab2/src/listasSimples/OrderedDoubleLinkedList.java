@@ -22,9 +22,36 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			actual.next=nuevo;
 		}
 	}
+        
+        private int buscarPosAnt(T elem){
+            int cont=1;//CUIDADO
+            boolean salir=false;
+            Node<T> prime=first;
+            Node<T> actual=first;
+            Node<T> elemento=new Node <T> (elem);
+            String elemen=elemento.data.toString();
+            while(!(salir||actual==null)){
+                String act_aux=actual.data.toString();
+                String sig=actual.next.data.toString();//y si el siguiente es null? Edit, es lista circular.
+                if(act_aux.compareTo(elemen)<=0&&sig.compareTo(elemen)>0){
+                    return cont;
+                    salir=true;
+                }
+                else{
+                    act_aux=actual.next.data.toString();
+                    sig=actual.next.next.data.toString();
+                    if(act_aux==prime.data.toString()){
+                        salir=true;
+                        cont=-1;
+                    }
+                    cont++;
+                }
+            }
+            return cont;
+        }//TODO no cubre todos los casos de prueba. No esta testado.
 	
 	
-	private int buscarPosAnt(T elem){
+	/*private int buscarPosAnt(T elem){
 		Node<T> actual=first;
 		Node<T> elemento=new Node <T> (elem);
 		int cont=1;
@@ -66,6 +93,6 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			nuevo.prev = anterior;
 			nuevo.next = siguiente;
 		}
-	}
+	}*/
 	
 }

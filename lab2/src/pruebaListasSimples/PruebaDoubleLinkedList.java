@@ -50,7 +50,7 @@ public class PruebaDoubleLinkedList {
                 System.out.println("Este valor tiene que dar 2 y da " + aux);
                 
                 l.addAfter(2, 1);
-                System.out.print(" Lista ...............");
+        System.out.print(" Lista ...............");
 		visualizarNodos(l);
 	}
         

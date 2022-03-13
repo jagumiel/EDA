@@ -26,18 +26,17 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
         private int buscarPosAnt(T elem){
             int cont=0;
             boolean salir=false;
-            Node<T> siguiente=first;
+            Node<T> anterior=first;
             Node<T> actual=new Node <T> (elem);
             if(first!=null)
-	            while((!salir)||(!(siguiente==first)&&(cont>0))){ 
-	                String sig_aux=siguiente.data.toString();
-	                String act_aux = actual.data.toString();
-	                if(act_aux.compareTo(sig_aux)==0){
+	            while(!(salir||(anterior==first&&cont>0))){ 
+	            	Comparable c_act = (Comparable)actual.data;
+	            	Comparable c_ant = (Comparable)anterior.data;
+	                if(c_act.compareTo(c_ant)==-1){
 	                    salir=true;
 	                }
 	                else{
-	                    actual=siguiente;
-	                    siguiente=siguiente.next;
+	                    anterior=anterior.next;
 	                    cont++;
 	                }
 	            }

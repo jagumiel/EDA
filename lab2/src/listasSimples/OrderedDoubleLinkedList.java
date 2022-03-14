@@ -10,17 +10,20 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			addToFront(elem);
 		}
 		else{
-			Node<T> nuevo,actual;
+			Node<T> nuevo,anterior;
 			nuevo=new Node<T>(elem);
-			actual=first;
+			anterior=first;
 			int cont=1;
 			while(cont!=pos){
-				actual=actual.next;
+				anterior=anterior.next;
 				cont++;
 			}
-			nuevo.next=actual.next;
-			actual.next=nuevo;
+			nuevo.next = anterior.next;
+			nuevo.prev = anterior;
+			anterior.next = nuevo;
+			nuevo.next.prev = nuevo;
 		}
+		count++;
 	}
         
         private int buscarPosAnt(T elem){
@@ -30,8 +33,8 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
             Node<T> actual=new Node <T> (elem);
             if(first!=null)
 	            while(!(salir||(anterior==first&&cont>0))){ 
-	            	Comparable c_act = (Comparable)actual.data;
-	            	Comparable c_ant = (Comparable)anterior.data;
+	            	Comparable c_act = (Comparable)actual.data.toString();
+	            	Comparable c_ant = (Comparable)anterior.data.toString();
 	                if(c_act.compareTo(c_ant)==-1){
 	                    salir=true;
 	                }
@@ -55,8 +58,8 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			anterior = first.prev;
 			siguiente = first;
 			first = nuevo;
-			nuevo.next = siguiente;
-			siguiente.prev = nuevo;		
+			siguiente.prev = nuevo;
+			anterior.next = nuevo;
 			nuevo.prev = anterior;
 			nuevo.next = siguiente;
 		}

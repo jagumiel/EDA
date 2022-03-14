@@ -53,8 +53,6 @@ public class PruebaOrderedDoubleLinkedList {
 			System.out.println("5555? " + l2.find(new Persona("", "5555")));
 			System.out.println("7777? " + l2.find(new Persona("", "7777")));	
 			System.out.println("8888? " + l2.find(new Persona("", "8888")));	
-			
-			
 	}
-	}
+}
 

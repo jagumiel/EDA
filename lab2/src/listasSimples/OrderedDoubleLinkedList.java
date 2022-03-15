@@ -5,6 +5,30 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 	
 
 	public void add(T elem) {
+            Node<T>elemact=new Node<T>(elem);
+            String elem_act=elemact.data.toString();
+            if(esInteger(elem_act)){
+                int pos=buscarPosAntInt(elem);
+                if (pos==0){
+			addToFront(elem);
+		}
+		else{
+			Node<T> nuevo,anterior;
+			nuevo=new Node<T>(elem);
+			anterior=first;
+			int cont=1;
+			while(cont!=pos){
+				anterior=anterior.next;
+				cont++;
+			}
+			nuevo.next = anterior.next;
+			nuevo.prev = anterior;
+			anterior.next = nuevo;
+			nuevo.next.prev = nuevo;
+                }
+                
+            }
+            else{
 		int pos=buscarPosAnt(elem);
 		if (pos==0){
 			addToFront(elem);
@@ -24,6 +48,7 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			nuevo.next.prev = nuevo;
 		}
 		count++;
+            }
 	}
         
         private int buscarPosAnt(T elem){
@@ -64,5 +89,40 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 			nuevo.next = siguiente;
 		}
 	}
+        
+        private boolean esInteger( String input )  {  
+            try  
+            {  
+               Integer.parseInt( input );  
+               return true;  
+            }  
+            catch( Exception ex)  
+            {  
+               return false;  
+            }  
+         }  
+        
+        
+        private int buscarPosAntInt(T elem){
+            int cont=0;
+            boolean salir=false;
+            Node<T> anterior=first;
+            Node<T> actual=new Node <T> (elem);
+            if(first!=null)
+	            while(!(salir||(anterior==first&&cont>0))){ 
+                        String c_act_str=actual.data.toString();
+                        int c_act= Integer.parseInt(c_act_str);
+                        String c_ant_str=actual.data.toString();
+                        int c_ant= Integer.parseInt(c_ant_str);	                
+                        if(c_act<(c_ant)){
+	                    salir=true;
+	                }
+	                else{
+	                    anterior=anterior.next;
+	                    cont++;
+	                }
+	            }
+            return cont;
+        }
 	
 }

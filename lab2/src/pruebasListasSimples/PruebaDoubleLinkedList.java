@@ -3,7 +3,6 @@ package pruebasListasSimples;
 import java.util.Iterator;
 
 import listasSimples.UnorderedDoubleLinkedList;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 
 public class PruebaDoubleLinkedList {

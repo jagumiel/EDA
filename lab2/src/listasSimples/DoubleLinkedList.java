@@ -25,6 +25,15 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	  return descr;
 	}
 
+	public Node<T> getFirst(){
+		return first;
+	}
+	
+	public void setFirst(Node<T> pFirst){
+		this.first = pFirst; 
+	}
+	
+	
 	public T removeFirst() {
 	//Elimina el primer elemento de la lista
     
@@ -188,8 +197,6 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			   indice = 0;
 		   }
 		   
-			@Override
-			//TODO que no se quede en bucle
 			public boolean hasNext() {
 				if(indice==count){
 					return false;
@@ -198,7 +205,6 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 				}
 			}
 	
-			@Override
 			public T next() {
 				try{
 					if(hasNext())
@@ -221,7 +227,6 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 					}
 			}
 
-			@Override
 			public void remove() {
 				actual.prev.next = actual.next;
 				actual.next = actual.prev;

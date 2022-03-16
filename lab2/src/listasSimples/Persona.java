@@ -35,8 +35,7 @@ public class Persona implements Comparable<Persona> {
 			return false;
 		return true;
 	}
-			
-	@Override
+
 	public int compareTo(Persona arg0) {
 		return name.compareToIgnoreCase(arg0.name);
 	}

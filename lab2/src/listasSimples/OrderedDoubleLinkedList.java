@@ -5,50 +5,52 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 	
 
 	public void add(T elem) {
+		if(!this.contains(elem)){
             Node<T>elemact=new Node<T>(elem);
             String elem_act=elemact.data.toString();
             if(esInteger(elem_act)){
                 int pos=buscarPosAntInt(elem);
                 if (pos==0){
-			addToFront(elem);
-		}
-		else{
-			Node<T> nuevo,anterior;
-			nuevo=new Node<T>(elem);
-			anterior=first;
-			int cont=1;
-			while(cont!=pos){
-				anterior=anterior.next;
-				cont++;
-			}
-			nuevo.next = anterior.next;
-			nuevo.prev = anterior;
-			anterior.next = nuevo;
-			nuevo.next.prev = nuevo;
+                	addToFront(elem);
+                }
+				else{
+					Node<T> nuevo,anterior;
+					nuevo=new Node<T>(elem);
+					anterior=first;
+					int cont=1;
+					while(cont!=pos){
+						anterior=anterior.next;
+						cont++;
+					}
+					nuevo.next = anterior.next;
+					nuevo.prev = anterior;
+					anterior.next = nuevo;
+					nuevo.next.prev = nuevo;
                 }
                 
             }
             else{
-		int pos=buscarPosAnt(elem);
-		if (pos==0){
-			addToFront(elem);
-		}
-		else{
-			Node<T> nuevo,anterior;
-			nuevo=new Node<T>(elem);
-			anterior=first;
-			int cont=1;
-			while(cont!=pos){
-				anterior=anterior.next;
-				cont++;
-			}
-			nuevo.next = anterior.next;
-			nuevo.prev = anterior;
-			anterior.next = nuevo;
-			nuevo.next.prev = nuevo;
-		}
-		count++;
+            	int pos=buscarPosAnt(elem);
+		
+				if (pos==0){
+					addToFront(elem);
+				}else{
+					Node<T> nuevo,anterior;
+					nuevo=new Node<T>(elem);
+					anterior=first;
+					int cont=1;
+					while(cont!=pos){
+						anterior=anterior.next;
+						cont++;
+					}
+					nuevo.next = anterior.next;
+					nuevo.prev = anterior;
+					anterior.next = nuevo;
+					nuevo.next.prev = nuevo;
+				}
             }
+            count++;
+		}
 	}
         
         private int buscarPosAnt(T elem){
@@ -112,15 +114,15 @@ public class OrderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements O
 	            while(!(salir||(anterior==first&&cont>0))){ 
                         String c_act_str=actual.data.toString();
                         int c_act= Integer.parseInt(c_act_str);
-                        String c_ant_str=actual.data.toString();
+                        String c_ant_str=anterior.data.toString();
                         int c_ant= Integer.parseInt(c_ant_str);	                
                         if(c_act<(c_ant)){
-	                    salir=true;
-	                }
-	                else{
-	                    anterior=anterior.next;
-	                    cont++;
-	                }
+                        	salir=true;
+                        }
+                        else{
+		                    anterior=anterior.next;
+		                    cont++;
+		                }
 	            }
             return cont;
         }

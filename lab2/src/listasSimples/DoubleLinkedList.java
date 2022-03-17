@@ -74,10 +74,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			}else{
 				//Hay mas de un elemento
 				Node<T> anterior = rdo.prev;
-				Node<T> siguiente = first;
+				Node<T> siguiente = rdo.next;
 				
 				anterior.next = siguiente;
 				siguiente.prev = anterior;
+				
+				first = siguiente;
 			}
 		count--;
 		}
@@ -96,16 +98,19 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	Node<T> rdo	= null;
 		
-	if(!contains(elem)){
-		
-	}else{
+	if(contains(elem)){
 		rdo = findDevuelveNodo(elem);
-		Node<T> anterior = rdo.prev;
-		Node<T> siguiente = rdo.next;
 		
-		anterior.next = siguiente;
-		siguiente.prev = anterior;
-		
+		if(rdo==first){
+			this.removeFirst();
+		}else{	
+			Node<T> anterior = rdo.prev;
+			Node<T> siguiente = rdo.next;
+			
+			anterior.next = siguiente;
+			siguiente.prev = anterior;
+		}	
+			
 		count--;	
 	}
 	
@@ -136,11 +141,24 @@ public class DoubleLinkedList<T> implements ListADT<T> {
       if (isEmpty())
           return false;
 
-      Node<T> current = first.next; // Empieza con el segundo elemento
-
-      while ((current != first) && !elem.equals(current.data)) 
-            current = current.next;
-      return elem.equals(current.data);
+      Node<T> actual = first;
+      boolean hapasadofirst = false;
+      boolean esta = false;
+      
+      while((!hapasadofirst)||(actual!=first)){
+    	  if(actual.prev == first){
+    		  hapasadofirst = true;
+    	  }
+    	  
+    	  if(actual.data.equals(elem)){
+    		  esta=true;
+    		  break;
+    	  }else{
+    		  actual = actual.next;
+    	  }
+      }
+      
+      return esta;
    }
 
 	private Node<T> findDevuelveNodo (T elem) {
@@ -193,8 +211,10 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		   private int indice;
 		   
 		   public ListIterator(DoubleLinkedList l){
-			   actual = l.first.prev;
-			   indice = 0;
+			   if(l.first!=null){
+				   actual = l.first.prev;
+				   indice = 0;
+			   }
 		   }
 		   
 			public boolean hasNext() {

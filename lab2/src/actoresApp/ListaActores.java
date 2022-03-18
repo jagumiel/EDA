@@ -1,20 +1,18 @@
 package actoresApp;
 
-import java.util.HashMap;
 import java.util.Iterator;
-
-import javax.swing.JOptionPane;
+import listasSimples.OrderedDoubleLinkedList;
 
 
 public class ListaActores {
 	//Atributos
 	private static ListaActores milistadeactores = new ListaActores();
-	private HashMap<String, Actor> milista;
+	private OrderedDoubleLinkedList<Actor> milista;
 	
 	
 	//Constructora
 	public ListaActores(){
-		milista = new HashMap<String, Actor>();
+		milista = new OrderedDoubleLinkedList<Actor>();
 	}
 	
 	
@@ -23,12 +21,12 @@ public class ListaActores {
 		return milistadeactores;
 	}
 	
-	public HashMap<String,Actor> getMilista(){
+	public OrderedDoubleLinkedList<Actor> getMilista(){
 		return this.milista;
 	}
 	
-	public Iterator<String> getIterador(){
-		return this.getMilista().keySet().iterator();
+	public Iterator<Actor> getIterador(){
+		return this.getMilista().iterator();
 	}
 	
 	public int getTamano(){
@@ -37,16 +35,16 @@ public class ListaActores {
 	
 	
 	//Otros Metodos
-		public boolean esta(String pNombre){
-			return this.getMilista().containsKey(pNombre);
+		public boolean esta(Actor pActor){
+			return this.getMilista().contains(pActor);
 		}
 		
 		public void anadirActor(Actor pActor){
 			try{
-				if(esta(pActor.getNombre())){
+				if(esta(pActor)){
 					System.out.println("El actor ya se encuentra en la lista");
 				}else{
-					getMilista().put(pActor.getNombre(), pActor);
+					getMilista().add(pActor);
 				}
 			}catch(NullPointerException e){
 				System.out.println("El actor que desea eliminar no existe");
@@ -55,7 +53,7 @@ public class ListaActores {
 		
 	public void eliminarActor(Actor pActor){
 		try{
-			if(esta(pActor.getNombre())){
+			if(esta(pActor)){
 				getMilista().remove(pActor);
 			}else{
 				System.out.println("El actor no se encuentra en la lista");
@@ -67,8 +65,8 @@ public class ListaActores {
 	
 	public Actor buscarActor(Actor pActor){
 		try{
-			if(esta(pActor.getNombre())){
-				return this.getMilista().get(pActor.getNombre());
+			if(esta(pActor)){
+				return this.getMilista().find(pActor);
 			}else{
 				return null;
 			}
@@ -79,18 +77,17 @@ public class ListaActores {
 	}
 	
 	public void resetear(){
-		getListaActores().getMilista().clear();
+		getListaActores().getMilista().setFirst(null);
 	}
 	
 	public void imprimir(){
-		Iterator<String> it = getListaActores().getIterador();
-		while(it.hasNext()){
-			getListaActores().getMilista().get(it.next()).imprimirInformacion();
-			System.out.println("\n\n");  //Imprime dos lineas vacías.
-		}
+		getListaActores().milista.visualizarNodos();
 	}
 	
-	public void ordenarLista(){
+	/*COMO LA LISTA YA ESTA ORDENADA NO NECESITA ESTOS MÉTODOS.
+	 * 
+	 * 
+	 * public void ordenarLista(){
 		Actor[] milistaordenada = this.convertirHashArray();
 		ordenacionPorBurbuja(milistaordenada);
 		JOptionPane.showMessageDialog(null, "El resultado se muestra por consola");
@@ -121,5 +118,5 @@ public class ListaActores {
 		Actor aux = tabla[a];
 		tabla[a] = tabla[b];
 		tabla[b] = aux;
-	}
+	}*/
 }

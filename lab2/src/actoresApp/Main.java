@@ -49,7 +49,7 @@ public class Main {
 				break;
 			case "2":
 				Actor anadir = new Actor(JOptionPane.showInputDialog("Introduce el nombre del actor"));
-				if(ListaActores.getListaActores().esta(anadir.getNombre())){
+				if(ListaActores.getListaActores().esta(anadir)){
 					System.out.println("El actor ya se encuentra en la lista"); //ListaActores lo comprueba también pero poniendo esto aqui te ahorras meterle peliculas para nada.
 				}else{
 					boolean quedanpeliculas = true;
@@ -70,13 +70,10 @@ public class Main {
 			case "3":
 				ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(new Pelicula(JOptionPane.showInputDialog("Introduce el titulo de la película")));
 				break;
-			case "4":
-				ListaActores.getListaActores().ordenarLista();
-				break;
-			case "5":
+			case "4":/*
 				Main.getMain().guardarFichero();
 				break;
-			case "6":
+			case "5":*/
 				repetir=false;
 				break;
 			default:
@@ -121,7 +118,7 @@ public class Main {
 								 String[] division = linea.split("\t");
 								 if(ayuda==0){
 									 ultimoactor = new Actor(division[0]);
-									 if (ListaActores.getListaActores().esta(division[0])){
+									 if (ListaActores.getListaActores().esta(ultimoactor)){
 										 Actor aux = ultimoactor;
 										 ultimoactor = ListaActores.getListaActores().buscarActor(aux);
 									 }else{
@@ -152,7 +149,7 @@ public class Main {
 	}
 	
 	
-	public void guardarFichero(){
+/*	public void guardarFichero(){
 		FileWriter fichero = null;
         PrintWriter pw = null;
         try
@@ -186,6 +183,6 @@ public class Main {
               e2.printStackTrace();
            }
         }
-	}
+	}*/
 	
 }

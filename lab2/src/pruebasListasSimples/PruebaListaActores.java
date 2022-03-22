@@ -1,7 +1,7 @@
 package pruebasListasSimples;
 
-import lab1.Actor;
-import lab1.ListaActores;
+import actoresApp.Actor;
+import actoresApp.ListaActores;
 
 public class PruebaListaActores {
 	

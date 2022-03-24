@@ -3,7 +3,7 @@ package lab3;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 
 public class ListaActoresPrincipal {
@@ -42,14 +42,10 @@ public class ListaActoresPrincipal {
 		}
 		
 		public void anadirActor(Actor pActor){
-			try{
-				if(esta(pActor)){
-					System.out.println("El actor ya se encuentra en la lista");
-				}else{
-					getMilista().put(pActor.getNombre(), pActor);
-				}
-			}catch(NullPointerException e){
-				System.out.println("El actor que desea eliminar no existe");
+			if(esta(pActor)){
+				System.out.println("El actor ya se encuentra en la lista");
+			}else{
+				getMilista().put(pActor.getNombre(), pActor);
 			}
 		}
 		
@@ -78,6 +74,10 @@ public class ListaActoresPrincipal {
 		}
 	}
 	
+	public Actor buscarActorNombre(String pActor){
+		return this.getMilista().get(pActor);
+	}
+	
 	public void resetear(){
 		getListaActoresPrincipal().getMilista().clear();
 	}
@@ -93,7 +93,7 @@ public class ListaActoresPrincipal {
 	public void ordenarLista(){
 		Actor[] milistaordenada = this.convertirHashArray();
 		ordenacionPorBurbuja(milistaordenada);
-		JOptionPane.showMessageDialog(null, "El resultado se muestra por consola");
+		//JOptionPane.showMessageDialog(null, "El resultado se muestra por consola");
 		for(int i = 0; i<milistaordenada.length; i++)
 			System.out.println(i+": "+milistaordenada[i].getNombre());
 	}

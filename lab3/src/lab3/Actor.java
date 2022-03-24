@@ -1,15 +1,19 @@
 package lab3;
 
+import java.util.Iterator;
+
 public class Actor{
 	//Atributos
 	private String nombre;
 	private ListaPeliculas milistapeliculas;
+	private ListaActores colegas;
 	
 	
 	//Constructora
 	public Actor(String pNombre){
 		this.nombre=pNombre;
 		this.milistapeliculas = new ListaPeliculas();
+		this.colegas=new ListaActores();
 	}
 	
 	
@@ -24,6 +28,10 @@ public class Actor{
 	
 	public ListaPeliculas getMiListaPeliculas(){
 		return this.milistapeliculas;
+	}
+		
+	public ListaActores getColegas(){
+		return this.colegas;
 	}
 	
 	
@@ -64,5 +72,26 @@ public class Actor{
 
 	public int compareTo(Actor o) {
 		return this.getNombre().compareTo(o.getNombre());
+	}
+	
+	public void rellenarColegas(){
+		Iterator <String> it=this.getMiListaPeliculas().getIterador();
+		while(it.hasNext()){
+			String aux;
+			Pelicula peliAux;
+			aux=it.next();
+			if (aux!=null){
+				peliAux=ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(aux);
+				//meter el if, puede devolver null buscarPeliNombre()
+				Iterator<String> itActor=peliAux.getListaActores.getIterador();
+				while (itActor.hasNext()){
+					String actorAux=itActor.next();
+					Actor actorAux2=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
+					if (actorAux2!=null){
+						this.getColegas().anadirActor(actorAux2);
+					}
+				}
+			}
+		}
 	}
 }

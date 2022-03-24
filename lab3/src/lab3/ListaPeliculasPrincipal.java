@@ -56,19 +56,7 @@ public class ListaPeliculasPrincipal {
 		this.getLista().clear();
 	}
 
-	/*public Pelicula buscarPeliculaPorTitulo(String pTitulo){
-		Pelicula rdo;
-		try{
-			if(estaPelicula(pTitulo)){
-				rdo = this.getLista().get(pTitulo);
-			}else{
-				System.out.println("La pelicula no se encuentra en la lista");
-				rdo=null;
-			}
-			return rdo;
-		}catch(NullPointerException e){
-			System.out.println("La película que intentas buscar no existe");
-			return null;
-		}
-	}	*/
+	public Pelicula buscarPeliNombre(String pTitulo){
+		return this.getLista().get(pTitulo);
+	}	
 }

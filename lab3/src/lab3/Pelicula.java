@@ -1,14 +1,18 @@
 package lab3;
 
+import java.util.Iterator;
+
 public class Pelicula {
 	//Atributos
 	private String titulo;
 	private ListaPeliculas milistapeliculas;
+	private ListaActores reparto;
 	
 	//Constructora
 	public Pelicula(String pTitulo){
 		this.titulo=pTitulo;
 		this.milistapeliculas = new ListaPeliculas();
+		this.reparto=new ListaActores();
 	}
 	
 	
@@ -23,6 +27,10 @@ public class Pelicula {
 	
 	public ListaPeliculas getMiListaPeliculas(){
 		return this.milistapeliculas;
+	}
+	
+	public ListaActores getListaActores(){
+		return this.reparto;
 	}
 	
 	
@@ -54,6 +62,10 @@ public class Pelicula {
 	
 	public void eliminarPelicula(Pelicula pPelicula){
 		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
+	}
+	
+	public void rellenarReparto(){
+		//TODO
 	}
 } 
 

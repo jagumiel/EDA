@@ -83,12 +83,14 @@ public class Actor{
 			if (aux!=null){
 				peliAux=ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(aux);
 				//meter el if, puede devolver null buscarPeliNombre()
-				Iterator<String> itActor=peliAux.getListaActores.getIterador();
-				while (itActor.hasNext()){
-					String actorAux=itActor.next();
-					Actor actorAux2=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
-					if (actorAux2!=null){
-						this.getColegas().anadirActor(actorAux2);
+				if (peliAux!=null){
+					Iterator<String> itActor=peliAux.getListaActores().getIterador();
+					while (itActor.hasNext()){
+						String actorAux=itActor.next();
+						Actor actorAux2=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
+						if (actorAux2!=null){
+							this.getColegas().anadirActor(actorAux2);
+						}
 					}
 				}
 			}

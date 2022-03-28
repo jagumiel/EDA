@@ -51,6 +51,9 @@ public class Actor{
 	public void anadirPelicula(Pelicula pPelicula){
 		try{
 		 this.getMiListaPeliculas().anadirPelicula(pPelicula);
+		 //this.getMiListaPeliculas().anadirEnReparto(pActor);
+		 String peliString=pPelicula.getTitulo();
+		 ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(peliString).anadirEnReparto(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(nombre));
 		}catch(Exception e){
 			System.out.println("La pelicula introducida no es válida");
 		}

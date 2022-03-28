@@ -35,7 +35,6 @@ public class Pelicula {
 	
 	
 	//Otros Metodos
-	
 	public boolean tieneElMismoTitulo(Pelicula pPelicula){
 		try{
 			if(pPelicula.getTitulo().equals(this.getTitulo())){
@@ -54,18 +53,22 @@ public class Pelicula {
 	
 	public void anadirPelicula(Pelicula pPelicula){
 		try{
-		 this.getMiListaPeliculas().anadirPelicula(pPelicula);
+		 this.getMiListaPeliculas().anadirPelicula(pPelicula);//Esto es mal?
 		}catch(Exception e){
 			System.out.println("La pelicula introducida no es válida");
 		}
 	}
 	
-	public void eliminarPelicula(Pelicula pPelicula){
-		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
+	public void anadirEnReparto(Actor pActor){
+		try{
+			 this.getListaActores().anadirActor(pActor);
+			}catch(Exception e){
+				System.out.println("El actor introducido no es válido");
+			}
 	}
 	
-	public void rellenarReparto(){
-		//TODO
+	public void eliminarPelicula(Pelicula pPelicula){
+		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
 	}
 } 
 

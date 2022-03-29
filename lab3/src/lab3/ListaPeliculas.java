@@ -30,7 +30,6 @@ public class ListaPeliculas {
 			String pTitulo = pPelicula.getTitulo();
 			return this.getMiListaPeliculas().containsKey(pTitulo);
 		}catch(NullPointerException e){
-			System.out.println("La película que buscas no se encuentra en la lista");
 			return false;
 		}
 	}

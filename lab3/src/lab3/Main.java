@@ -1,4 +1,4 @@
-package lab1;
+package lab3;
 
 import java.io.*;  //Importo el Paquete Entero
 import java.util.Iterator;
@@ -49,7 +49,8 @@ public class Main {
 				break;
 			case "2":
 				Actor anadir = new Actor(JOptionPane.showInputDialog("Introduce el nombre del actor"));
-				if(ListaActores.getListaActores().esta(anadir.getNombre())){
+				Pelicula anadepelicula;
+				if(ListaActoresPrincipal.getListaActoresPrincipal().esta(anadir)){
 					System.out.println("El actor ya se encuentra en la lista"); //ListaActores lo comprueba también pero poniendo esto aqui te ahorras meterle peliculas para nada.
 				}else{
 					boolean quedanpeliculas = true;
@@ -57,21 +58,22 @@ public class Main {
 					do{
 						respuesta = JOptionPane.showInputDialog("¿Quieres añadirle una película? (Si/No)");
 						if (respuesta.equalsIgnoreCase("si")){
-							anadir.anadirPelicula(JOptionPane.showInputDialog("Introduce el titulo de la película"));
+							anadepelicula = new Pelicula(JOptionPane.showInputDialog("Introduce el titulo de la película"));
+							anadir.anadirPelicula(anadepelicula);
 						}else if (respuesta.equalsIgnoreCase("no")){
 							quedanpeliculas=false;
 						}else{
 							JOptionPane.showMessageDialog(null, "La respuesta introducida es incorrecta. Por favor introduzca si o no");
 						}
 					}while (quedanpeliculas);
-					ListaActores.getListaActores().anadirActor(anadir);
+					ListaActoresPrincipal.getListaActoresPrincipal().anadirActor(anadir);
 				}	
 				break;
 			case "3":
 				ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(new Pelicula(JOptionPane.showInputDialog("Introduce el titulo de la película")));
 				break;
 			case "4":
-				ListaActores.getListaActores().ordenarLista();
+				ListaActoresPrincipal.getListaActoresPrincipal().ordenarLista();
 				break;
 			case "5":
 				Main.getMain().guardarFichero();
@@ -94,6 +96,7 @@ public class Main {
 			BufferedReader br = new BufferedReader(fr);
 			 String linea, tituloaux;
 			 Actor ultimoactor = null;
+			 Pelicula anadepelicula;
 			 boolean todobien = true;
 			 int ayuda = 0;
 			 while ((linea=br.readLine())!=null) {
@@ -108,11 +111,12 @@ public class Main {
 									 String[] sintabuladores = linea.split("\t");
 									 String[] titulo = sintabuladores[3-ayuda].split(" *[(]+\\d+[)]");
 									 tituloaux = titulo[0].replaceAll("[\"]","");
+									 anadepelicula = new Pelicula(tituloaux);
 									 if(tituloaux.equals("")){
 										 todobien=false;
 										 ayuda++;
 									 }else{
-										 ultimoactor.anadirPelicula(tituloaux);
+										 ultimoactor.anadirPelicula(anadepelicula);
 									 }
 								 }else{
 									 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
@@ -121,11 +125,11 @@ public class Main {
 								 String[] division = linea.split("\t");
 								 if(ayuda==0){
 									 ultimoactor = new Actor(division[0]);
-									 if (ListaActores.getListaActores().esta(division[0])){
+									 if (ListaActoresPrincipal.getListaActoresPrincipal().esta(ultimoactor)){
 										 Actor aux = ultimoactor;
-										 ultimoactor = ListaActores.getListaActores().buscarActor(aux);
+										 ultimoactor = ListaActoresPrincipal.getListaActoresPrincipal().buscarActor(aux);
 									 }else{
-										 ListaActores.getListaActores().anadirActor(ultimoactor);
+										 ListaActoresPrincipal.getListaActoresPrincipal().anadirActor(ultimoactor);
 									 }
 								 }
 								 String[] titulo = division[2-ayuda].split(" *[(]+\\d+[)]");
@@ -134,7 +138,8 @@ public class Main {
 									 todobien=false;
 									 ayuda++;
 								 }else{
-									 ultimoactor.anadirPelicula(tituloaux);
+									 anadepelicula = new Pelicula(tituloaux);
+									 ultimoactor.anadirPelicula(anadepelicula);
 								 }
 							 }
 						 }
@@ -142,7 +147,7 @@ public class Main {
 							//A veces en vez de salir actriz\t\tpelicula solo hay un \t. Lo solucionamos aqui:
 							todobien=false;
 							ayuda++;
-							ListaActores.getListaActores().eliminarActor(ultimoactor); //Para evitar duplicados
+							ListaActoresPrincipal.getListaActoresPrincipal().eliminarActor(ultimoactor); //Para evitar duplicados
 					 }
 				 }while(!todobien);
 			 }
@@ -161,13 +166,13 @@ public class Main {
             pw = new PrintWriter(fichero);
             String auxAct, auxPel;
             
-            Iterator<String> itrAct = ListaActores.getListaActores().getIterador();
+            Iterator<String> itrAct = ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
             Iterator<String> itrPel; 
             
             while(itrAct.hasNext()){
             	auxAct = itrAct.next();
             	pw.println(auxAct);
-            	itrPel = ListaActores.getListaActores().getMilista().get(auxAct).getMiListaPeliculas().getIterador();
+            	itrPel = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().get(auxAct).getMiListaPeliculas().getIterador();
             	while(itrPel.hasNext()){
             		auxPel=itrPel.next();
             		pw.println("--> "+auxPel);

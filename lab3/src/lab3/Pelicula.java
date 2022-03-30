@@ -61,10 +61,16 @@ public class Pelicula {
 	
 	public void anadirEnReparto(Actor pActor){
 		try{
-			 this.getListaActores().anadirActor(pActor);
-			}catch(Exception e){
-				System.out.println("El actor introducido no es válido");
+			Iterator<String> it = reparto.getIterador();
+			while(it.hasNext()){
+				String saux = it.next();
+				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
+				aaux.getColegas().anadirActor(aaux);
 			}
+			this.getListaActores().anadirActor(pActor);
+		}catch(Exception e){
+			System.out.println("El actor introducido no es válido");
+		}
 	}
 	
 	public void eliminarPelicula(Pelicula pPelicula){

@@ -2,6 +2,8 @@ package lab3;
 
 import java.io.*;  //Importo el Paquete Entero
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -191,6 +193,19 @@ public class Main {
               e2.printStackTrace();
            }
         }
+	}
+	
+	
+	public boolean estanRelacionados(Actor a1, Actor a2){
+		boolean estanrelacionados = false;
+		Queue porExaminar = new LinkedList();
+		
+		
+		
+		
+		
+		
+		return estanrelacionados;
 	}
 	
 }

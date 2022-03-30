@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 public class ListaActores {
 
-	private ListaActores milistaprincipaldeactores = new ListaActores();
 	private HashMap<String, Actor> lista;
 	
 	public ListaActores(){

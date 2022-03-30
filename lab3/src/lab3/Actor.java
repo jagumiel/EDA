@@ -50,12 +50,24 @@ public class Actor{
 	
 	public void anadirPelicula(Pelicula pPelicula){
 		try{
-		 this.getMiListaPeliculas().anadirPelicula(pPelicula);
-		 //this.getMiListaPeliculas().anadirEnReparto(pActor);
-		 String peliString=pPelicula.getTitulo();
-		 ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(peliString).anadirEnReparto(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(nombre));
+			 this.getMiListaPeliculas().anadirPelicula(pPelicula);
+			 String peliString=pPelicula.getTitulo();
+			 ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(peliString).anadirEnReparto(this);
+			 this.anadirNuevosColegas(pPelicula);
+			 
+		
 		}catch(Exception e){
 			System.out.println("La pelicula introducida no es válida");
+		}
+	}
+	
+	public void anadirNuevosColegas(Pelicula pPelicula){
+		ListaActores repartopelicula = pPelicula.getListaActores();
+		Iterator<String> it = repartopelicula.getIterador();
+		while(it.hasNext()){
+			String saux = it.next();
+			Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
+			this.getColegas().anadirActor(aaux);
 		}
 	}
 	

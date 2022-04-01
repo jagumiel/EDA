@@ -36,7 +36,8 @@ public class Main {
 					+ "3- Añadir una pelicula\n"
 					+ "4- Ordenar la lista de actores\n"
 					+ "5- Guardar fichero\n"
-					+ "6- Salir");
+					+ "6- Salir\n"
+					+ "7- Imprimir colegas de un actor");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -83,8 +84,14 @@ public class Main {
 			case "6":
 				repetir=false;
 				break;
+			case "7":
+				String auuuux = JOptionPane.showInputDialog("Introduce el nombre del actor");
+				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(auuuux);
+				aaux.rellenarColegas();
+				aaux.imprimirInformacion();
+				break;
 			default:
-				JOptionPane.showMessageDialog(null, "La opción itroducida es incorrecta. Introduce un número del 1 al 5.");
+				JOptionPane.showMessageDialog(null, "La opción introducida es incorrecta. Introduce un número del 1 al 5.");
 			}
 		}while(repetir==true);	
 	}
@@ -164,7 +171,7 @@ public class Main {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("C:\\actrices.txt");
+            fichero = new FileWriter("C:\\Users\\Mikel\\Desktop\\actrices.txt");
             pw = new PrintWriter(fichero);
             String auxAct, auxPel;
             
@@ -196,16 +203,16 @@ public class Main {
 	}
 	
 	
-	public boolean estanRelacionados(Actor a1, Actor a2){
-		boolean estanrelacionados = false;
-		Queue porExaminar = new LinkedList();
+	public int estanRelacionados(Actor a1, Actor a2){
+		int distancia = 0;
+		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
 		
 		
 		
 		
 		
-		
-		return estanrelacionados;
+		return distancia;
 	}
 	
 }

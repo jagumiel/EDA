@@ -54,8 +54,6 @@ public class Actor{
 			 String peliString=pPelicula.getTitulo();
 			 ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(peliString).anadirEnReparto(this);
 			 this.anadirNuevosColegas(pPelicula);
-			 
-		
 		}catch(Exception e){
 			System.out.println("La pelicula introducida no es válida");
 		}
@@ -66,8 +64,10 @@ public class Actor{
 		Iterator<String> it = repartopelicula.getIterador();
 		while(it.hasNext()){
 			String saux = it.next();
-			Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
-			this.getColegas().anadirActor(aaux);
+			if(saux!=this.getNombre()){
+				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
+				this.getColegas().anadirActor(aaux);
+			}
 		}
 	}
 	
@@ -77,7 +77,10 @@ public class Actor{
 	
 	public void imprimirInformacion(){
 		System.out.println("Nombre: "+this.getNombre());
+		System.out.println("Peliculas:");
 		this.getMiListaPeliculas().imprimirPeliculas();
+		System.out.println("Colegas:");
+		this.colegas.imprimirActores();
 	}
 	
 	public boolean equals(Actor pActor){
@@ -97,13 +100,12 @@ public class Actor{
 			aux=it.next();
 			if (aux!=null){
 				peliAux=ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(aux);
-				//meter el if, puede devolver null buscarPeliNombre()
 				if (peliAux!=null){
 					Iterator<String> itActor=peliAux.getListaActores().getIterador();
 					while (itActor.hasNext()){
 						String actorAux=itActor.next();
 						Actor actorAux2=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
-						if (actorAux2!=null){
+						if ((actorAux2!=null)&&(actorAux2.getNombre()!=this.getNombre())){
 							this.getColegas().anadirActor(actorAux2);
 						}
 					}

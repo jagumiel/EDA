@@ -65,7 +65,6 @@ public class Pelicula {
 			while(it.hasNext()){
 				String saux = it.next();
 				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
-				aaux.getColegas().anadirActor(aaux);
 			}
 			this.getListaActores().anadirActor(pActor);
 		}catch(Exception e){

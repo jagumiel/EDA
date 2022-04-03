@@ -203,7 +203,7 @@ public class Main {
 	}
 	
 	
-	public int estanRelacionados(Actor a1, Actor a2){
+	/*public int estanRelacionados(Actor a1, Actor a2){
 		int distancia = 0;
 		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
@@ -213,6 +213,58 @@ public class Main {
 		
 		
 		return distancia;
+	}*/
+	
+	public int estanRelacionados(Actor a1, Actor a2){
+		int distancia=0;
+		//boolean enc=false;
+		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
+		if(a1.getColegas().estaActor(a2)){
+			distancia=distancia++;
+			//enc=true;
+		}else{
+			//Crear un iterador, por cada colega de a1 lo anado a examinados porque ya lo he comprobado antes.
+			Iterator<String> itColega=a1.getColegas().getIterador();
+			while (itColega.hasNext()){
+				String colegAux=itColega.next();
+				Actor actorAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux);
+				examinados.anadirActor(actorAux);
+				distancia=distancia++;
+			}//Hasta aquí hemos comparado si a1 y a2 son amigos, y si no lo son, añadimos los colegas de a1 a examinados
+			//TODO ahora hay que anadir los "porExaminar".
+			itColega=examinados.getIterador();
+			while (itColega.hasNext()){
+				String actorAux=itColega.next();
+				Actor colegAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
+				if(a2==colegAux){
+					distancia++;
+					return distancia;
+				}
+			}
+		}
+		return distancia;
 	}
 	
+	public int estanRelacionados2(Actor a1, Actor a2){
+		boolean enc=false;
+		int distancia=0;
+		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
+		Iterator<String> itColega=a1.getColegas().getIterador();
+		while (itColega.hasNext()){
+			String colegAux=itColega.next();
+			porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
+		}
+		distancia++;
+		while(porExaminar.sacarUltimoElemento()!=null){
+			if(a2.equals(porExaminar.sacarUltimoElemento())){	
+				enc=true;
+				return distancia;
+			}
+		examinados.anadirActor(porExaminar.sacarUltimoElemento());
+		}
+		//TODO hacer una llamada recursiva para que se vuelva a cargar la lista de elementos por examinar.
+	return distancia;
+	}
 }

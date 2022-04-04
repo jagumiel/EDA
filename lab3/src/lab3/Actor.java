@@ -50,24 +50,17 @@ public class Actor{
 	
 	public void anadirPelicula(Pelicula pPelicula){
 		try{
-			 this.getMiListaPeliculas().anadirPelicula(pPelicula);
-			 String peliString=pPelicula.getTitulo();
-			 ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(peliString).anadirEnReparto(this);
-			 this.anadirNuevosColegas(pPelicula);
+			 if(pPelicula.getListaActores().getTamano()==0){
+				 this.getMiListaPeliculas().anadirPelicula(pPelicula);
+				 pPelicula.getListaActores().anadirActor(this);
+			 }else{
+				 pPelicula.anadirAColegasDelReparto(this);
+				 this.anadirColegasDePelicula(pPelicula);
+				 pPelicula.getListaActores().anadirActor(this);
+				 this.getMiListaPeliculas().anadirPelicula(pPelicula);
+			 }
 		}catch(Exception e){
 			System.out.println("La pelicula introducida no es válida");
-		}
-	}
-	
-	public void anadirNuevosColegas(Pelicula pPelicula){
-		ListaActores repartopelicula = pPelicula.getListaActores();
-		Iterator<String> it = repartopelicula.getIterador();
-		while(it.hasNext()){
-			String saux = it.next();
-			if(saux!=this.getNombre()){
-				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
-				this.getColegas().anadirActor(aaux);
-			}
 		}
 	}
 	
@@ -92,23 +85,16 @@ public class Actor{
 		return this.getNombre().compareTo(o.getNombre());
 	}
 	
-	public void rellenarColegas(){
-		Iterator <String> it=this.getMiListaPeliculas().getIterador();
+	public void anadirColegasDePelicula(Pelicula pPelicula){
+		Iterator <String> it=pPelicula.getListaActores().getIterador();
 		while(it.hasNext()){
 			String aux;
-			Pelicula peliAux;
+			Actor aaux;
 			aux=it.next();
 			if (aux!=null){
-				peliAux=ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(aux);
-				if (peliAux!=null){
-					Iterator<String> itActor=peliAux.getListaActores().getIterador();
-					while (itActor.hasNext()){
-						String actorAux=itActor.next();
-						Actor actorAux2=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
-						if ((actorAux2!=null)&&(actorAux2.getNombre()!=this.getNombre())){
-							this.getColegas().anadirActor(actorAux2);
-						}
-					}
+				aaux=pPelicula.getListaActores().buscarActorNombre(aux);
+				if (aaux!=null){
+					this.getColegas().anadirActor(aaux);
 				}
 			}
 		}

@@ -12,16 +12,16 @@ public class ListaActores {
 	}
 	
 	//Getters y Setters
-	public HashMap<String, Actor> getLista(){
-		return this.lista;
-	}
-	
 	public HashMap<String,Actor> getMiListaActores(){
 		return lista;
 	}
 	
 	public Iterator<String> getIterador(){
 		return this.getMiListaActores().keySet().iterator();
+	}
+	
+	public int getTamano(){
+		return this.lista.size();
 	}
 	
 	
@@ -57,6 +57,11 @@ public class ListaActores {
 			}
 		}	
 	}	
+	
+	public Actor buscarActorNombre(String pActor){
+		//Devuelve el Actor si está y sino devuelve null
+		return this.getMiListaActores().get(pActor);
+	}
 	
 	public void imprimirActores(){
 		Iterator<String> it = this.getIterador();

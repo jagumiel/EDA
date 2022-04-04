@@ -5,13 +5,11 @@ import java.util.Iterator;
 public class Pelicula {
 	//Atributos
 	private String titulo;
-	private ListaPeliculas milistapeliculas;
 	private ListaActores reparto;
 	
 	//Constructora
 	public Pelicula(String pTitulo){
 		this.titulo=pTitulo;
-		this.milistapeliculas = new ListaPeliculas();
 		this.reparto=new ListaActores();
 	}
 	
@@ -23,10 +21,6 @@ public class Pelicula {
 	
 	public void setTitulo(String pTitulo){
 		this.titulo=pTitulo;
-	}
-	
-	public ListaPeliculas getMiListaPeliculas(){
-		return this.milistapeliculas;
 	}
 	
 	public ListaActores getListaActores(){
@@ -51,29 +45,19 @@ public class Pelicula {
 		return this.tieneElMismoTitulo(pPelicula);
 	}
 	
-	public void anadirPelicula(Pelicula pPelicula){
-		try{
-		 this.getMiListaPeliculas().anadirPelicula(pPelicula);//Esto es mal?
-		}catch(Exception e){
-			System.out.println("La pelicula introducida no es válida");
-		}
-	}
-	
-	public void anadirEnReparto(Actor pActor){
+	public void anadirAColegasDelReparto(Actor pActor){
 		try{
 			Iterator<String> it = reparto.getIterador();
 			while(it.hasNext()){
 				String saux = it.next();
-				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(saux);
-			}
-			this.getListaActores().anadirActor(pActor);
+				if(!saux.equals(pActor.getNombre())){
+					Actor aaux = reparto.getMiListaActores().get(saux);
+					aaux.getColegas().anadirActor(pActor);
+				}
+			}	
 		}catch(Exception e){
 			System.out.println("El actor introducido no es válido");
 		}
-	}
-	
-	public void eliminarPelicula(Pelicula pPelicula){
-		this.getMiListaPeliculas().eliminarPelicula(pPelicula);
 	}
 } 
 

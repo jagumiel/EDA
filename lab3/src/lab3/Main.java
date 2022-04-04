@@ -87,8 +87,11 @@ public class Main {
 			case "7":
 				String auuuux = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(auuuux);
-				aaux.rellenarColegas();
-				aaux.imprimirInformacion();
+				if(aaux!=null){
+					aaux.imprimirInformacion();
+				}else{
+					JOptionPane.showMessageDialog(null, "El actor introducido es incorrecto");
+				}
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "La opción introducida es incorrecta. Introduce un número del 1 al 5.");
@@ -102,7 +105,8 @@ public class Main {
 		try{
 			 FileReader fr = new FileReader(nomF);
 			 @SuppressWarnings("resource")
-			BufferedReader br = new BufferedReader(fr);
+			 BufferedReader br = new BufferedReader(fr);
+			 String nombreactor;
 			 String linea, tituloaux;
 			 Actor ultimoactor = null;
 			 Pelicula anadepelicula;
@@ -120,36 +124,62 @@ public class Main {
 									 String[] sintabuladores = linea.split("\t");
 									 String[] titulo = sintabuladores[3-ayuda].split(" *[(]+\\d+[)]");
 									 tituloaux = titulo[0].replaceAll("[\"]","");
-									 anadepelicula = new Pelicula(tituloaux);
+									 
+									 
+									 //Tenemos el título de la película
 									 if(tituloaux.equals("")){
 										 todobien=false;
 										 ayuda++;
 									 }else{
-										 ultimoactor.anadirPelicula(anadepelicula);
+										 anadepelicula = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(tituloaux);
+										 if(anadepelicula==null){
+											 //No está en la Lista Principal de Peliculas
+											 anadepelicula = new Pelicula(tituloaux);
+											 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(anadepelicula);
+											 ultimoactor.anadirPelicula(anadepelicula);
+										 }else{
+											 ultimoactor.anadirPelicula(anadepelicula);
+										 }
 									 }
+									 
+									 
 								 }else{
 									 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 								 }
 							 }else{
 								 String[] division = linea.split("\t");
+								 nombreactor=division[0];
+								 
+								 
+								 //Tenemos el nombre del actor
 								 if(ayuda==0){
-									 ultimoactor = new Actor(division[0]);
-									 if (ListaActoresPrincipal.getListaActoresPrincipal().esta(ultimoactor)){
-										 Actor aux = ultimoactor;
-										 ultimoactor = ListaActoresPrincipal.getListaActoresPrincipal().buscarActor(aux);
-									 }else{
+									 ultimoactor = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(nombreactor);
+									 if (ultimoactor==null){
+										//No está en la Lista Principal de Actores
+										 ultimoactor = new Actor(nombreactor);
 										 ListaActoresPrincipal.getListaActoresPrincipal().anadirActor(ultimoactor);
 									 }
 								 }
+								 
+									 
 								 String[] titulo = division[2-ayuda].split(" *[(]+\\d+[)]");
 								 tituloaux = titulo[0].replaceAll("\"","");
+								 
+								 
+								//Tenemos el titulo de la película	 
 								 if(tituloaux.equals("\t")){
 									 todobien=false;
 									 ayuda++;
 								 }else{
-									 anadepelicula = new Pelicula(tituloaux);
-									 ultimoactor.anadirPelicula(anadepelicula);
-								 }
+									 anadepelicula = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(tituloaux);
+									 if(anadepelicula==null){
+										 anadepelicula = new Pelicula(tituloaux);
+										 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(anadepelicula);
+										 ultimoactor.anadirPelicula(anadepelicula);
+									 }else{
+										 ultimoactor.anadirPelicula(anadepelicula);
+									 }
+								 }	 
 							 }
 						 }
 					 }catch(ArrayIndexOutOfBoundsException ae){
@@ -203,7 +233,7 @@ public class Main {
 	}
 	
 	
-	/*public int estanRelacionados(Actor a1, Actor a2){
+	public int estanRelacionados(Actor a1, Actor a2){
 		int distancia = 0;
 		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
@@ -213,58 +243,6 @@ public class Main {
 		
 		
 		return distancia;
-	}*/
-	
-	public int estanRelacionados(Actor a1, Actor a2){
-		int distancia=0;
-		//boolean enc=false;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		if(a1.getColegas().estaActor(a2)){
-			distancia=distancia++;
-			//enc=true;
-		}else{
-			//Crear un iterador, por cada colega de a1 lo anado a examinados porque ya lo he comprobado antes.
-			Iterator<String> itColega=a1.getColegas().getIterador();
-			while (itColega.hasNext()){
-				String colegAux=itColega.next();
-				Actor actorAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux);
-				examinados.anadirActor(actorAux);
-				distancia=distancia++;
-			}//Hasta aquí hemos comparado si a1 y a2 son amigos, y si no lo son, añadimos los colegas de a1 a examinados
-			//TODO ahora hay que anadir los "porExaminar".
-			itColega=examinados.getIterador();
-			while (itColega.hasNext()){
-				String actorAux=itColega.next();
-				Actor colegAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
-				if(a2==colegAux){
-					distancia++;
-					return distancia;
-				}
-			}
-		}
-		return distancia;
 	}
 	
-	public int estanRelacionados2(Actor a1, Actor a2){
-		boolean enc=false;
-		int distancia=0;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		Iterator<String> itColega=a1.getColegas().getIterador();
-		while (itColega.hasNext()){
-			String colegAux=itColega.next();
-			porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
-		}
-		distancia++;
-		while(porExaminar.sacarUltimoElemento()!=null){
-			if(a2.equals(porExaminar.sacarUltimoElemento())){	
-				enc=true;
-				return distancia;
-			}
-		examinados.anadirActor(porExaminar.sacarUltimoElemento());
-		}
-		//TODO hacer una llamada recursiva para que se vuelva a cargar la lista de elementos por examinar.
-	return distancia;
-	}
 }

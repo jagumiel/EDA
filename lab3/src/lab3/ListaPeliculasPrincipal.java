@@ -57,6 +57,7 @@ public class ListaPeliculasPrincipal {
 	}
 
 	public Pelicula buscarPeliNombre(String pTitulo){
+		//Devuelve la Película si está y sino devuelve null
 		return this.getLista().get(pTitulo);
 	}	
 }

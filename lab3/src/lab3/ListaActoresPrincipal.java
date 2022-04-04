@@ -75,6 +75,7 @@ public class ListaActoresPrincipal {
 	}
 	
 	public Actor buscarActorNombre(String pActor){
+		//Devuelve el Actor si está y sino devuelve null
 		return this.getMilista().get(pActor);
 	}
 	

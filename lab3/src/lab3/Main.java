@@ -213,7 +213,7 @@ public class Main {
 		
 		
 		return distancia;
-	}*/
+	
 	
 	public int estanRelacionados(Actor a1, Actor a2){
 		int distancia=0;
@@ -275,5 +275,38 @@ public class Main {
 		}
 		//TODO hacer una llamada recursiva para que se vuelva a cargar la lista de elementos por examinar.
 	return distancia;
+	}*/
+	
+	public int estanRelacionados(Actor a1, Actor a2){
+		boolean enc=false;
+		int distancia=0;
+		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
+		Iterator<String> itColega=a1.getColegas().getIterador();
+		if(a1.getColegas().estaActor(a2)){
+			enc=true;
+			return 1; //Aqui se rompe el metodo si son colegas.
+		}
+		while (itColega.hasNext()){
+			String colegAux=itColega.next();
+			porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
+		}
+		distancia=distancia++;
+		while(enc=false){
+			Actor aux=porExaminar.sacarUltimoElemento();
+			if(aux.equals(a2)){
+				enc=true;
+			}
+			else{
+				examinados.anadirActor(aux);
+				itColega=aux.getColegas().getIterador();
+				while(itColega.hasNext()){
+					String colegAux=itColega.next();
+					porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
+				}
+			}
+		}
+		//TODO no va a devolver la distancia correcta, pero sí que es capaz de decir si estan o no relacionados.
+		return distancia;
 	}
 }

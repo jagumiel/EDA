@@ -87,8 +87,22 @@ public class Main {
 			case "7":
 				String auuuux = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(auuuux);
-				aaux.rellenarColegas();
-				aaux.imprimirInformacion();
+				if(aaux!=null){
+					aaux.imprimirInformacion();
+				}else{
+					JOptionPane.showMessageDialog(null, "El actor introducido es incorrecto");
+				}
+				break;
+			case "8":
+				String compara1 = JOptionPane.showInputDialog("Introduce el nombre del actor");
+				String compara2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
+				Actor acompara1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compara1);
+				Actor acompara2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compara2);
+				int distancia = 0;
+				if((acompara1!=null)&&(acompara2!=null)){
+					distancia = estanRelacionados(acompara1,acompara2);
+				}
+				System.out.println(distancia);
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "La opción introducida es incorrecta. Introduce un número del 1 al 5.");
@@ -102,7 +116,8 @@ public class Main {
 		try{
 			 FileReader fr = new FileReader(nomF);
 			 @SuppressWarnings("resource")
-			BufferedReader br = new BufferedReader(fr);
+			 BufferedReader br = new BufferedReader(fr);
+			 String nombreactor;
 			 String linea, tituloaux;
 			 Actor ultimoactor = null;
 			 Pelicula anadepelicula;
@@ -120,36 +135,62 @@ public class Main {
 									 String[] sintabuladores = linea.split("\t");
 									 String[] titulo = sintabuladores[3-ayuda].split(" *[(]+\\d+[)]");
 									 tituloaux = titulo[0].replaceAll("[\"]","");
-									 anadepelicula = new Pelicula(tituloaux);
+									 
+									 
+									 //Tenemos el título de la película
 									 if(tituloaux.equals("")){
 										 todobien=false;
 										 ayuda++;
 									 }else{
-										 ultimoactor.anadirPelicula(anadepelicula);
+										 anadepelicula = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(tituloaux);
+										 if(anadepelicula==null){
+											 //No está en la Lista Principal de Peliculas
+											 anadepelicula = new Pelicula(tituloaux);
+											 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(anadepelicula);
+											 ultimoactor.anadirPelicula(anadepelicula);
+										 }else{
+											 ultimoactor.anadirPelicula(anadepelicula);
+										 }
 									 }
+									 
+									 
 								 }else{
 									 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
 								 }
 							 }else{
 								 String[] division = linea.split("\t");
+								 nombreactor=division[0];
+								 
+								 
+								 //Tenemos el nombre del actor
 								 if(ayuda==0){
-									 ultimoactor = new Actor(division[0]);
-									 if (ListaActoresPrincipal.getListaActoresPrincipal().esta(ultimoactor)){
-										 Actor aux = ultimoactor;
-										 ultimoactor = ListaActoresPrincipal.getListaActoresPrincipal().buscarActor(aux);
-									 }else{
+									 ultimoactor = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(nombreactor);
+									 if (ultimoactor==null){
+										//No está en la Lista Principal de Actores
+										 ultimoactor = new Actor(nombreactor);
 										 ListaActoresPrincipal.getListaActoresPrincipal().anadirActor(ultimoactor);
 									 }
 								 }
+								 
+									 
 								 String[] titulo = division[2-ayuda].split(" *[(]+\\d+[)]");
 								 tituloaux = titulo[0].replaceAll("\"","");
+								 
+								 
+								//Tenemos el titulo de la película	 
 								 if(tituloaux.equals("\t")){
 									 todobien=false;
 									 ayuda++;
 								 }else{
-									 anadepelicula = new Pelicula(tituloaux);
-									 ultimoactor.anadirPelicula(anadepelicula);
-								 }
+									 anadepelicula = ListaPeliculasPrincipal.getListaPeliculasPrincipal().buscarPeliNombre(tituloaux);
+									 if(anadepelicula==null){
+										 anadepelicula = new Pelicula(tituloaux);
+										 ListaPeliculasPrincipal.getListaPeliculasPrincipal().anadirPelicula(anadepelicula);
+										 ultimoactor.anadirPelicula(anadepelicula);
+									 }else{
+										 ultimoactor.anadirPelicula(anadepelicula);
+									 }
+								 }	 
 							 }
 						 }
 					 }catch(ArrayIndexOutOfBoundsException ae){
@@ -171,7 +212,7 @@ public class Main {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("C:\\Users\\Mikel\\Desktop\\actrices.txt");
+            fichero = new FileWriter("C:\\Documents and Settings\\euitibi\\Escritorio\\actrices.txt");
             pw = new PrintWriter(fichero);
             String auxAct, auxPel;
             
@@ -277,32 +318,32 @@ public class Main {
 	return distancia;
 	}*/
 	
-	public int estanRelacionados(Actor a1, Actor a2){
+	public static int estanRelacionados(Actor a1, Actor a2){
 		boolean enc=false;
-		int distancia=0;
+		int distancia=1;
 		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		Iterator<String> itColega=a1.getColegas().getIterador();
 		if(a1.getColegas().estaActor(a2)){
-			enc=true;
 			return 1; //Aqui se rompe el metodo si son colegas.
-		}
-		while (itColega.hasNext()){
-			String colegAux=itColega.next();
-			porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
-		}
-		distancia=distancia++;
-		while(enc=false){
-			Actor aux=porExaminar.sacarUltimoElemento();
-			if(aux.equals(a2)){
-				enc=true;
+		}else{
+			while (itColega.hasNext()){
+				String colegAux=itColega.next();
+				porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
 			}
-			else{
-				examinados.anadirActor(aux);
-				itColega=aux.getColegas().getIterador();
-				while(itColega.hasNext()){
-					String colegAux=itColega.next();
-					porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
+			distancia=distancia+1;
+			while((enc==false)||(porExaminar.getTamano()!=0)){
+				Actor aux=porExaminar.sacarUltimoElemento();
+				if(aux.equals(a2)){
+					enc=true;
+				}
+				else{
+					examinados.anadirActor(aux);
+					itColega=aux.getColegas().getIterador();
+					while(itColega.hasNext()){
+						String colegAux=itColega.next();
+						porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
+					}
 				}
 			}
 		}

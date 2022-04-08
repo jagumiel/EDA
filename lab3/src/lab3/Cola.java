@@ -13,16 +13,25 @@ public class Cola {
 		numeroelementos=0;
 	}
 	
+	public int getTamano(){
+		return numeroelementos;
+	}
+	
 	public void anadir(Actor pActor){
 		cola[numeroelementos] = pActor;
 		numeroelementos++;
 	}
 	
 	public Actor sacarUltimoElemento(){
-		Actor retorno = cola[numeroelementos-1];
-		cola[numeroelementos-1]=null;
-		numeroelementos--;
-		return retorno;
+		if(numeroelementos==0){
+			System.out.println("La cola está vacía");
+			return null;
+		}else{
+			Actor retorno = cola[numeroelementos-1];
+			cola[numeroelementos-1]=null;
+			numeroelementos--;
+			return retorno;
+		}
 	}
 	
 }

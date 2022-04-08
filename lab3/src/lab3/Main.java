@@ -101,6 +101,8 @@ public class Main {
 				int distancia = 0;
 				if((acompara1!=null)&&(acompara2!=null)){
 					distancia = estanRelacionados(acompara1,acompara2);
+				}else{
+					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
 				System.out.println(distancia);
 				break;
@@ -318,7 +320,7 @@ public class Main {
 	return distancia;
 	}*/
 	
-	public static int estanRelacionados(Actor a1, Actor a2){
+	/*public static int estanRelacionados(Actor a1, Actor a2){
 		boolean enc=false;
 		int distancia=1;
 		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
@@ -332,7 +334,7 @@ public class Main {
 				porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
 			}
 			distancia=distancia+1;
-			while((enc==false)||(porExaminar.getTamano()!=0)){
+			while((enc==false)||(porExaminar.getTamano()<0)){
 				Actor aux=porExaminar.sacarUltimoElemento();
 				if(aux.equals(a2)){
 					enc=true;
@@ -349,5 +351,40 @@ public class Main {
 		}
 		//TODO no va a devolver la distancia correcta, pero sí que es capaz de decir si estan o no relacionados.
 		return distancia;
+	}*/
+	
+	
+	public static int estanRelacionados(Actor actor1, Actor actor2){
+		boolean enc = false;
+		Cola<Actor> porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
+		porExaminar.anadir(actor1);
+		Actor actoraexaminar = new Actor("Actor por Defecto");
+		Iterator<String> iteradordecolegas;
+		String saux;
+		Actor aaux;
+		int nivel = 1;
+		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0
+		
+		while((enc==false)&&(porExaminar.getTamano()>0)){
+			actoraexaminar = porExaminar.sacarPrimerElemento();
+			if(actoraexaminar.getColegas().estaActor(actor2)){
+				enc=true;
+			}else{
+				iteradordecolegas = actoraexaminar.getColegas().getIterador();
+				nivel++;
+				while(iteradordecolegas.hasNext()){
+					saux = iteradordecolegas.next();
+					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
+					if((aaux!=null)&&(!examinados.estaActor(aaux))){
+						aaux.setNivel(nivel);
+						porExaminar.anadir(aaux);
+						examinados.anadirActor(aaux);
+					}
+				}
+			}
+		}
+			
+		return actoraexaminar.getNivel();		
 	}
 }

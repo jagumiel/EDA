@@ -59,6 +59,12 @@ public class Pelicula {
 			System.out.println("El actor introducido no es válido");
 		}
 	}
+	
+	public void anadirActorAlReparto(Actor pActor){
+		if(!this.getListaActores().getMiListaActores().containsKey(pActor.getNombre())){
+			this.getListaActores().anadirActor(pActor);
+		}
+	}
 } 
 
 

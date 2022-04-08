@@ -7,13 +7,14 @@ public class Actor{
 	private String nombre;
 	private ListaPeliculas milistapeliculas;
 	private ListaActores colegas;
-	
+	private int nivel; //Mide distancia en el estan relacionados
 	
 	//Constructora
 	public Actor(String pNombre){
 		this.nombre=pNombre;
 		this.milistapeliculas = new ListaPeliculas();
 		this.colegas=new ListaActores();
+		this.nivel = 0;
 	}
 	
 	
@@ -34,6 +35,13 @@ public class Actor{
 		return this.colegas;
 	}
 	
+	public int getNivel(){
+		return this.nivel;
+	}
+	
+	public void setNivel(int pNivel){
+		this.nivel=pNivel;
+	}
 	
 	//Otros Metodos
 	public boolean tieneElMismoNombre(Actor pActor){
@@ -56,7 +64,7 @@ public class Actor{
 			 }else{
 				 pPelicula.anadirAColegasDelReparto(this);
 				 this.anadirColegasDePelicula(pPelicula);
-				 pPelicula.getListaActores().anadirActor(this);
+				 pPelicula.anadirActorAlReparto(this);
 				 this.getMiListaPeliculas().anadirPelicula(pPelicula);
 			 }
 		}catch(Exception e){
@@ -93,7 +101,7 @@ public class Actor{
 			aux=it.next();
 			if (aux!=null){
 				aaux=pPelicula.getListaActores().buscarActorNombre(aux);
-				if (aaux!=null){
+				if ((aaux!=null)&&(!aux.equals(this.getNombre()))){
 					this.getColegas().anadirActor(aaux);
 				}
 			}

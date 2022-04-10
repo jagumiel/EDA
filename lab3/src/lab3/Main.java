@@ -37,7 +37,8 @@ public class Main {
 					+ "4- Ordenar la lista de actores\n"
 					+ "5- Guardar fichero\n"
 					+ "6- Salir\n"
-					+ "7- Imprimir colegas de un actor");
+					+ "7- Imprimir colegas de un actor\n"
+					+ "8- Ver relación entre dos actores");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -363,7 +364,27 @@ public class Main {
 		Iterator<String> iteradordecolegas;
 		String saux;
 		Actor aaux;
+		actoraexaminar = porExaminar.sacarPrimerElemento();
 		int nivel = 1;
+		if(actoraexaminar.getColegas().estaActor(actor2)){
+			enc=true;
+			return 1;
+		}else{
+			//Aqui copio
+			iteradordecolegas = actoraexaminar.getColegas().getIterador();
+			nivel=actoraexaminar.getNivel()+1;
+			while(iteradordecolegas.hasNext()){
+				saux = iteradordecolegas.next();
+				aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
+				if((aaux!=null)&&(!examinados.estaActor(aaux))){
+					aaux.setNivel(nivel);
+					porExaminar.anadir(aaux);
+					examinados.anadirActor(aaux);
+				}
+			}
+			//Aqui termino
+		}
+		
 		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0
 		
 		while((enc==false)&&(porExaminar.getTamano()>0)){
@@ -372,7 +393,7 @@ public class Main {
 				enc=true;
 			}else{
 				iteradordecolegas = actoraexaminar.getColegas().getIterador();
-				nivel++;
+				nivel=actoraexaminar.getNivel()+1;
 				while(iteradordecolegas.hasNext()){
 					saux = iteradordecolegas.next();
 					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
@@ -384,7 +405,10 @@ public class Main {
 				}
 			}
 		}
-			
-		return actoraexaminar.getNivel();		
+		if (enc){
+			return actoraexaminar.getNivel();	
+		}else{
+			return (0);
+		}
 	}
 }

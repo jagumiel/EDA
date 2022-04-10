@@ -1,43 +1,61 @@
 package lab3;
 
 public class Cola<T> {
-
-	private int max;
+	
 	private T[] cola;
+	private int max;
 	private int numeroelementos;
-	private int fin;
-	private int frente;
+	private int primero;
+	private int ultimo;
 	
-	
-	@SuppressWarnings("unchecked")
 	public Cola(int pMax){
-		max=pMax;
-		cola = (T[]) new Object[max];
+		cola = (T[]) new Object[pMax];
+		max = pMax;
+		primero = 0;
 		numeroelementos=0;
-		frente=0;
-		fin=-1;
+		ultimo = -1;
 	}
 	
 	public int getTamano(){
-		return numeroelementos;
+		return this.numeroelementos;
 	}
 	
-	public void anadir(T anade){
-		//Si llega al final de la cola inserta en la posicion 0.
-		if(fin==max-1){
-			fin = -1;
+	public void anadir(T pAnade){
+		if(numeroelementos<max){
+			numeroelementos++;
+			if(ultimo==max-1){
+				System.out.println("true");
+				ultimo=-1;
+			}
+			ultimo++;
+			cola[ultimo]=pAnade;
 		}
-		cola[++fin] = anade;
-		numeroelementos++;
 	}
 	
 	public T sacarPrimerElemento(){
-		T temp = cola[frente++];
-		if(frente == max){
-			frente=0;
+		T elem = null;
+		if(numeroelementos!=0){
+			elem=cola[primero];
+			primero++;
+			if(primero==max){
+				primero=0;
+			}
+			numeroelementos--;
 		}
-		numeroelementos--;
-		return temp;
+		return elem;
 	}
 	
+	public void imprimirCola(){
+		int cont = 0;
+		int aux = primero;
+		while(cont<numeroelementos){
+			System.out.println(cola[aux]);
+			aux++;
+			cont++;
+			if(aux==max){
+				aux=0;
+			}
+		}
+	}
+
 }

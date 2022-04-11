@@ -389,7 +389,7 @@ public class Main {
 		
 		while((enc==false)&&(porExaminar.getTamano()>0)){
 			actoraexaminar = porExaminar.sacarPrimerElemento();
-			if(actoraexaminar.getColegas().estaActor(actor2)){
+			if(actoraexaminar.equals(actor2)){
 				enc=true;
 			}else{
 				iteradordecolegas = actoraexaminar.getColegas().getIterador();

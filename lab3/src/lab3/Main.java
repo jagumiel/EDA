@@ -101,7 +101,8 @@ public class Main {
 				Actor acompara2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compara2);
 				int distancia = 0;
 				if((acompara1!=null)&&(acompara2!=null)){
-					distancia = estanRelacionados(acompara1,acompara2);
+					distancia = estanRelacionados2(acompara1,acompara2);
+				
 				}else{
 					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
@@ -410,5 +411,39 @@ public class Main {
 		}else{
 			return (0);
 		}
+	}
+	
+	public static int estanRelacionados2(Actor actor1, Actor actor2){
+		boolean enc = false;
+		Cola<Actor> porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		ListaActores examinados = new ListaActores();
+		porExaminar.anadir(actor1);
+		Actor actoraexaminar = new Actor("Actor por Defecto");
+		Iterator<String> iteradordecolegas;
+		String saux;
+		Actor aaux;
+		int nivel = 1;
+		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0
+		
+		while((enc==false)&&(porExaminar.getTamano()>0)){
+			actoraexaminar = porExaminar.sacarPrimerElemento();
+			if(actoraexaminar.getColegas().estaActor(actor2)){
+				enc=true;
+			}else{
+				iteradordecolegas = actoraexaminar.getColegas().getIterador();
+				nivel=actoraexaminar.getNivel()+1;
+				while(iteradordecolegas.hasNext()){
+					saux = iteradordecolegas.next();
+					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
+					if((aaux!=null)&&(!examinados.estaActor(aaux))){
+						aaux.setNivel(nivel);
+						porExaminar.anadir(aaux);
+						examinados.anadirActor(aaux);
+					}
+				}
+			}
+		}
+			
+		return actoraexaminar.getNivel();		
 	}
 }

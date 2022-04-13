@@ -1,9 +1,12 @@
 package lab3;
 
 import java.io.*;  //Importo el Paquete Entero
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,9 +39,10 @@ public class Main {
 					+ "3- Añadir una pelicula\n"
 					+ "4- Ordenar la lista de actores\n"
 					+ "5- Guardar fichero\n"
-					+ "6- Salir\n"
-					+ "7- Imprimir colegas de un actor\n"
-					+ "8- Ver relación entre dos actores");
+					+ "6- Imprimir colegas de un actor\n"
+					+ "7- Ver relación entre dos actores\n"
+					+ "8- Hallar el grado de relaciones de esta lista\n"
+					+ "9- Salir\n");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -83,9 +87,6 @@ public class Main {
 				Main.getMain().guardarFichero();
 				break;
 			case "6":
-				repetir=false;
-				break;
-			case "7":
 				String auuuux = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(auuuux);
 				if(aaux!=null){
@@ -94,7 +95,7 @@ public class Main {
 					JOptionPane.showMessageDialog(null, "El actor introducido es incorrecto");
 				}
 				break;
-			case "8":
+			case "7":
 				String compara1 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				String compara2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor acompara1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compara1);
@@ -107,6 +108,9 @@ public class Main {
 					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
 				System.out.println(distancia);
+				break;
+			case "9":
+				repetir=false;
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "La opción introducida es incorrecta. Introduce un número del 1 al 5.");
@@ -216,7 +220,7 @@ public class Main {
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter("C:\\Documents and Settings\\euitibi\\Escritorio\\actrices.txt");
+            fichero = new FileWriter("C:\\Documents and Settings\\HP_Propietario\\Escritorio\\plop.txt");
             pw = new PrintWriter(fichero);
             String auxAct, auxPel;
             
@@ -248,176 +252,11 @@ public class Main {
 	}
 	
 	
-	/*public int estanRelacionados(Actor a1, Actor a2){
-		int distancia = 0;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		
-		
-		
-		
-		
-		return distancia;
-	
-	
-	public int estanRelacionados(Actor a1, Actor a2){
-		int distancia=0;
-		//boolean enc=false;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		if(a1.getColegas().estaActor(a2)){
-			distancia=distancia++;
-			//enc=true;
-		}else{
-			//Crear un iterador, por cada colega de a1 lo anado a examinados porque ya lo he comprobado antes.
-			Iterator<String> itColega=a1.getColegas().getIterador();
-			while (itColega.hasNext()){
-				String colegAux=itColega.next();
-				Actor actorAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux);
-				examinados.anadirActor(actorAux);
-				distancia=distancia++;
-			}//Hasta aquí hemos comparado si a1 y a2 son amigos, y si no lo son, añadimos los colegas de a1 a examinados
-			//TODO ahora hay que anadir los "porExaminar".
-			itColega=examinados.getIterador();
-			while (itColega.hasNext()){
-				String actorAux=itColega.next();
-				Actor colegAux=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actorAux);
-				if(a2==colegAux){
-					distancia++;
-					return distancia;
-				}
-			}
-		}
-		return distancia;
-	}
-	
-	public int estanRelacionados2(Actor a1, Actor a2){
-		boolean enc=false;
-		int distancia=0;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		Iterator<String> itColega=a1.getColegas().getIterador();
-		while (itColega.hasNext()){
-			String colegAux=itColega.next();
-			porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
-		}
-		distancia++;
-		while(!enc){
-			while(porExaminar.sacarUltimoElemento()!=null){
-				if(a2.equals(porExaminar.sacarUltimoElemento())){	
-					enc=true;
-					return distancia;
-				}
-			examinados.anadirActor(porExaminar.sacarUltimoElemento());
-			}
-			Iterator<String> it2=examinados.getIterador();
-			while(it2.hasNext()){
-				String actor=it2.next();
-				Actor a3=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(actor);
-				distancia=distancia+estanRelacionados2(a3, a2);
-			}
-
-		}
-		//TODO hacer una llamada recursiva para que se vuelva a cargar la lista de elementos por examinar.
-	return distancia;
-	}*/
-	
-	/*public static int estanRelacionados(Actor a1, Actor a2){
-		boolean enc=false;
-		int distancia=1;
-		Cola porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		Iterator<String> itColega=a1.getColegas().getIterador();
-		if(a1.getColegas().estaActor(a2)){
-			return 1; //Aqui se rompe el metodo si son colegas.
-		}else{
-			while (itColega.hasNext()){
-				String colegAux=itColega.next();
-				porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
-			}
-			distancia=distancia+1;
-			while((enc==false)||(porExaminar.getTamano()<0)){
-				Actor aux=porExaminar.sacarUltimoElemento();
-				if(aux.equals(a2)){
-					enc=true;
-				}
-				else{
-					examinados.anadirActor(aux);
-					itColega=aux.getColegas().getIterador();
-					while(itColega.hasNext()){
-						String colegAux=itColega.next();
-						porExaminar.anadir(ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(colegAux));
-					}
-				}
-			}
-		}
-		//TODO no va a devolver la distancia correcta, pero sí que es capaz de decir si estan o no relacionados.
-		return distancia;
-	}*/
-	
-	
-	public static int estanRelacionados(Actor actor1, Actor actor2){
-		boolean enc = false;
-		Cola<Actor> porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-		ListaActores examinados = new ListaActores();
-		porExaminar.anadir(actor1);
-		Actor actoraexaminar = new Actor("Actor por Defecto");
-		Iterator<String> iteradordecolegas;
-		String saux;
-		Actor aaux;
-		actoraexaminar = porExaminar.sacarPrimerElemento();
-		int nivel = 1;
-		if(actoraexaminar.getColegas().estaActor(actor2)){
-			enc=true;
-			return 1;
-		}else{
-			//Aqui copio
-			iteradordecolegas = actoraexaminar.getColegas().getIterador();
-			nivel=actoraexaminar.getNivel()+1;
-			while(iteradordecolegas.hasNext()){
-				saux = iteradordecolegas.next();
-				aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
-				if((aaux!=null)&&(!examinados.estaActor(aaux))){
-					aaux.setNivel(nivel);
-					porExaminar.anadir(aaux);
-					examinados.anadirActor(aaux);
-				}
-			}
-			//Aqui termino
-		}
-		
-		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0
-		
-		while((enc==false)&&(porExaminar.getTamano()>0)){
-			actoraexaminar = porExaminar.sacarPrimerElemento();
-			if(actoraexaminar.equals(actor2)){
-				enc=true;
-			}else{
-				iteradordecolegas = actoraexaminar.getColegas().getIterador();
-				nivel=actoraexaminar.getNivel()+1;
-				while(iteradordecolegas.hasNext()){
-					saux = iteradordecolegas.next();
-					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
-					if((aaux!=null)&&(!examinados.estaActor(aaux))){
-						aaux.setNivel(nivel);
-						porExaminar.anadir(aaux);
-						examinados.anadirActor(aaux);
-					}
-				}
-			}
-		}
-		if (enc){
-			return actoraexaminar.getNivel();	
-		}else{
-			return (0);
-		}
-	}
-	
 	public static int estanRelacionados2(Actor actor1, Actor actor2){
 		boolean enc = false;
 		Cola<Actor> porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
-		porExaminar.anadir(actor1);
+		porExaminar.anadirElemento(actor1);
 		Actor actoraexaminar = new Actor("Actor por Defecto");
 		Iterator<String> iteradordecolegas;
 		String saux;
@@ -437,13 +276,144 @@ public class Main {
 					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
 					if((aaux!=null)&&(!examinados.estaActor(aaux))){
 						aaux.setNivel(nivel);
-						porExaminar.anadir(aaux);
+						porExaminar.anadirElemento(aaux);
 						examinados.anadirActor(aaux);
 					}
 				}
 			}
 		}
+		int resultado=actoraexaminar.getNivel();
+		while(porExaminar.getTamano()!=0){
+			Actor a=porExaminar.sacarPrimerElemento();
+			ListaActoresPrincipal.getListaActoresPrincipal().buscarActor(a).setNivel(0);
+			//Esto borra la lista de actores porExaminar y ademas restaura su valor a 0.
+		}
+		while(examinados.getIterador().hasNext()){
+			String a1=examinados.getIterador().next();
+			examinados.eliminarActor(examinados.buscarActorNombre(a1));
+			/*Hace lo mismo con los examinados. Esto es porque si lo dejamos igual y
+			volvemos a hacer otra búsqueda, el resultado no sería correcto, ya que
+			tendrían niveles asignados.*/
+		}
+		
+		if(enc==false){
+			resultado=0;
+		}
 			
-		return actoraexaminar.getNivel();		
+		return resultado;	
 	}
+	
+	
+	public double gradoRelaciones(){
+		double gr = 0;
+		int numeropruebas = ListaActoresPrincipal.getListaActoresPrincipal().getTamano();
+		
+		if(numeropruebas>500){
+			numeropruebas=500;
+		}
+		
+		boolean fin = false;
+		String[] arraynombres = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+		arraynombres = rellenarArray();
+		int r1;
+		int r2;
+		double distancia = 0;
+		double distanciaantigua = 0;
+		int cont = 0; //Borrar tras las pruebas
+		Random rg = new Random();
+		Actor a1;
+		Actor a2;
+		
+		while(!fin){
+			
+			for (int i=0; i<numeropruebas; i++){
+				r1 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+				r2 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+				a1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r1]);
+				a2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r2]);
+				distancia += estanRelacionados2(a1, a2);
+			}
+			
+			distancia /= numeropruebas;
+			
+			//Borrar tras las pruebas (o no)
+			cont++;
+			System.out.println("Vuelta número: "+cont);
+			System.out.println(distancia);
+			System.out.println(distanciaantigua);
+			System.out.println(fin);
+			
+			
+			if((distancia-0.05<distanciaantigua)&&(distanciaantigua<distancia+0.05)){
+				fin = true;
+				gr = distancia;
+			}else{
+				numeropruebas*=2;
+				distanciaantigua=distancia;
+				distancia = 0;
+			}
+		}
+		
+		return gr;
+	}
+	
+	public String[] rellenarArray(){
+		String[] miarray = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+		int cont = 0;
+		
+		Object[] arraydellaves = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().keySet().toArray();
+		for(Object a :arraydellaves){
+			miarray[cont] = a.toString();
+			cont++;
+		}
+		
+		
+		return miarray;
+	}
+	
+	
+	
+	/*
+	 *1er ejercicio: 
+	 *for i in 1..numPruebas{
+	 *	Generar Aleatoriamente x,y Tomamos una muestra(Hacemos pruebas de distintos tamaños hasta que los resultados obtenidos no difieran mucho entre si)
+	 *	calcular dist(x,y)
+	 *}
+	 *hacer media 
+	 *
+	 *
+	 *Random rg = new Random()
+	 *int x = rg.nextInt(numeroactores)
+	 *
+	 *
+	 *Para acceder al actor por posicion, creamos un ArrayList de claves
+	 *T.Hash.keySet().toArray(); <-- PROBAR ESTO
+	 *
+	 *-----------------------------------------------------------------------
+	 *
+	 *2º ejercicio:
+	 *Centralidad(a)
+	 *cont=0
+	 *for i in 1..numPruebas
+	 *	Genero aleatoriamente x,y
+	 *	Si a pertenece al camino entre x e y
+	 *		cont++;
+	 *	}
+	 *}
+	 *centralidad de a = numero de apariciones de a/numero de actores en el grafo
+	 *
+	 *-------------------------------------------------------------------------
+	 *
+	 *Del Labo Anterior: Hacer que imprima el camino del recorrido minimo
+	 *
+	 *-------------------------------------------------------------------------
+	 *
+	 *3er Ejercicio:
+	 *Para saber los actores de mas centralidad, hacemos pruebas hallando el camino 
+	 *mas corto entrte dos actores Random, y apuntamos en una tabla los actores 
+	 *que están por medio y el número de veces que aparecen
+	 *
+	 *Si hacemos el tercer ejercicio no hay que hacer el segundo.
+	 *Se puede hacer un filtrado para que no aparezcan cantantes.
+	 */
 }

@@ -69,5 +69,12 @@ public class ListaActores {
 			System.out.println("->"+it.next());
 		}
 	}
-	
+
+	public void resetear() {
+		int tamano=this.getTamano();
+		//TODO para resetear la lista, pero que ponga los valores del nivel de los actores a 0.
+		this.lista.clear();
+	}
 }
+
+

@@ -1,61 +1,77 @@
 package lab3;
 
+import java.util.concurrent.TimeUnit;
+
 public class Cola<T> {
 	
-	private T[] cola;
-	private int max;
-	private int numeroelementos;
+	private T[] micola;
 	private int primero;
 	private int ultimo;
+	private int numeroelementos;
+	private int capacidadmaxima;
 	
-	public Cola(int pMax){
-		cola = (T[]) new Object[pMax];
-		max = pMax;
-		primero = 0;
-		numeroelementos=0;
-		ultimo = -1;
+	public Cola(int pCapacidadMaxima){
+		this.capacidadmaxima = pCapacidadMaxima;
+		this.primero = 0;
+		this.ultimo = -1;
+		this.numeroelementos = 0;
+		this.micola = (T[])(new Object[capacidadmaxima]);
 	}
 	
-	public int getTamano(){
-		return this.numeroelementos;
-	}
-	
-	public void anadir(T pAnade){
-		if(numeroelementos<max){
-			numeroelementos++;
-			if(ultimo==max-1){
-				System.out.println("true");
+	public boolean anadirElemento(T elem){
+		//Devuelve true si lo he añadido
+		boolean anadido = false;
+		
+		if(numeroelementos!=capacidadmaxima){
+			if(ultimo+1==capacidadmaxima){
 				ultimo=-1;
 			}
-			ultimo++;
-			cola[ultimo]=pAnade;
+			this.micola[++ultimo] = elem;
+			numeroelementos++;
+			anadido=true;
 		}
+		
+		return anadido;		
 	}
 	
 	public T sacarPrimerElemento(){
 		T elem = null;
+		
 		if(numeroelementos!=0){
-			elem=cola[primero];
+			elem = this.micola[primero];
 			primero++;
-			if(primero==max){
-				primero=0;
-			}
 			numeroelementos--;
+			if(primero==capacidadmaxima){
+				primero = 0;
+			}
 		}
+		
 		return elem;
 	}
 	
-	public void imprimirCola(){
-		int cont = 0;
-		int aux = primero;
-		while(cont<numeroelementos){
-			System.out.println(cola[aux]);
-			aux++;
-			cont++;
-			if(aux==max){
-				aux=0;
+	public void imprimir(){
+		if(ultimo!=-1){
+			boolean salir = false;
+			int contactual = primero;
+			int fin = ultimo;
+			while(!salir){
+				if(contactual==fin){
+					salir=true;
+				}
+				
+				T actual = micola[contactual];
+				System.out.print(actual+"-");
+				if(contactual==capacidadmaxima-1){
+					contactual=0;
+				}else{
+					contactual++;
+				}
 			}
 		}
+	}
+
+	public int getTamano() {
+		return this.numeroelementos;
 	}
 
 }

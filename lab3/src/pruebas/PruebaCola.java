@@ -1,8 +1,6 @@
-package lab3;
+package pruebas;
 
 import lab3.Cola;
-
-
 
 public class PruebaCola {
 	
@@ -10,7 +8,7 @@ public class PruebaCola {
 	
 	public static void main(String[] args){
 		 System.out.println("Prueba 1: ");
-		 micoladepruebas = new Cola(5);
+		 micoladepruebas = new Cola<Integer>(5);
 		 
 		
 		System.out.println("Compruebo que efctivamente está vacía: ");

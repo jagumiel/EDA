@@ -130,7 +130,7 @@ public class Main {
 				String comparas2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor acomparas1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(comparas1);
 				Actor acomparas2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(comparas2);
-				Cola<Actor> distancias=new Cola<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+				Pila<Actor> distancias=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 				if((acomparas1!=null)&&(acomparas2!=null)){
 					distancias = estanRelacionadosCola(acomparas1,acomparas2);
 				
@@ -285,7 +285,7 @@ public class Main {
 	
 	public static int estanRelacionados(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Cola<Actor> porExaminar = new Cola(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
 		Actor actoraexaminar = new Actor("Actor por Defecto");
@@ -340,10 +340,10 @@ public class Main {
 	}
 	
 	
-	public static Cola<Actor> estanRelacionadosCola(Actor actor1, Actor actor2){
+	public static Pila<Actor> estanRelacionadosCola(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Cola <Actor> camino=new Cola<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());//TODO ¿Por qué?
-		Cola<Actor> porExaminar = new Cola<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
 		Actor actoraexaminar = new Actor("Actor por Defecto");

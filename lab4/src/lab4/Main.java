@@ -4,6 +4,7 @@ import java.io.*;  //Importo el Paquete Entero
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,11 +37,12 @@ public class Main {
 					+ "3- Añadir una pelicula\n"
 					+ "4- Ordenar la lista de actores\n"
 					+ "5- Guardar fichero\n"
-					+ "6- Salir\n"
-					+ "7- Imprimir colegas de un actor\n"
-					+ "8- Ver relación entre dos actores (distancia)\n"
-					+ "9- ¿Estan relacionados los actores? (boolean)\n"
-					+ "10- Ver relación entre dos actores (distancia y nombres)\n");
+					+ "6- Imprimir colegas de un actor\n"
+					+ "7- Ver relación entre dos actores (distancia)\n"
+					+ "8 ¿Estan relacionados los actores? (boolean)\n"
+					+ "9- Ver relación entre dos actores (distancia y nombres)\n"
+					+ "10- Hallar el grado de relaciones de los actores en la lista"
+					+ "11- Salir");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -48,7 +50,9 @@ public class Main {
 				fc.setDialogTitle("Elige un fichero"); 
 				fc.setAcceptAllFileFilterUsed(false);  
 				if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { //Comprueba que hemos seleccionado un archivo
+					StopWatch crono = new StopWatch();
 					Main.getMain().cargarFichero(fc.getSelectedFile()); 
+					System.out.println(crono.elapsedTime());
 				} else {
 					System.out.println("No seleccion ");
 				}
@@ -85,9 +89,6 @@ public class Main {
 				Main.getMain().guardarFichero();
 				break;
 			case "6":
-				repetir=false;
-				break;
-			case "7":
 				String auuuux = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor aaux = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(auuuux);
 				if(aaux!=null){
@@ -96,7 +97,7 @@ public class Main {
 					JOptionPane.showMessageDialog(null, "El actor introducido es incorrecto");
 				}
 				break;
-			case "8":
+			case "7":
 				String compara1 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				String compara2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor acompara1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compara1);
@@ -110,7 +111,7 @@ public class Main {
 				}
 				System.out.println(distancia);
 				break;
-			case "9":
+			case "8":
 				String compar1 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				String compar2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor acompar1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(compar1);
@@ -125,7 +126,7 @@ public class Main {
 				System.out.println(relacionados);
 				break;
 				
-			case "10":
+			case "9":
 				String comparas1 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				String comparas2 = JOptionPane.showInputDialog("Introduce el nombre del actor");
 				Actor acomparas1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(comparas1);
@@ -142,6 +143,12 @@ public class Main {
 						System.out.println(distancias.sacarPrimerElemento().getNombre());
 					}
 				}catch(Exception e){}
+				break;
+			case "10":
+				System.out.println(Main.getMain().gradoRelaciones());
+
+			case "11":
+				repetir=false;
 				break;
 			default:
 				JOptionPane.showMessageDialog(null, "La opción introducida es incorrecta. Introduce un número del 1 al 5.");
@@ -402,4 +409,117 @@ public class Main {
 			
 		return camino;	
 	}
+	
+	public double gradoRelaciones(){
+	double gr = 0;
+	int numeropruebas = ListaActoresPrincipal.getListaActoresPrincipal().getTamano();
+	
+	if(numeropruebas>500){
+		numeropruebas=500;
+	}
+	
+	boolean fin = false;
+	String[] arraynombres = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+	arraynombres = rellenarArray();
+	int r1;
+	int r2;
+	double distancia = 0;
+	double distanciaantigua = 0;
+	int cont = 0; //Borrar tras las pruebas
+	Random rg = new Random();
+	Actor a1;
+	Actor a2;
+	
+	while(!fin){
+		
+		for (int i=0; i<numeropruebas; i++){
+			r1 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+			r2 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+			a1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r1]);
+			a2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r2]);
+			distancia += estanRelacionados(a1, a2);
+		}
+		
+		distancia /= numeropruebas;
+		
+		//Borrar tras las pruebas (o no)
+		cont++;
+		System.out.println("Vuelta número: "+cont);
+		System.out.println(distancia);
+		System.out.println(distanciaantigua);
+		System.out.println(fin);
+		
+		
+		if((distancia-0.05<distanciaantigua)&&(distanciaantigua<distancia+0.05)){
+			fin = true;
+			gr = distancia;
+		}else{
+			numeropruebas*=2;
+			distanciaantigua=distancia;
+			distancia = 0;
+		}
+	}
+	
+	return gr;
+}
+
+public String[] rellenarArray(){
+	String[] miarray = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+	int cont = 0;
+	
+	Object[] arraydellaves = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().keySet().toArray();
+	for(Object a :arraydellaves){
+		miarray[cont] = a.toString();
+		cont++;
+	}
+	
+	
+	return miarray;
+}
+
+
+
+/*
+ *1er ejercicio: 
+ *for i in 1..numPruebas{
+ *	Generar Aleatoriamente x,y Tomamos una muestra(Hacemos pruebas de distintos tamaños hasta que los resultados obtenidos no difieran mucho entre si)
+ *	calcular dist(x,y)
+ *}
+ *hacer media 
+ *
+ *
+ *Random rg = new Random()
+ *int x = rg.nextInt(numeroactores)
+ *
+ *
+ *Para acceder al actor por posicion, creamos un ArrayList de claves
+ *T.Hash.keySet().toArray(); <-- PROBAR ESTO
+ *
+ *-----------------------------------------------------------------------
+ *
+ *2º ejercicio:
+ *Centralidad(a)
+ *cont=0
+ *for i in 1..numPruebas
+ *	Genero aleatoriamente x,y
+ *	Si a pertenece al camino entre x e y
+ *		cont++;
+ *	}
+ *}
+ *centralidad de a = numero de apariciones de a/numero de actores en el grafo
+ *
+ *-------------------------------------------------------------------------
+ *
+ *Del Labo Anterior: Hacer que imprima el camino del recorrido minimo
+ *
+ *-------------------------------------------------------------------------
+ *
+ *3er Ejercicio:
+ *Para saber los actores de mas centralidad, hacemos pruebas hallando el camino 
+ *mas corto entrte dos actores Random, y apuntamos en una tabla los actores 
+ *que están por medio y el número de veces que aparecen
+ *
+ *Si hacemos el tercer ejercicio no hay que hacer el segundo.
+ *Se puede hacer un filtrado para que no aparezcan cantantes.
+ */
 }

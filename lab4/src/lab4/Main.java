@@ -1,6 +1,8 @@
 package lab4;
 
 import java.io.*;  //Importo el Paquete Entero
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -41,8 +43,9 @@ public class Main {
 					+ "7- Ver relación entre dos actores (distancia)\n"
 					+ "8 ¿Estan relacionados los actores? (boolean)\n"
 					+ "9- Ver relación entre dos actores (distancia y nombres)\n"
-					+ "10- Hallar el grado de relaciones de los actores en la lista"
-					+ "11- Salir");
+					+ "10- Hallar el grado de relaciones de los actores en la lista\n"
+					+ "11- Mostrar Top 10 (Más nodos)\n"
+					+ "12- Salir");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -148,6 +151,10 @@ public class Main {
 				System.out.println(Main.getMain().gradoRelaciones());
 
 			case "11":
+				Main.getMain().nodoCentral(ListaActoresPrincipal.getListaActoresPrincipal().getMilista());
+				break;	
+				
+			case "12":
 				repetir=false;
 				break;
 			default:
@@ -292,7 +299,7 @@ public class Main {
 	
 	public static int estanRelacionados(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila<Actor> porExaminar = new Pila(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
 		Actor actoraexaminar = new Actor("Actor por Defecto");
@@ -349,7 +356,7 @@ public class Main {
 	
 	public static Pila<Actor> estanRelacionadosCola(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());//TODO ¿Por qué?
 		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
@@ -411,72 +418,111 @@ public class Main {
 	}
 	
 	public double gradoRelaciones(){
-	double gr = 0;
-	int numeropruebas = ListaActoresPrincipal.getListaActoresPrincipal().getTamano();
-	
-	if(numeropruebas>500){
-		numeropruebas=500;
-	}
-	
-	boolean fin = false;
-	String[] arraynombres = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
-	arraynombres = rellenarArray();
-	int r1;
-	int r2;
-	double distancia = 0;
-	double distanciaantigua = 0;
-	int cont = 0; //Borrar tras las pruebas
-	Random rg = new Random();
-	Actor a1;
-	Actor a2;
-	
-	while(!fin){
+		double gr = 0;
+		int numeropruebas = ListaActoresPrincipal.getListaActoresPrincipal().getTamano();
 		
-		for (int i=0; i<numeropruebas; i++){
-			r1 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-			r2 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-			a1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r1]);
-			a2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r2]);
-			distancia += estanRelacionados(a1, a2);
+		if(numeropruebas>500){
+			numeropruebas=500;
 		}
 		
-		distancia /= numeropruebas;
+		boolean fin = false;
+		String[] arraynombres = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+		arraynombres = rellenarArray();
+		int r1;
+		int r2;
+		double distancia = 0;
+		double distanciaantigua = 0;
+		int cont = 0; //Borrar tras las pruebas
+		Random rg = new Random();
+		Actor a1;
+		Actor a2;
 		
-		//Borrar tras las pruebas (o no)
-		cont++;
-		System.out.println("Vuelta número: "+cont);
-		System.out.println(distancia);
-		System.out.println(distanciaantigua);
-		System.out.println(fin);
-		
-		
-		if((distancia-0.05<distanciaantigua)&&(distanciaantigua<distancia+0.05)){
-			fin = true;
-			gr = distancia;
-		}else{
-			numeropruebas*=2;
-			distanciaantigua=distancia;
-			distancia = 0;
+		while(!fin){
+			
+			for (int i=0; i<numeropruebas; i++){
+				r1 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+				r2 = rg.nextInt(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+				a1 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r1]);
+				a2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(arraynombres[r2]);
+				distancia += estanRelacionados(a1, a2);
+			}
+			
+			distancia /= numeropruebas;
+			
+			//Borrar tras las pruebas (o no)
+			cont++;
+			System.out.println("Vuelta número: "+cont);
+			System.out.println(distancia);
+			System.out.println(distanciaantigua);
+			System.out.println(fin);
+			
+			
+			if((distancia-0.05<distanciaantigua)&&(distanciaantigua<distancia+0.05)){
+				fin = true;
+				gr = distancia;
+			}else{
+				numeropruebas*=2;
+				distanciaantigua=distancia;
+				distancia = 0;
+			}
 		}
+		
+		return gr;
+	}
+
+	public String[] rellenarArray(){
+		String[] miarray = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
+		int cont = 0;
+		
+		Object[] arraydellaves = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().keySet().toArray();
+		for(Object a :arraydellaves){
+			miarray[cont] = a.toString();
+			cont++;
+		}
+		
+		
+		return miarray;
+	}
+ 
+	public void nodoCentral(HashMap<String,Actor> pMiMapa) {
+		ArrayList<Actor> topActores = new ArrayList<Actor>();
+		for(int i=0; i<10;i++){
+			//Suponemos que trabajamos con una lista de actores grande, asi que siempre tendrá más de 10 elementos.
+			ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
+			String pActorNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
+			topActores.add(pActor);
+			//Hasta aqui llenamos una lista con los 10 primeros actores.
+		}
+		
+		while(ListaActoresPrincipal.getListaActoresPrincipal().getIterador().hasNext()){
+			String pActorNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
+			int min=this.buscarPosMin(topActores);
+			if(pActor.getNumColegas()>topActores.get(min).getNumColegas()){
+				topActores.add(min, pActor);
+			}
+		}
+		//Metodo para imprimir el top 10 de actores
+		for (int j=0; j < topActores.size(); j++) {
+			Actor aux = topActores.get(j);
+			System.out.println(aux.getNombre());
+		}
+		//Orden constante, 10 iteraciones, la longitud del array;
 	}
 	
-	return gr;
-}
-
-public String[] rellenarArray(){
-	String[] miarray = new String[ListaActoresPrincipal.getListaActoresPrincipal().getTamano()];
-	int cont = 0;
-	
-	Object[] arraydellaves = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().keySet().toArray();
-	for(Object a :arraydellaves){
-		miarray[cont] = a.toString();
-		cont++;
+	public int buscarPosMin(ArrayList<Actor>pTop){
+		int pos=0;
+		for (int i=0; i<10; i++) {
+		    if (pTop.get(i).getNumColegas()<pTop.get(pos).getNumColegas()) {
+		        pos=i;
+		    }
+		}
+		return pos;
 	}
 	
-	
-	return miarray;
 }
-
+		
 
 
 /*
@@ -522,4 +568,3 @@ public String[] rellenarArray(){
  *Si hacemos el tercer ejercicio no hay que hacer el segundo.
  *Se puede hacer un filtrado para que no aparezcan cantantes.
  */
-}

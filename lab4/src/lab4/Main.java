@@ -151,7 +151,12 @@ public class Main {
 				System.out.println(Main.getMain().gradoRelaciones());
 
 			case "11":
-				Main.getMain().nodoCentral(ListaActoresPrincipal.getListaActoresPrincipal().getMilista());
+				int i=0;
+				ArrayList<Actor>top=Main.getMain().nodoCentral(ListaActoresPrincipal.getListaActoresPrincipal().getMilista());
+				while(top.get(i)!=null){
+					System.out.println(top.get(i).getNombre());
+					i++;
+				}
 				break;	
 				
 			case "12":
@@ -299,7 +304,7 @@ public class Main {
 	
 	public static int estanRelacionados(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Pila<Actor> porExaminar = new Pila(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
 		Actor actoraexaminar = new Actor("Actor por Defecto");
@@ -356,7 +361,7 @@ public class Main {
 	
 	public static Pila<Actor> estanRelacionadosCola(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());//TODO ¿Por qué?
+		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
 		porExaminar.anadir(actor1);
@@ -484,14 +489,14 @@ public class Main {
 		return miarray;
 	}
  
-	public void nodoCentral(HashMap<String,Actor> pMiMapa) {
+	public ArrayList<Actor> nodoCentral(HashMap<String,Actor> pMiMapa) {
 		ArrayList<Actor> topActores = new ArrayList<Actor>();
 		for(int i=0; i<10;i++){
 			//Suponemos que trabajamos con una lista de actores grande, asi que siempre tendrá más de 10 elementos.
 			ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
 			String pActorNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
 			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
-			topActores.add(pActor);
+			topActores.add(pActor);//TODO, siempre me está metiendo al primer actor, el array se llena con el mismo actor. ERROR.
 			//Hasta aqui llenamos una lista con los 10 primeros actores.
 		}
 		
@@ -509,17 +514,25 @@ public class Main {
 			System.out.println(aux.getNombre());
 		}
 		//Orden constante, 10 iteraciones, la longitud del array;
+		return topActores;
 	}
 	
 	public int buscarPosMin(ArrayList<Actor>pTop){
 		int pos=0;
-		for (int i=0; i<10; i++) {
-		    if (pTop.get(i).getNumColegas()<pTop.get(pos).getNumColegas()) {
+		int i=0;
+		while(i<10) {
+		    if (pTop.get(i).getNumColegas()<=pTop.get(pos).getNumColegas()) {
 		        pos=i;
+		    }else{
+		    	i++;
 		    }
 		}
 		return pos;
+		//TODO AQUI FALLA.
 	}
+	
+	
+	//public
 	
 }
 		

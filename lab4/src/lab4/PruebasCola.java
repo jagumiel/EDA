@@ -1,5 +1,4 @@
 package lab4;
-
 public class PruebasCola {
 	
 	public static void main(String[] args){

@@ -137,7 +137,7 @@ public class Main {
 				Pila<Actor> distancias=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 				if((acomparas1!=null)&&(acomparas2!=null)){
 					distancias = estanRelacionadosCola(acomparas1,acomparas2);
-				
+					//Para qué hostias quieres la pila si devuelve integer??
 				}else{
 					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
@@ -149,14 +149,13 @@ public class Main {
 				break;
 			case "10":
 				System.out.println(Main.getMain().gradoRelaciones());
-
+				break;
 			case "11":
-				int i=0;
 				ArrayList<Actor>top=Main.getMain().nodoCentral(ListaActoresPrincipal.getListaActoresPrincipal().getMilista());
-				while(top.get(i)!=null){
-					System.out.println(top.get(i).getNombre());
-					i++;
-				}
+				/*Iterator<Actor> iterador = top.iterator();
+				while(iterador.hasNext()){
+					System.out.println(iterador.next().getNombre());
+				}*/
 				break;	
 				
 			case "12":
@@ -304,20 +303,24 @@ public class Main {
 	
 	public static int estanRelacionados(Actor actor1, Actor actor2){
 		boolean enc = false;
-		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		Pila<String> porExaminar = new Pila<String>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		ListaActores examinados = new ListaActores();
-		porExaminar.anadir(actor1);
+		porExaminar.anadir(actor1.getNombre());
 		Actor actoraexaminar = new Actor("Actor por Defecto");
 		Iterator<String> iteradordecolegas;
 		String saux;
 		Actor aaux;
 		int nivel = 1;
-		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0
+		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0.
+		ArrayList<String> caminomascorto = new ArrayList<String>();
+		caminomascorto.add(actor1.getNombre());
 		
 		while((enc==false)&&(porExaminar.getTamano()>0)){
-			actoraexaminar = porExaminar.sacarPrimerElemento();
+			saux = porExaminar.sacarPrimerElemento();
+			actoraexaminar = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().get(saux);
 			if(actoraexaminar.getColegas().estaActor(actor2)){
 				enc=true;
+				caminomascorto.add(actor2.getNombre());
 			}else{
 				iteradordecolegas = actoraexaminar.getColegas().getIterador();
 				nivel=actoraexaminar.getNivel()+1;
@@ -326,15 +329,20 @@ public class Main {
 					aaux = actoraexaminar.getColegas().getMiListaActores().get(saux);
 					if((aaux!=null)&&(!examinados.estaActor(aaux))){
 						aaux.setNivel(nivel);
-						porExaminar.anadir(aaux);
+						porExaminar.anadir(aaux.getNombre());
 						examinados.anadirActor(aaux);
 					}
 				}
+				caminomascorto.add(actor1.getNombre());
 			}
 		}
+		
+		//--------------------------------------------------------------------------------------------------
+		
 		int resultado=actoraexaminar.getNivel();
 		while(porExaminar.getTamano()!=0){
-			Actor a=porExaminar.sacarPrimerElemento();
+			saux = porExaminar.sacarPrimerElemento();
+			Actor a = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().get(saux);
 			ListaActoresPrincipal.getListaActoresPrincipal().buscarActor(a).setNivel(0);
 			//Esto borra la lista de actores porExaminar y ademas restaura su valor a 0.
 		}
@@ -345,6 +353,12 @@ public class Main {
 			/*Hace lo mismo con los examinados. Esto es porque si lo dejamos igual y
 			volvemos a hacer otra búsqueda, el resultado no sería correcto, ya que
 			tendrían niveles asignados.*/
+		}
+		
+		//-----------------------------------------------------------------------------------------------------
+		
+		for(String s:caminomascorto){
+			System.out.print(s+" - ");
 		}
 			
 		return resultado;	
@@ -491,17 +505,20 @@ public class Main {
  
 	public ArrayList<Actor> nodoCentral(HashMap<String,Actor> pMiMapa) {
 		ArrayList<Actor> topActores = new ArrayList<Actor>();
+		Iterator<String> it = ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
 		for(int i=0; i<10;i++){
 			//Suponemos que trabajamos con una lista de actores grande, asi que siempre tendrá más de 10 elementos.
 			ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
-			String pActorNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+			String pActorNom=it.next();
 			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
 			topActores.add(pActor);//TODO, siempre me está metiendo al primer actor, el array se llena con el mismo actor. ERROR.
 			//Hasta aqui llenamos una lista con los 10 primeros actores.
 		}
 		
-		while(ListaActoresPrincipal.getListaActoresPrincipal().getIterador().hasNext()){
-			String pActorNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+		Iterator<String> itr = ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
+		
+		while(itr.hasNext()){
+			String pActorNom=itr.next();
 			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
 			int min=this.buscarPosMin(topActores);
 			if(pActor.getNumColegas()>topActores.get(min).getNumColegas()){
@@ -509,7 +526,7 @@ public class Main {
 			}
 		}
 		//Metodo para imprimir el top 10 de actores
-		for (int j=0; j < topActores.size(); j++) {
+		for (int j=0; j < 10; j++) {
 			Actor aux = topActores.get(j);
 			System.out.println(aux.getNombre());
 		}
@@ -523,9 +540,8 @@ public class Main {
 		while(i<10) {
 		    if (pTop.get(i).getNumColegas()<=pTop.get(pos).getNumColegas()) {
 		        pos=i;
-		    }else{
-		    	i++;
 		    }
+		    i++;
 		}
 		return pos;
 		//TODO AQUI FALLA.
@@ -533,6 +549,17 @@ public class Main {
 	
 	
 	//public
+	
+	
+	public ArrayList<Actor> losDeMasCentralidad(int n){
+		ArrayList<Actor> centrales = new ArrayList<Actor>();
+		
+		
+		
+		return centrales;
+	}
+	
+	
 	
 }
 		

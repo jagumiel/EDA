@@ -53,6 +53,16 @@ public class Actor{
 		this.ultActor=pActor;
 	}
 	
+	public int getNumColegas(){
+		int num=0;
+		Iterator<String> it = this.getColegas().getIterador();
+		while(it.hasNext()){
+			it.next();
+			num++;
+		}
+		return num;
+	}
+	
 	//Otros Metodos
 	public boolean tieneElMismoNombre(Actor pActor){
 		try{

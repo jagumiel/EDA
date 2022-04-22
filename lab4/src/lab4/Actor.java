@@ -9,6 +9,7 @@ public class Actor{
 	private ListaActores colegas;
 	private int nivel; //Mide distancia en el estan relacionados
 	private Actor ultActor;
+	private int repeticiones;
 	
 	//Constructora
 	public Actor(String pNombre){
@@ -61,6 +62,14 @@ public class Actor{
 			num++;
 		}
 		return num;
+	}
+	
+	public int getRepeticiones(){
+		return this.repeticiones;
+	}
+	
+	public void setRepeticiones(int pRepeticiones){
+		this.repeticiones=pRepeticiones;
 	}
 	
 	//Otros Metodos

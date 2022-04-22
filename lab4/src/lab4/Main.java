@@ -45,7 +45,8 @@ public class Main {
 					+ "9- Ver relación entre dos actores (distancia y nombres)\n"
 					+ "10- Hallar el grado de relaciones de los actores en la lista\n"
 					+ "11- Mostrar Top 10 (Más nodos)\n"
-					+ "12- Salir");
+					+ "12- top\n"
+					+ "13- Salir");
 			switch(entrada){
 			case "1":
 				JFileChooser fc = new JFileChooser();
@@ -137,7 +138,6 @@ public class Main {
 				Pila<Actor> distancias=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 				if((acomparas1!=null)&&(acomparas2!=null)){
 					distancias = estanRelacionadosCola(acomparas1,acomparas2);
-					//Para qué hostias quieres la pila si devuelve integer??
 				}else{
 					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
@@ -158,7 +158,16 @@ public class Main {
 				}*/
 				break;	
 				
-			case "12":
+			case"12":
+				Actor one;
+				String reps = JOptionPane.showInputDialog("Introduce cuantos casos analizar");
+				int repes=Integer.parseInt(reps);
+				if(repes<ListaActoresPrincipal.getListaActoresPrincipal().getTamano()){
+					one=hallarNodoCentral(repes);
+					System.out.println(one.getNombre());
+				}
+				
+			case "13":
 				repetir=false;
 				break;
 			default:
@@ -551,19 +560,57 @@ public class Main {
 	//public
 	
 	
-	public ArrayList<Actor> losDeMasCentralidad(int n){
+	/*public ArrayList<Actor> losDeMasCentralidad(int n){
 		ArrayList<Actor> centrales = new ArrayList<Actor>();
 		
 		
 		
 		return centrales;
-	}
-	
-	
-	
-}
+	}*/
 		
-
+	public static Actor hallarNodoCentral(int repes){
+		int i=0;
+		Pila<Actor> miPila=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+		while(i<repes){
+			Random gen1 = new Random();
+			Random gen2 = new Random();
+			Object[] values = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().values().toArray();
+			Actor randomActor1 = (Actor)values[gen1.nextInt(values.length)];
+			Actor randomActor2 = (Actor)values[gen2.nextInt(values.length)];
+			//Esto coge un actor aleatorio de la lista de actores principal.
+			Pila<Actor> miPilaAux=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
+			miPilaAux=estanRelacionadosCola(randomActor1, randomActor2);
+			//Ahora apilamos los actores resultantes en la pila principal.
+			while(miPilaAux.getTamano()!=0){
+				miPila.anadir(miPilaAux.sacarPrimerElemento());
+			}
+			i++;
+		}
+		//Ahora tenemos una pila con todos los actores, hay que apuntar sus repeticiones.
+		while(miPila.getTamano()!=0){
+			Actor aux=miPila.sacarPrimerElemento();
+			aux.setRepeticiones(aux.getRepeticiones()+1);
+		}
+		//Ahora hemos seteado las veces que un actor aparece repetido cuando hayamos el camino entre dos actores diferentes.
+		//Es hora de recorrer el HashMap con el iterador y mirar quien es el actor que en más caminos aparece.
+		String topNom=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+		Actor top=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(topNom);
+		//inicializamos top
+		while(ListaActoresPrincipal.getListaActoresPrincipal().getIterador().hasNext()){
+			String a1=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+			Actor ac1=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(a1);
+			if(ac1.getRepeticiones()>top.getRepeticiones()){
+				top=ac1;
+			}
+		}
+		//Ahora hay que restaurar todos los valores de repeticiones a 0
+		while(ListaActoresPrincipal.getListaActoresPrincipal().getIterador().hasNext()){
+			String aux=ListaActoresPrincipal.getListaActoresPrincipal().getIterador().next();
+			ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(aux).setRepeticiones(0);
+		}
+		return top;
+	}
+}
 
 /*
  *1er ejercicio: 

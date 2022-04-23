@@ -1,4 +1,7 @@
-package lab4;
+package pruebas;
+
+import lab4.Cola;
+
 public class PruebasCola {
 	
 	public static void main(String[] args){

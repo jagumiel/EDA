@@ -1,6 +1,8 @@
-package lab4;
+package pruebas;
 
 import java.util.ArrayList;
+
+import lab4.*;
 
 public class Pruebas {
 	public void pruebaPos(){

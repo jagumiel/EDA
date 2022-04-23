@@ -1,6 +1,8 @@
-package lab4;
+package pruebas;
 
 import java.io.File;
+
+import lab4.Main;
 
 public class PruebaGradoRelaciones {
 

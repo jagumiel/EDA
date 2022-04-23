@@ -1,4 +1,6 @@
-package lab4;
+package pruebas;
+
+import lab4.Cola;
 
 public class PruebaCola {
 	

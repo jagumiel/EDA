@@ -49,6 +49,7 @@ public class Main {
 					+ "13- Salir");
 			switch(entrada){
 			case "1":
+				//Opción 1:
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File("."));
 				fc.setDialogTitle("Elige un fichero"); 
@@ -137,7 +138,7 @@ public class Main {
 				Actor acomparas2 = ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(comparas2);
 				Pila<Actor> distancias=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 				if((acomparas1!=null)&&(acomparas2!=null)){
-					distancias = estanRelacionadosCola(acomparas1,acomparas2);
+					distancias = estanRelacionadosNombres(acomparas1,acomparas2);
 				}else{
 					JOptionPane.showMessageDialog(null,"Uno de los actores introducidos no se encuentra en la Lista de Actores");
 				}
@@ -166,7 +167,7 @@ public class Main {
 					one=hallarNodoCentral(repes);
 					System.out.println(one.getNombre());
 				}
-				
+				break;
 			case "13":
 				repetir=false;
 				break;
@@ -321,15 +322,12 @@ public class Main {
 		Actor aaux;
 		int nivel = 1;
 		actor1.setNivel(nivel);//Porque si lo encuentra de primeras devuelve 0.
-		ArrayList<String> caminomascorto = new ArrayList<String>();
-		caminomascorto.add(actor1.getNombre());
 		
 		while((enc==false)&&(porExaminar.getTamano()>0)){
 			saux = porExaminar.sacarPrimerElemento();
 			actoraexaminar = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().get(saux);
 			if(actoraexaminar.getColegas().estaActor(actor2)){
 				enc=true;
-				caminomascorto.add(actor2.getNombre());
 			}else{
 				iteradordecolegas = actoraexaminar.getColegas().getIterador();
 				nivel=actoraexaminar.getNivel()+1;
@@ -342,13 +340,16 @@ public class Main {
 						examinados.anadirActor(aaux);
 					}
 				}
-				caminomascorto.add(actor1.getNombre());
 			}
 		}
 		
 		//--------------------------------------------------------------------------------------------------
 		
-		int resultado=actoraexaminar.getNivel();
+		int resultado = 0;
+		if(enc){
+			resultado=actoraexaminar.getNivel();
+		}
+		
 		while(porExaminar.getTamano()!=0){
 			saux = porExaminar.sacarPrimerElemento();
 			Actor a = ListaActoresPrincipal.getListaActoresPrincipal().getMilista().get(saux);
@@ -363,12 +364,6 @@ public class Main {
 			volvemos a hacer otra búsqueda, el resultado no sería correcto, ya que
 			tendrían niveles asignados.*/
 		}
-		
-		//-----------------------------------------------------------------------------------------------------
-		
-		for(String s:caminomascorto){
-			System.out.print(s+" - ");
-		}
 			
 		return resultado;	
 	}
@@ -382,7 +377,7 @@ public class Main {
 	}
 	
 	
-	public static Pila<Actor> estanRelacionadosCola(Actor actor1, Actor actor2){
+	public static Pila<Actor> estanRelacionadosNombres(Actor actor1, Actor actor2){
 		boolean enc = false;
 		Pila <Actor> camino=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
 		Pila<Actor> porExaminar = new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
@@ -418,9 +413,8 @@ public class Main {
 		}
 		int resultado=actoraexaminar.getNivel();
 		if (resultado!=0){
-			camino.anadir(actor2);
 			Actor ulti=actoraexaminar;
-			while (ulti!=null){
+			while (ulti!=actor1){
 				camino.anadir(ulti);
 				ulti=ulti.getUltActor();
 			}
@@ -520,7 +514,7 @@ public class Main {
 			ListaActoresPrincipal.getListaActoresPrincipal().getIterador();
 			String pActorNom=it.next();
 			Actor pActor=ListaActoresPrincipal.getListaActoresPrincipal().buscarActorNombre(pActorNom);
-			topActores.add(pActor);//TODO, siempre me está metiendo al primer actor, el array se llena con el mismo actor. ERROR.
+			topActores.add(pActor);
 			//Hasta aqui llenamos una lista con los 10 primeros actores.
 		}
 		
@@ -553,18 +547,11 @@ public class Main {
 		    i++;
 		}
 		return pos;
-		//TODO AQUI FALLA.
 	}
-	
-	
-	//public
-	
+		
 	
 	/*public ArrayList<Actor> losDeMasCentralidad(int n){
 		ArrayList<Actor> centrales = new ArrayList<Actor>();
-		
-		
-		
 		return centrales;
 	}*/
 		
@@ -579,7 +566,7 @@ public class Main {
 			Actor randomActor2 = (Actor)values[gen2.nextInt(values.length)];
 			//Esto coge un actor aleatorio de la lista de actores principal.
 			Pila<Actor> miPilaAux=new Pila<Actor>(ListaActoresPrincipal.getListaActoresPrincipal().getTamano());
-			miPilaAux=estanRelacionadosCola(randomActor1, randomActor2);
+			miPilaAux=estanRelacionadosNombres(randomActor1, randomActor2);
 			//Ahora apilamos los actores resultantes en la pila principal.
 			while(miPilaAux.getTamano()!=0){
 				miPila.anadir(miPilaAux.sacarPrimerElemento());

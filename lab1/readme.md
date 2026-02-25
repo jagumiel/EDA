@@ -1,24 +1,44 @@
-# Lab 1
-## Actividad 1:
+# Lab 1 - Base de catálogo de actores y películas
 
-**Diseño e implementación de un sistema que permite carga, búsquedas y listado de los elementos.**
+## Objetivo
 
-**Requisitos:** Los algoritmos deben ser lo más eficientes posible.
-**Objetivo final:** Obtener un sistema que permitirá hacer eficientemente (deberemos razonar los motivos de la eficiencia) las siguientes operaciones:
-- Cargar los datos desde un fichero.
-- Búsqueda de un actor/actriz.
-- Inserción de un nuevo actor/actriz.
-- Borrado de un actor/actriz.
-- Guardar la lista en un fichero.
-- Obtener una lista de actores ordenada (nombre, apellido).
+Diseñar e implementar un sistema capaz de cargar, buscar, insertar, borrar, ordenar y guardar información de actores/películas de forma eficiente.
 
-El repositorio contiene:
-- Programas ejecutables y código fuente implementando lo mencionado.
-- Documentación describiendo el problema planteado, las alternativas examinadas, implementaciones, y eficiencia.
-- Especificación inicial de las clases correspondientes al problema. Diagrama de clases principal.
-- Diseño de las pruebas.
-- Diseño de las estructuras de datos principales.
-- Descripción general del problema
-- Descripción general de las alternativas examinadas y las soluciones adoptadas, justificándolas en base a diferentes criterios, como eficiencia.
-- Diseño e implementación de los algoritmos
-- Resultados empíricos de las pruebas realizadas
+Referencia del enunciado y memoria: `../Docs/EDA-LAB1.pdf`.
+
+## Funcionalidades principales
+
+- Carga de datos desde fichero de texto.
+- Búsqueda de actor/actriz por nombre.
+- Inserción de nuevos actores y películas.
+- Borrado de actores.
+- Guardado a fichero.
+- Listado ordenado de actores.
+
+## Estructuras de datos usadas y por qué
+
+- `HashMap<String, Actor>`:
+  permite busqueda y actualización promedio `O(1)` por nombre.
+  Es la mejor elección cuando el cuello de botella es localizar rápidamente actores en un dataset grande.
+- `Array` temporal para ordenacion:
+  las tablas hash no estan ordenadas; por eso se convierte a array para aplicar algoritmo de ordenación y generar listados alfabéticos.
+
+## Complejidad orientativa
+
+- Carga de fichero: `O(n)` (recorrido lineal de lineas).
+- Buscar actor: promedio `O(1)` con `HashMap`.
+- Insertar actor: promedio `O(1)`.
+- Borrar actor: promedio `O(1)` por clave.
+- Ordenar lista: depende del algoritmo aplicado al array (`O(n^2)` si burbuja, `O(n log n)` si mergesort).
+
+## Cuando esta solucion es adecuada
+
+- Muy buena para catálogos grandes con muchas consultas por nombre.
+- Adecuada para flujos "cargar y consultar" frecuentes.
+- Menos adecuada si se necesita mantener orden total en tiempo real tras cada inserción (ahí conviene estructura ordenada nativa).
+
+## Entregables esperados (segun enunciado)
+
+- Programa funcional.
+- Pruebas de funcionamiento.
+- Documentación de diseño, alternativas y análisis de eficiencia.

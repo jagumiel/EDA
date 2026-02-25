@@ -1,28 +1,62 @@
 # EDA - Estructuras de Datos y Algoritmos
-## _Aplicación para gestionar actores/actrices y películas_
 
-Queremos crear una aplicación que gestione un número grande (miles, decenas de miles o cientos de miles) de actores/actrices y las películas en que participan. Los datos se han tomado de IMDB (Internet Movie Database):
+Proyecto academico de EDA basado en una base de datos de actores/actrices y peliculas (dataset tipo IMDB - https://ftp.fu-berlin.de/pub/misc/movies/database/frozendata/)
+El repositorio esta organizado por laboratorios progresivos, cada uno con nuevas estructuras y algoritmos.
 
-http://ftp.fu-berlin.de/pub/misc/movies/database/)
+## Enunciado oficial
 
-Un actor o actriz puede participar en numerosas películas. Se debe usar el modelo de dominio siguiente:
+El enunciado completo de cada fase esta en:
 
-Actor->Película
+- `Docs/EDA-LAB1.pdf`
+- `Docs/EDA-LAB2.pdf`
+- `Docs/EDA-LAB3.pdf`
+- `Docs/EDA-LAB4.pdf`
 
-Por cada elemento del fichero de actores/actrices se tienen líneas de la forma:
-```
-Cruz, Karla             2xUno (2013) [Vanesa]
-                        3 y Media Vueltas en Posición C (2012) [Ella] <1>
-                        Cigarros (2013) [Ana]
-                        "Amor Cautivo" (2012) {(#1.1)} [Carmen] <31>
-Cruz, Karmele           "Mi reino por un caballo" (2010) {(#1.38)} [Herself]
-Cruz, Kassandra (II)    Kings of Bushwick (2011) [Lisa Sanchez]
-Cruz, Kat               "Pinoy Idol Extra" (2008) {(#1.1)} [Herself - Stylist] <10>
-```
+## Estructura del repositorio
 
-Los nombres de las películas se han marcado en negrita para que se distingan mejor (este marcado no se encuentra presente en el fichero de datos proporcionado). Antes de cada película, como elemento separador, se tendrán uno o varios tabuladores. Esto será útil a la hora de delimitar los distintos campos de cada línea.
+- `lab1/`: carga de datos, busqueda, insercion/borrado y listado ordenado.
+- `lab2/`: implementacion de listas doblemente enlazadas (ordenadas y desordenadas).
+- `lab3/`: relaciones entre actores mediante recorridos en anchura (BFS).
+- `lab4/`: grado medio de relacion y centralidad sobre el grafo de actores.
+- `examen/`: ejercicios independientes.
 
-Entre las funcionalidades podemos tener operaciones como:
-- Búsqueda de una persona determinada, dados su nombre y apellidos
-- Añadir un nuevo elemento (actor o película)
-- Obtener la lista de actores ordenada
+## Modelo de dominio
+
+Se trabaja con el grafo implicito:
+
+- Nodo: actor/actriz.
+- Arista: dos actores que han coincidido en una pelicula.
+
+Ademas, cada actor mantiene su filmografia y cada pelicula su reparto.
+
+## Por que estas estructuras son buenas para este problema
+
+- `HashMap`:
+  acceso promedio `O(1)` por clave para buscar actor/pelicula por nombre.
+  Es clave cuando se procesan miles o millones de lineas.
+- `DoubleLinkedList` (lab2):
+  inserciones y borrados eficientes con referencia a nodo, recorrido en ambos sentidos y buen control de extremos.
+  Es util cuando hay muchas operaciones de edicion sobre secuencias.
+- `Cola` (FIFO):
+  estructura natural para BFS en busqueda de caminos minimos no ponderados entre actores.
+- `Pila` (LIFO):
+  util para reconstruir/imprimir caminos desde destino a origen.
+- `Array`:
+  practico para ordenacion y para mantener un top-n fijo (por ejemplo, centralidad).
+
+## Casos de uso que cubre el proyecto
+
+- Cargar y parsear ficheros grandes de actores/peliculas.
+- Buscar actores/peliculas rapidamente.
+- Insertar y eliminar informacion del catalogo.
+- Ordenar y listar actores.
+- Comprobar si dos actores estan relacionados.
+- Calcular distancia minima entre actores.
+- Estimar medidas globales del grafo (grado medio y centralidad).
+
+## Resumen por laboratorio
+
+- `lab1`: base del sistema con enfasis en operaciones CRUD y eficiencia de acceso.
+- `lab2`: implementacion manual de TAD lista doblemente enlazada y su analisis.
+- `lab3`: paso de "catalogo" a "grafo de relaciones" con BFS.
+- `lab4`: metricas de red y estimaciones para que el coste sea asumible en datasets grandes.
